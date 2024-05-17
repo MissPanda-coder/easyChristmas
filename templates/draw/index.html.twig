@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+<section class="randomDraw">
+
+    <h2>Le grand tirage au sort</h2>
+   
+    <form id="form_players">
+        <fieldset  action="" method="POST" name="">
+      <label for="player_name"> Participants :</label>
+      <input type="text" id="player_name" placeholder="indiquez le nom d'utilisateur" required>
+      <button class="btn_add" type="button">Ajouter</button>
+    </fieldset>
+    </form>
+  <div class="row-gap-3">
+    <div class="col-md-12 text-center">
+    <h3>Résultats :</h3>
+    <p id="player_instructions">Lire de gauche à droite pour savoir qui offre à qui</p>
+</div>
+</div>
+    <div class="container">
+    <div class="row" id="player_result">
+      <div class="col-lg-3 col-md-3 col-sm-12 ">
+        tableau pour les couples
+        <button class="btn-tirage" onclick="effectuerTirage()">Lancer le tirage</button>
+      </div>
+    
+      <div class="col-lg-3 col-md-3 col-sm-12 mx-auto">
+      <div class="perspective">
+        <div class="cardDraw">
+          <div class="imgCard"></div>
+  </div>
+  </div>
+  </div>
+ 
+  <div class="col-lg-3 col-md-3 col-sm-12 mx-auto">
+    <div class="perspective">
+      <div class="cardDraw">
+        <div class="imgCard">       
+  </div>
+  </div>
+  </div>
+  </div>
+  <div class="col-lg-3 col-md-3 col-sm-12">
+      <div class="perspective">
+        <div class="cardDraw">
+          <div class="imgCard"></div>
+  </div>
+  </div>
+  </div>
+  
+  
+</div>
+</div>
+
+
+
+
+</section>
+
+{% endblock %}
