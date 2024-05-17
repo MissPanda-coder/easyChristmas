@@ -1,0 +1,101 @@
+@import "_variables";
+@import "_mixin";
+
+.randomDraw{
+    width: 100%;
+    height: 100vh;
+    background-color: $c-red;
+}
+
+#form_players{
+    margin-left:3rem;
+}
+
+#player_name{
+    font-family: $f-second; 
+      color:rgba(255, 255, 255, 0.767);
+      width:380px;
+      border-radius: 50px;
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      -moz-backdrop-filter: blur(5px);
+      box-shadow: 4px 4px 60px rgba(0, 0, 0, .2);
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, .2);
+      transition: all .3s;   
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      background: transparent;
+      padding: 0.8rem; 
+      margin-left: 5rem;
+      
+}
+
+.btn_add{
+    @include btn;  
+    background-color: $c-green;
+    margin-left:2rem;
+  
+}
+
+.btn_add:hover{
+    color:$c-white;
+}
+
+#player_instructions{
+    color: $c-white;
+    font-size: 0.8rem;
+  
+}
+
+.perspective{
+    perspective: 1000px;
+}
+
+
+.cardDraw {
+    width: 270px;
+    height: 400px;
+    box-shadow: 0px 10px 13px -7px #000000;
+    transform-style: preserve-3d;
+    transition: transform .05s linear;
+}
+
+    .imgCard {
+        background-image: url(../images/else/presents.png);
+        background-repeat: no-repeat;
+        background-size: cover;
+        width: 100%;
+        height: 100%;
+        border-radius: 15px;
+
+        // &:after {
+        //     background: inherit;
+        //     content: '';
+        //     display: block;
+        //     position: absolute;
+        //     left: -40px;
+        //     top: 40px;
+        //     width: 100%;
+        //     height: 90%;
+        //     z-index: -1;
+        //     filter: blur(85px);
+        // }
+    }
+
+
+
+.btn-tirage{
+    @include btn;  
+    background-color: $c-green;
+}
+
+.btn-tirage::before{
+@include btn;
+}
+
+.btn-tirage:hover{
+    color:$c-white;
+}
+
+.btn-tirage:hover::before{
+    width: 100%;
+}

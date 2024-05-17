@@ -1,0 +1,47 @@
+
+
+@mixin form{
+    background: rgba(150, 149, 149, 0.173);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(101, 100, 100, 0);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 1.5rem;
+    width:auto;
+    height:auto;
+    position: absolute;
+    left:50%;
+    top:50%;
+    transform: translate(-50%,-50%);
+    z-index:7;
+  
+    transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+@mixin fieldIcon{
+    position: absolute;
+    z-index: 2;
+    color: black;
+    float:right;
+   }
+
+  @mixin glassmorphism{
+background: rgba(161, 46, 46, 0.459);
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(5px);
+-webkit-backdrop-filter: blur(5px);
+border: 0.1rem solid rgba(131, 48, 48, 0.3);
+  }
+
+  @mixin btn{
+    border-radius: 50px;
+    color: $c-white;
+    font-family: $f-first, sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    padding: 0.5rem 1rem;
+    border: none;
+  }

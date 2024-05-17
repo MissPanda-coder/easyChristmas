@@ -1,0 +1,93 @@
+@import "_variables";
+@import "_mixin";
+
+
+#home{
+  background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+  overflow: hidden;
+  filter: drop-shadow(0 0 10px white);
+  perspective: 1000px;
+  height:100vh;
+  width: 100%;
+}
+
+
+.home_snowflakes {
+  position: absolute;
+  background: #fff;
+  border-radius: 50%;
+  pointer-events: none;
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+  animation: fall linear infinite;
+}
+
+@keyframes fall {
+  to {
+      transform: translateY(100vh); 
+  }
+}
+
+.parallax{
+  pointer-events:none;
+  position: absolute;
+  transform-style: preserve-3d;
+  transition: transform 0.4s;
+}
+
+.parallax_text{
+  @include glassmorphism;
+  width: auto;
+  height:auto;
+  padding:1.5rem;
+  z-index:7;
+  pointer-events: auto;
+  border-radius: 16px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center; 
+  
+ 
+  }
+
+.parallax_text p{
+  color: $c-white;
+  font-family: $f-second, sans-serif;
+  font-size: 1.1rem;
+  line-height: 1.5rem;
+  text-align: justify;
+}
+
+.parallax_mountain{
+  position: absolute;
+  z-index: 2;
+  width: 2000px;
+  height:950px;
+  top: calc(50% + 9px);
+  left: calc(50% + 10px);
+  transform: translate(-50%, -50%);
+}
+
+.parallax_leftTree{
+  position: absolute;
+  z-index: 3;
+  width: 463px;
+  top: calc(50% + 152px);
+  left: calc(50% - 790px);
+  transform: translate(-50%, -50%);
+}
+
+.parallax_rightTree{
+  position: absolute;
+  z-index: 4;
+  width: 683px;
+  top: calc(50% + 82px);
+  left: calc(50% + 630px);
+  transform: translate(-50%, -50%);
+}
+
+// PHONES
+@media only screen and (max-width: 768px) {
+
+}
