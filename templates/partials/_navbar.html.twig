@@ -1,0 +1,110 @@
+   
+    <section id="{{ sectionName }}">
+    <nav class="container-fluid navbar">
+        
+        <button class="hamburger"><a href="#"><div class="bar"></div></a></button>
+   
+        <ul class="nav_links-hidden">
+            <li><img src="{{asset('images/favicon/favicon.png')}}" alt="photo du Père Noël étonné qui tient ses lunettes sur son nez" /></li>
+            <li><a href="{{ path('home') }}">Accueil</a></li>
+            <li><a href="{{ path('countdown') }}">Compte à rebours</a></li>
+            <li><a href="{{ path('draw') }}">Tirage au sort</a></li>
+            <li><a href="{{ path('wishlist') }}">Liste au père Noël</a></li>
+            <li><a href="{{ path('recipes_cat') }}">Idées recettes</a></li>
+            <li><button class="login_button" href="login">Se connecter</button></li>
+        </ul>
+    
+    <ul class="nav_links">
+        <li><img src="{{asset('images/favicon/favicon.png')}}" alt="photo du Père Noël étonné qui tient ses lunettes sur son nez" /></li>
+                <li><a href="{{ path('home') }}">Accueil</a></li>
+            <li><a href="{{ path('countdown') }}">Compte à rebours</a></li>
+            <li><a href="{{ path('draw') }}">Tirage au sort</a></li>
+            <li><a href="{{ path('wishlist') }}">Liste au père Noël</a></li>
+            <li><a href="{{ path('recipes_cat') }}">Idées recettes</a></li>
+        <li><button class="login_button" href="login">Se connecter</button></li>
+    </ul>
+
+</nav>
+
+    <form id="form_login" class="form_layout">
+        <fieldset action="processLogIn.php" name="login" method="POST">
+            <h3 class="form_title">Connexion</h3>
+            <p class="form_field">
+                <label for="email_login" class="form_label">Email</label>
+                <input class="form_input" type="email" name="email_login" id="email_login">
+               
+            </p>
+    
+            <p class="form_field">
+                <label for="password_login" class="form_label">Mot de passe</label>
+                <input type="password" name="password_login" id="password_login" class="password_eye form_input" toggle>
+                <i toggle="password_field" class="fa fa_eye_slash field_icon_login toggle_password"></i>
+              
+            </p>
+            <p class="form_field-center">
+                <button type="submit" class="form_btn">Envoyer</button>
+                <a href="#" class="form_password-forgot">Mot de passe oublié ?</a>
+                <a class="register_button" href="#">Pas encore inscrit ? Inscrivez-vous <span class="register_button-click" >ici</span></a>
+               
+            </p> 
+        </fieldset>
+    </form>
+    
+    
+    <form id="form_password" class="form_layout">
+        <fieldset  action="processFPw.php" method="POST" name="forgot">
+            <h3 class="form_title">Mot de passe oublié</h3>
+            <p class="form_field">
+                <label for="email_forgot" class="form_label">Email</label>
+                <input type="email" name="email_forgot" class="form_input" id="email_forgot">
+             
+             
+            </p>
+            <button type="submit" class="form_btn">Envoyer</button>
+        </fieldset>
+    </form>
+    
+    <form id="form_register" class="form_layout">
+            <fieldset  action="processRegister.php" method="POST" name="register">
+                <h3 class="form_title">Inscription</h3>
+                <p class="form_field">
+                    <label for="name" class="form_label">Nom d'utilisateur</label>
+                    <input type="text" name="name" class="form_input" id="name" required autocomplete="off">
+                   
+                </p>
+                <p class="form_field">
+                    <label for="dob" class="form_label">Date de naissance</label>
+                    <input type="date" required name="dob" class="form_input" id="dob">
+        
+                </p>
+    
+                <p class="form_field">
+                    <label for="email" class="form_label">Email</label>
+                    <input type="email" required class="form_input" autocomplete="off" name="email" id="email">
+                  
+               
+                </p>
+    
+                <p class="form_field">
+                    <label for="password" class="form_label">Mot de passe</label>
+                    <input type="password" required class="form_input" autocomplete="off" name="password" id="password" toggle="">
+                
+                    <i toggle="password_field" class="fa fa_eye_slash field_icon_register toggle_password"></i>
+                    
+                </p>
+                <p class="form_field">
+            <label for="password_confirm" class="form_label">Confirmez le mot de passe</label>
+            <input type="password" required class="form_input" name="password_confirm" id="password_confirm" autocomplete="off">
+    </p>
+    
+    <p class="form_field_checkobox">
+        <input type="checkbox" id="cgu" name="cgu" class="checkbox" required/>
+        <label for="cgu" class="form_label" >J'ai lu et j'accepte les conditions générales d'utilisation</label>
+       
+    </p>
+    
+    <button type="submit" class="form_btn">Envoyer</button>
+            </fieldset>
+        </form>
+    
+</header>

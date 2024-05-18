@@ -13,6 +13,7 @@ class PdcController extends AbstractController
     {
         return $this->render('pdc/index.html.twig', [
             'page_title' => 'Politique de confidentialité',
+            'sectionName' => 'pdc',
             'controller_name' => 'PdcController'
         ]);
     }

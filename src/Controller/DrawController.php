@@ -13,7 +13,9 @@ class DrawController extends AbstractController
     {
         return $this->render('draw/index.html.twig', [
             'page_title' => 'Tirage au sort de Noël - Qui offrira un cadeau à qui ?',
+            'sectionName' => 'randomDraw',
             'controller_name' => 'DrawController',
+            
         ]);
     }
 }

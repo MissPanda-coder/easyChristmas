@@ -13,6 +13,7 @@ class WishlistController extends AbstractController
     {
         return $this->render('wishlist/index.html.twig', [
             'page_title' => 'Créez et partagez votre liste de vœux pour Noël',
+            'sectionName' => 'wishlist',
             'controller_name' => 'WishlistController',
         ]);
     }
