@@ -2,3 +2,43 @@
 @import "_mixin";
 
 
+footer {
+    width: 100%;
+    height:fit-content;
+    background-color: transparent;
+    font-family: $f-second, sans-serif;
+    color: $c-white;
+    margin-top:1.5rem;
+    padding-top: 1.5rem;
+    padding-bottom: 0.8rem;
+  }
+  
+footer ul {
+    padding: 0;
+    list-style: none;
+    text-align: center;
+    font-size: clamp(0.875rem, 2vw, 1.1rem); 
+    margin-bottom: 0;
+    color: $c-white;
+  }
+  
+footer ul a {
+    color: $c-white;
+    text-decoration: none;
+  }
+  
+footer ul li {
+    display: inline-block;
+    padding: 0 1.5rem; 
+  }
+  
+footer ul a:hover{
+    color: $c-red;
+  }
+  
+  .copyright {
+    margin-top: 0.8rem; 
+    text-align: center;
+    font-size: clamp(0.75rem, 0.6vw, 0.81rem); 
+    color: $c-white;
+  }

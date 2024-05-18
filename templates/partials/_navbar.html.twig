@@ -1,5 +1,6 @@
    
     <section id="{{ sectionName }}">
+    <header>
     <nav class="container-fluid navbar">
         
         <button class="hamburger"><a href="#"><div class="bar"></div></a></button>
@@ -16,7 +17,7 @@
     
     <ul class="nav_links">
         <li><img src="{{asset('images/favicon/favicon.png')}}" alt="photo du Père Noël étonné qui tient ses lunettes sur son nez" /></li>
-                <li><a href="{{ path('home') }}">Accueil</a></li>
+            <li><a href="{{ path('home') }}">Accueil</a></li>
             <li><a href="{{ path('countdown') }}">Compte à rebours</a></li>
             <li><a href="{{ path('draw') }}">Tirage au sort</a></li>
             <li><a href="{{ path('wishlist') }}">Liste au père Noël</a></li>

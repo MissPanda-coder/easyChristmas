@@ -1,0 +1,62 @@
+@import "_variables";
+@import "_mixin";
+
+
+#cgu{
+    width: 100%;
+    background: $c-blue;
+}
+
+.cgu_layout{
+    width: 95%;
+    margin: 1rem auto;
+    line-height: 2rem;
+    font-size: clamp(1rem, 3vw, 1.1rem);
+    
+}
+
+.cgu_update {
+    font-family: $f-second, sans-serif;
+    font-size: clamp(0.5rem, 2vw, 0.8rem);
+    margin: 0.6rem 0; 
+    color: $c-white;
+}
+
+.preambule{
+    margin-bottom: 4rem;
+}
+
+.preambule_title-click {
+    text-decoration: none;
+    color: $c-white;
+    font-family: $f-second, sans-serif;
+}
+
+.preambule_title-click:hover{
+    color: $c-red; 
+}
+
+
+/* RESPONSIVE */
+@media only screen and (max-width: 711px) { 
+    h6{
+        font-size: 0.85rem;
+    }
+
+    .presentation_img {
+        margin-top: 15px; 
+        margin-left:20px;
+    }
+  }
+
+  @media only screen and (min-width: 712px) and (max-width: 768px) { 
+    .container {
+        margin: 50px 0 50px 0;    
+        }
+  }
+
+@media screen and (min-width: 769px) and (max-width: 992px) {
+    .container {
+        margin: 70px 0 74px 0;    
+        }
+      }

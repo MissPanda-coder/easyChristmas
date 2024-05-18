@@ -13,6 +13,8 @@
 @import '_recipesCat';
 @import '_recipesDetail';
 @import '_pageNotFound';
+@import '_pdc';
+@import '_cgu';
 
 
 body {
@@ -57,3 +59,23 @@ h3{
      text-align: center;
      
     }
+
+    h4 {
+      text-transform: uppercase;
+      text-align: center;
+      margin-top: 2.5rem !important;
+      font-family: $f-first, sans-serif;
+  }
+  
+
+    h5 {
+      font-family: $f-second, sans-serif;
+      text-transform: uppercase;
+      margin-top: 1.2rem; 
+      color: $c-white !important;
+  }
+
+  h6{
+    font-size: 0.85rem;
+    color: $c-white !important;
+}
