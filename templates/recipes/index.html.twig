@@ -6,21 +6,14 @@
 <h2>Idées Gourmandes pour les Fêtes</h2>
 
 <div class="recipes_carousel">
- 
-  <div class="recipes_item verrine active">
-<h4>Verrines d'avocats et crevettes</h4>
-<a class="recipes_a" href="">Découvrez la recette</a>
-</div>
 
-<div class="recipes_item rillettes ">
-<h4>Rillettes de maquereau aux herbes sur toast</h4>
-<a class="recipes_a" href="">Découvrez la recette</a>
-</div>
+    {% for recipe in recipes %}
+        <div class="recipes_item verrine active">
+            <h4>{{ recipe.title }}</h4>
+            <a class="recipes_a" href="">Découvrez la recette</a>
+        </div>
+    {% endfor %}
 
-<div class="recipes_item miniCake">
-<h4>Mini cakes au Boursin</h4>
-<a class="recipes_a" href="">Découvrez la recette</a>
-</div>
 
 </div>
 <div class="recipes_items-navigation">
@@ -30,6 +23,8 @@
     <img class="recipes_item-next third" src="/assets/images/else/fleche.png" alt="flèche pour aller vers la droite">
 
 </div>
+
+
  
 
 {% endblock %}
