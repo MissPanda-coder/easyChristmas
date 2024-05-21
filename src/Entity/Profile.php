@@ -13,16 +13,16 @@ class Profile
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 50, nullable: true)]
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $photo = null;
+
+    #[ORM\Column(length: 150)]
     private ?string $userName = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $photo = null;
-
-    #[ORM\Column(length: 100)]
     private ?string $firstName = null;
 
-    #[ORM\Column(length: 60, nullable: true)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $lastName = null;
 
     public function getId(): ?int
@@ -30,26 +30,26 @@ class Profile
         return $this->id;
     }
 
-    public function getUserName(): ?string
-    {
-        return $this->userName;
-    }
-
-    public function setUserName(?string $userName): static
-    {
-        $this->userName = $userName;
-
-        return $this;
-    }
-
     public function getPhoto(): ?string
     {
         return $this->photo;
     }
 
-    public function setPhoto(string $photo): static
+    public function setPhoto(?string $photo): static
     {
         $this->photo = $photo;
+
+        return $this;
+    }
+
+    public function getUserName(): ?string
+    {
+        return $this->userName;
+    }
+
+    public function setUserName(string $userName): static
+    {
+        $this->userName = $userName;
 
         return $this;
     }

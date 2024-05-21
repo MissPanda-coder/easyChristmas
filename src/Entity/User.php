@@ -2,12 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Entity\Draw;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use App\Repository\UserRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
@@ -39,10 +40,52 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Recipe::class, mappedBy: 'User')]
     private Collection $recipes;
 
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?Profile $Profile = null;
+
+    /**
+     * @var Collection<int, Draw>
+     */
+    #[ORM\OneToMany(targetEntity: Draw::class, mappedBy: 'organizer')]
+    private Collection $drawsOrganized;
+
+    /**
+     * @var Collection<int, Draw>
+     */
+    #[ORM\ManyToMany(targetEntity: Draw::class, mappedBy: 'participants')]
+    #[ORM\JoinTable(name: "draw_has_user")]
+    private Collection $drawsParticipated;
+
+    /**
+     * @var Collection<int, Role>
+     */
+    #[ORM\ManyToMany(targetEntity: Role::class, mappedBy: 'User')]
+    #[ORM\JoinTable(name: "user_has_role")]
+    private Collection $role;
+
+    /**
+     * @var Collection<int, Wishes>
+     */
+    #[ORM\ManyToMany(targetEntity: Wishes::class, mappedBy: 'User')]
+    #[ORM\JoinTable(name: "user_has_wishes")]
+    private Collection $wishes;
+
+    /**
+     * @var Collection<int, Role>
+     */
+    
+    
+
     public function __construct()
     {
-        $this->recipes = new ArrayCollection();
+        $this->drawsOrganized = new ArrayCollection();
+        $this->drawsParticipated = new ArrayCollection();
+        $this->role = new ArrayCollection();
+        $this->wishes = new ArrayCollection();
+        
     }
+
+    
 
     public function getId(): ?int
     {
@@ -148,4 +191,132 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-}
+
+    public function getProfile(): ?Profile
+    {
+        return $this->Profile;
+    }
+
+    public function setProfile(?Profile $Profile): static
+    {
+        $this->Profile = $Profile;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Draw>
+     */
+    public function getDrawsOrganized(): Collection
+    {
+        return $this->drawsOrganized;
+    }
+
+    public function addDrawsOrganized(Draw $drawsOrganized): static
+    {
+        if (!$this->drawsOrganized->contains($drawsOrganized)) {
+            $this->drawsOrganized->add($drawsOrganized);
+            $drawsOrganized->setOrganizer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDrawsOrganized(Draw $drawsOrganized): static
+    {
+        if ($this->drawsOrganized->removeElement($drawsOrganized)) {
+            // set the owning side to null (unless already changed)
+            if ($drawsOrganized->getOrganizer() === $this) {
+                $drawsOrganized->setOrganizer(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Draw>
+     */
+    public function getDrawsParticipated(): Collection
+    {
+        return $this->drawsParticipated;
+    }
+
+    public function addDrawsParticipated(Draw $drawsParticipated): static
+    {
+        if (!$this->drawsParticipated->contains($drawsParticipated)) {
+            $this->drawsParticipated->add($drawsParticipated);
+            $drawsParticipated->addParticipant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDrawsParticipated(Draw $drawsParticipated): static
+    {
+        if ($this->drawsParticipated->removeElement($drawsParticipated)) {
+            $drawsParticipated->removeParticipant($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Role>
+     */
+    public function getRole(): Collection
+    {
+        return $this->role;
+    }
+
+    public function addRole(Role $role): static
+    {
+        if (!$this->role->contains($role)) {
+            $this->role->add($role);
+            $role->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRole(Role $role): static
+    {
+        if ($this->role->removeElement($role)) {
+            $role->removeUser($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Wishes>
+     */
+    public function getWishes(): Collection
+    {
+        return $this->wishes;
+    }
+
+    public function addWish(Wishes $wish): static
+    {
+        if (!$this->wishes->contains($wish)) {
+            $this->wishes->add($wish);
+            $wish->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWish(Wishes $wish): static
+    {
+        if ($this->wishes->removeElement($wish)) {
+            $wish->removeUser($this);
+        }
+
+        return $this;
+    }
+
+      
+    }
+
+   
+     

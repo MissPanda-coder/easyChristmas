@@ -18,7 +18,10 @@ class RecipeStep
     private ?int $stepNumber = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    private ?string $stepDescription = null;
+    private ?string $description = null;
+
+    #[ORM\ManyToOne(inversedBy: 'RecipeStep')]
+    private ?Recipe $recipe = null;
 
     public function getId(): ?int
     {
@@ -37,14 +40,26 @@ class RecipeStep
         return $this;
     }
 
-    public function getStepDescription(): ?string
+    public function getDescription(): ?string
     {
-        return $this->stepDescription;
+        return $this->description;
     }
 
-    public function setStepDescription(string $stepDescription): static
+    public function setDescription(string $description): static
     {
-        $this->stepDescription = $stepDescription;
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getRecipe(): ?Recipe
+    {
+        return $this->recipe;
+    }
+
+    public function setRecipe(?Recipe $recipe): static
+    {
+        $this->recipe = $recipe;
 
         return $this;
     }
