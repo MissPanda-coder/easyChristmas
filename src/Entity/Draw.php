@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Repository\DrawRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: DrawRepository::class)]
 class Draw
 {
     #[ORM\Id]
@@ -14,46 +14,27 @@ class Draw
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: 'datetime')]
-    private ?\DateTime $drawDate = null;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $drawDate = null;
 
     #[ORM\Column]
     private ?int $drawYear = null;
-
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: "drawsOrganized")]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $organizer = null;
-
-    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: "drawsParticipated")]
-    private Collection $participants;
-
-    #[ORM\OneToMany(targetEntity: Exclusion::class, mappedBy: "draw")]
-    private Collection $exclusions;
-
-    public function __construct()
-    {
-        $this->participants = new ArrayCollection();
-        $this->exclusions = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function setId(?int $id): void
-    {
-        $this->id = $id;
-    }
-
-    public function getDrawDate(): ?\DateTime
+    public function getDrawDate(): ?\DateTimeInterface
     {
         return $this->drawDate;
     }
 
-    public function setDrawDate(?\DateTime $drawDate): void
+    public function setDrawDate(\DateTimeInterface $drawDate): static
     {
         $this->drawDate = $drawDate;
+
+        return $this;
     }
 
     public function getDrawYear(): ?int
@@ -61,38 +42,10 @@ class Draw
         return $this->drawYear;
     }
 
-    public function setDrawYear(?int $drawYear): void
+    public function setDrawYear(int $drawYear): static
     {
         $this->drawYear = $drawYear;
-    }
 
-    public function getOrganizer(): ?User
-    {
-        return $this->organizer;
-    }
-
-    public function setOrganizer(?User $organizer): void
-    {
-        $this->organizer = $organizer;
-    }
-
-    public function getParticipants(): array
-    {
-        return $this->participants;
-    }
-
-    public function setParticipants(array $participants): void
-    {
-        $this->participants = $participants;
-    }
-
-    public function getExclusions(): array
-    {
-        return $this->exclusions;
-    }
-
-    public function setExclusions(array $exclusions): void
-    {
-        $this->exclusions = $exclusions;
+        return $this;
     }
 }

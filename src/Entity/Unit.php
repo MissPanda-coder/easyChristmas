@@ -2,11 +2,10 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Repository\UnitRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: UnitRepository::class)]
 class Unit
 {
     #[ORM\Id]
@@ -14,44 +13,23 @@ class Unit
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 145)]
-    private ?string $name = null;
-
-    #[ORM\OneToMany(targetEntity: Ingredient::class, mappedBy: "unit")]
-    private Collection $ingredients;
-
-    public function __construct()
-    {
-        $this->ingredients = new ArrayCollection();
-    }
+    #[ORM\Column(length: 50)]
+    private ?string $unitName = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function setId(?int $id): void
+    public function getUnitName(): ?string
     {
-        $this->id = $id;
+        return $this->unitName;
     }
 
-    public function getName(): ?string
+    public function setUnitName(string $unitName): static
     {
-        return $this->name;
-    }
+        $this->unitName = $unitName;
 
-    public function setName(?string $name): void
-    {
-        $this->name = $name;
-    }
-
-    public function getIngredients(): array
-    {
-        return $this->ingredients;
-    }
-
-    public function setIngredients(array $ingredients): void
-    {
-        $this->ingredients = $ingredients;
+        return $this;
     }
 }

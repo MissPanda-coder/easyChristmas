@@ -2,11 +2,10 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Repository\RecipeDifficultyRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: RecipeDifficultyRepository::class)]
 class RecipeDifficulty
 {
     #[ORM\Id]
@@ -17,22 +16,9 @@ class RecipeDifficulty
     #[ORM\Column(length: 50)]
     private ?string $difficultyName = null;
 
-    #[ORM\OneToMany(targetEntity: Recipe::class, mappedBy: "difficulty")]
-    private Collection $recipes;
-
-    public function __construct()
-    {
-        $this->recipes = new ArrayCollection();
-    }
-
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function setId(?int $id): void
-    {
-        $this->id = $id;
     }
 
     public function getDifficultyName(): ?string
@@ -40,18 +26,10 @@ class RecipeDifficulty
         return $this->difficultyName;
     }
 
-    public function setDifficultyName(?string $difficultyName): void
+    public function setDifficultyName(string $difficultyName): static
     {
         $this->difficultyName = $difficultyName;
-    }
 
-    public function getRecipes(): array
-    {
-        return $this->recipes;
-    }
-
-    public function setRecipes(array $recipes): void
-    {
-        $this->recipes = $recipes;
+        return $this;
     }
 }

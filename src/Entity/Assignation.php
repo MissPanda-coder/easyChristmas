@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\ExclusionRepository;
+use App\Repository\AssignationRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: ExclusionRepository::class)]
-class Exclusion
+#[ORM\Entity(repositoryClass: AssignationRepository::class)]
+class Assignation
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

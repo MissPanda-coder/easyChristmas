@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
+use App\Repository\RecipeStepRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity]
-#[ORM\UniqueConstraint(columns: ["recipe_id", "step_number"])]
+#[ORM\Entity(repositoryClass: RecipeStepRepository::class)]
 class RecipeStep
 {
     #[ORM\Id]
@@ -16,21 +17,12 @@ class RecipeStep
     #[ORM\Column]
     private ?int $stepNumber = null;
 
-    #[ORM\Column(type: "text")]
-    private ?string $description = null;
-
-    #[ORM\ManyToOne(targetEntity: Recipe::class, inversedBy: "steps")]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Recipe $recipe = null;
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $stepDescription = null;
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function setId(?int $id): void
-    {
-        $this->id = $id;
     }
 
     public function getStepNumber(): ?int
@@ -38,28 +30,22 @@ class RecipeStep
         return $this->stepNumber;
     }
 
-    public function setStepNumber(?int $stepNumber): void
+    public function setStepNumber(int $stepNumber): static
     {
         $this->stepNumber = $stepNumber;
+
+        return $this;
     }
 
-    public function getDescription(): ?string
+    public function getStepDescription(): ?string
     {
-        return $this->description;
+        return $this->stepDescription;
     }
 
-    public function setDescription(?string $description): void
+    public function setStepDescription(string $stepDescription): static
     {
-        $this->description = $description;
-    }
+        $this->stepDescription = $stepDescription;
 
-    public function getRecipe(): ?Recipe
-    {
-        return $this->recipe;
-    }
-
-    public function setRecipe(?Recipe $recipe): void
-    {
-        $this->recipe = $recipe;
+        return $this;
     }
 }

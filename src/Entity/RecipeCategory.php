@@ -2,11 +2,10 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Repository\RecipeCategoryRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: RecipeCategoryRepository::class)]
 class RecipeCategory
 {
     #[ORM\Id]
@@ -17,22 +16,9 @@ class RecipeCategory
     #[ORM\Column(length: 50)]
     private ?string $categoryName = null;
 
-    #[ORM\OneToMany(targetEntity: Recipe::class, mappedBy: "category")]
-    private Collection $recipes;
-
-    public function __construct()
-    {
-        $this->recipes = new ArrayCollection();
-    }
-
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function setId(?int $id): void
-    {
-        $this->id = $id;
     }
 
     public function getCategoryName(): ?string
@@ -40,18 +26,10 @@ class RecipeCategory
         return $this->categoryName;
     }
 
-    public function setCategoryName(?string $categoryName): void
+    public function setCategoryName(string $categoryName): static
     {
         $this->categoryName = $categoryName;
-    }
 
-    public function getRecipes(): array
-    {
-        return $this->recipes;
-    }
-
-    public function setRecipes(array $recipes): void
-    {
-        $this->recipes = $recipes;
+        return $this;
     }
 }

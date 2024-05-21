@@ -2,10 +2,7 @@
 
 namespace App\Entity;
 
-use App\Entity\User;
 use App\Repository\RecipeRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: RecipeRepository::class)]
@@ -16,46 +13,21 @@ class Recipe
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 250)]
+    #[ORM\Column(length: 100)]
     private ?string $title = null;
 
-    #[ORM\Column(type: "text")]
+    #[ORM\Column(length: 255)]
     private ?string $description = null;
 
     #[ORM\Column]
     private ?int $duration = null;
 
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: "recipes")]
-    private ?User $user = null;
-
-    #[ORM\ManyToOne(targetEntity: RecipeDifficulty::class, inversedBy: "recipes", cascade: ["persist"])]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?RecipeDifficulty $difficulty = null;
-
-    #[ORM\ManyToOne(targetEntity: RecipeCategory::class, inversedBy: "recipes", cascade: ["persist"])]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?RecipeCategory $category = null;
-
-    #[ORM\OneToMany(targetEntity: RecipeStep::class, mappedBy: "recipe")]
-    private Collection $steps;
-
-    #[ORM\OneToMany(targetEntity: RecipeHasIngredient::class, mappedBy: "recipe")]
-    private Collection $ingredients;
-
-    public function __construct()
-    {
-        $this->steps = new ArrayCollection();
-        $this->ingredients = new ArrayCollection();
-    }
+    #[ORM\ManyToOne(inversedBy: 'recipes')]
+    private ?User $User = null;
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function setId(?int $id): void
-    {
-        $this->id = $id;
     }
 
     public function getTitle(): ?string
@@ -63,9 +35,11 @@ class Recipe
         return $this->title;
     }
 
-    public function setTitle(?string $title): void
+    public function setTitle(string $title): static
     {
         $this->title = $title;
+
+        return $this;
     }
 
     public function getDescription(): ?string
@@ -73,9 +47,11 @@ class Recipe
         return $this->description;
     }
 
-    public function setDescription(?string $description): void
+    public function setDescription(string $description): static
     {
         $this->description = $description;
+
+        return $this;
     }
 
     public function getDuration(): ?int
@@ -83,74 +59,22 @@ class Recipe
         return $this->duration;
     }
 
-    public function setDuration(?int $duration): void
+    public function setDuration(int $duration): static
     {
         $this->duration = $duration;
+
+        return $this;
     }
 
     public function getUser(): ?User
     {
-        return $this->user;
+        return $this->User;
     }
 
-    public function setUser(?User $user): void
+    public function setUser(?User $User): static
     {
-        $this->user = $user;
-    }
+        $this->User = $User;
 
-    public function getDifficulty(): ?RecipeDifficulty
-    {
-        return $this->difficulty;
-    }
-
-    public function setDifficulty(?RecipeDifficulty $difficulty): void
-    {
-        $this->difficulty = $difficulty;
-    }
-
-    public function getCategory(): ?RecipeCategory
-    {
-        return $this->category;
-    }
-
-    public function setCategory(?RecipeCategory $category): void
-    {
-        $this->category = $category;
-    }
-
-    public function getSteps(): array
-    {
-        return $this->steps;
-    }
-
-    public function addStep(RecipeStep $step): void
-    {
-        $this->steps[] = $step;
-    }
-
-    public function removeStep(RecipeStep $step): void
-    {
-        unset(
-            $this->steps[
-                array_search(
-                    $step->getId(),
-                    array_map(
-                        function (RecipeStep $step) {
-                            return $step->getId();
-                        }, $this->steps
-                    )
-                )
-            ]
-        );
-    }
-
-    public function getIngredients(): array
-    {
-        return $this->ingredients;
-    }
-
-    public function setIngredients(array $ingredients): void
-    {
-        $this->ingredients = $ingredients;
+        return $this;
     }
 }
