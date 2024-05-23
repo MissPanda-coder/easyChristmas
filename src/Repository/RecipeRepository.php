@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Recipe;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\RecipeCategory;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Recipe>
@@ -16,6 +17,18 @@ class RecipeRepository extends ServiceEntityRepository
         parent::__construct($registry, Recipe::class);
     }
 
+
+    function findByCategoryName(string $categoryName): array
+    {
+        return $this->createQueryBuilder('recipe')
+            ->join(RecipeCategory::class,'category', 'WITH', 'recipe.recipeCategory = category.id')
+            ->where('category.categoryName = :categoryName')
+            ->setParameter('categoryName',$categoryName)
+            ->getQuery()
+            ->getResult();
+    }
+
+
     //    /**
     //     * @return Recipe[] Returns an array of Recipe objects
     //     */
@@ -24,8 +37,8 @@ class RecipeRepository extends ServiceEntityRepository
     //        return $this->createQueryBuilder('r')
     //            ->andWhere('r.exampleField = :val')
     //            ->setParameter('val', $value)
-    //            ->orderBy('r.id', 'ASC')
-    //            ->setMaxResults(10)
+    //            
+    //      
     //            ->getQuery()
     //            ->getResult()
     //        ;

@@ -12,7 +12,11 @@ class RecipeDetailedController extends AbstractController
     public function index(): Response
     {
         return $this->render('recipe_detailed/index.html.twig', [
+            'page_title' => 'Recettes de Noël pour tous les goûtts',
+            'sectionName' => 'recipeDetailed',
             'controller_name' => 'RecipeDetailedController',
         ]);
     }
+
+    
 }

@@ -2,18 +2,36 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\Recipe;
+use App\Repository\RecipeCategoryRepository;
+use App\Repository\RecipeRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class RecipeListByCategoryController extends AbstractController
 {
-    #[Route('/recipe/list/by/category', name: 'recipe_list_by_category')]
-    public function index(): Response
+
+    protected EntityManagerInterface $entityManager;
+
+    private RecipeRepository $recipeRepository;
+
+    public function __construct(EntityManagerInterface $em)
     {
+        $this->entityManager = $em;
+        $this->recipeRepository = $em->getRepository(Recipe::class);
+    }
+    #[Route('/recipe/list/by/category/{categoryName}', name: 'recipe_list_by_category')]
+    public function index(string $categoryName): Response
+    {
+
+        $recipes = $this->recipeRepository->findByCategoryName($categoryName);
+
         return $this->render('recipe_list_by_category/index.html.twig', [
+            'recipes' => $recipes,
             'page_title' => 'Recettes de Noël pour tous les goûts',
-            'sectionName' => 'recipes',
+            'sectionName' => 'recipesListByCategory',
             'controller_name' => 'RecipeListByCategoryController',
         ]);
     }

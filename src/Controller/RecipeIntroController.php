@@ -13,7 +13,7 @@ class RecipeIntroController extends AbstractController
     {
         return $this->render('recipe_intro/index.html.twig', [
             'page_title' => 'Recettes de Noël pour tous les goûts',
-            'sectionName' => 'recipesCat',
+            'sectionName' => 'recipesIntro',
             'controller_name' => 'RecipeIntroController',
         ]);
     }

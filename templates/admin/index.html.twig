@@ -1,0 +1,36 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block head_stylesheets %}
+    {{ parent() }}
+    <style>
+        body {
+            background-image: url("{{ asset('images/else/dog.jpg') }}");
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        .content-header {
+            background-color: transparent;
+            padding: 20px;
+        }
+        .sidebar {
+            background-color: #113B09;
+        }
+       
+    </style>
+{% endblock %}
+
+
+
+{% block content_header %}
+    <h1 class="text-center text-light">Bienvenue sur l'espace Admin de Easy Christmas</h1>
+{% endblock %}
+
+{% block main %}
+    <div class="container-fluid h-100">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                
+            </div>
+        </div>
+    </div>
+{% endblock %}

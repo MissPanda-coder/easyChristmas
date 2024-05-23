@@ -16,11 +16,13 @@ class RecipeHasIngredient
     #[ORM\Column]
     private ?int $quantity = null;
 
-    #[ORM\ManyToOne(inversedBy: 'recipeHasIngredients')]
-    private ?Recipe $Recipe = null;
+    #[ORM\ManyToOne(targetEntity: Recipe::class, inversedBy: "ingredients")]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Recipe $recipe = null;
 
-    #[ORM\ManyToOne(inversedBy: 'recipeHasIngredients')]
-    private ?Ingredient $Ingredient = null;
+    #[ORM\ManyToOne(targetEntity: Ingredient::class, inversedBy: "recipes")]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Ingredient $ingredient = null;
 
     public function getId(): ?int
     {
@@ -41,24 +43,24 @@ class RecipeHasIngredient
 
     public function getRecipe(): ?Recipe
     {
-        return $this->Recipe;
+        return $this->recipe;
     }
 
-    public function setRecipe(?Recipe $Recipe): static
+    public function setRecipe(?Recipe $recipe): static
     {
-        $this->Recipe = $Recipe;
+        $this->recipe = $recipe;
 
         return $this;
     }
 
     public function getIngredient(): ?Ingredient
     {
-        return $this->Ingredient;
+        return $this->ingredient;
     }
 
-    public function setIngredient(?Ingredient $Ingredient): static
+    public function setIngredient(?Ingredient $ingredient): static
     {
-        $this->Ingredient = $Ingredient;
+        $this->ingredient = $ingredient;
 
         return $this;
     }

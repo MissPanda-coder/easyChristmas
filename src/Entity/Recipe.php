@@ -2,10 +2,16 @@
 
 namespace App\Entity;
 
-use App\Repository\RecipeRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Entity\User;
+use DateTimeImmutable;
+use App\Entity\RecipeStep;
+use App\Entity\RecipeCategory;
+use App\Entity\RecipeDifficulty;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\RecipeHasIngredient;
+use App\Repository\RecipeRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: RecipeRepository::class)]
 class Recipe
@@ -21,42 +27,44 @@ class Recipe
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $photo = null;
+
     #[ORM\Column]
     private ?int $duration = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
+    private ?DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column]
+    private ?bool $isActive = null;
 
     #[ORM\ManyToOne(inversedBy: 'recipes')]
     #[ORM\JoinColumn(nullable: false)]
     private ?user $User = null;
 
     #[ORM\ManyToOne(inversedBy: 'recipes')]
-    private ?RecipeCategory $RecipeCategory = null;
+    private ?RecipeCategory $recipeCategory = null;
 
     #[ORM\ManyToOne(inversedBy: 'recipes')]
-    private ?RecipeDifficulty $RecipeDifficulty = null;
+    private ?RecipeDifficulty $recipeDifficulty = null;
 
     /**
      * @var Collection<int, RecipeStep>
      */
     #[ORM\OneToMany(targetEntity: RecipeStep::class, mappedBy: 'recipe')]
-    private Collection $RecipeStep;
+    private Collection $recipeStep;
 
     /**
      * @var Collection<int, RecipeHasIngredient>
      */
-    #[ORM\OneToMany(targetEntity: RecipeHasIngredient::class, mappedBy: 'Recipe')]
-    private Collection $recipeHasIngredients;
+    #[ORM\OneToMany(targetEntity: RecipeHasIngredient::class, mappedBy: 'recipe')]
+    private Collection $ingredients;
 
     public function __construct()
     {
-        $this->recipeHasIngredients = new ArrayCollection();
+        $this->ingredients = new ArrayCollection();
     }
-
-    
-
-
 
     public function getId(): ?int
     {
@@ -125,24 +133,24 @@ class Recipe
 
     public function getRecipeCategory(): ?RecipeCategory
     {
-        return $this->RecipeCategory;
+        return $this->recipeCategory;
     }
 
-    public function setRecipeCategory(?RecipeCategory $RecipeCategory): static
+    public function setRecipeCategory(?RecipeCategory $recipeCategory): static
     {
-        $this->RecipeCategory = $RecipeCategory;
+        $this->recipeCategory = $recipeCategory;
 
         return $this;
     }
 
     public function getRecipeDifficulty(): ?RecipeDifficulty
     {
-        return $this->RecipeDifficulty;
+        return $this->recipeDifficulty;
     }
 
-    public function setRecipeDifficulty(?RecipeDifficulty $RecipeDifficulty): static
+    public function setRecipeDifficulty(?RecipeDifficulty $recipeDifficulty): static
     {
-        $this->RecipeDifficulty = $RecipeDifficulty;
+        $this->recipeDifficulty = $recipeDifficulty;
 
         return $this;
     }
@@ -152,13 +160,13 @@ class Recipe
      */
     public function getRecipeStep(): Collection
     {
-        return $this->RecipeStep;
+        return $this->recipeStep;
     }
 
     public function addRecipeStep(RecipeStep $recipeStep): static
     {
-        if (!$this->RecipeStep->contains($recipeStep)) {
-            $this->RecipeStep->add($recipeStep);
+        if (!$this->recipeStep->contains($recipeStep)) {
+            $this->recipeStep->add($recipeStep);
             $recipeStep->setRecipe($this);
         }
 
@@ -167,7 +175,7 @@ class Recipe
 
     public function removeRecipeStep(RecipeStep $recipeStep): static
     {
-        if ($this->RecipeStep->removeElement($recipeStep)) {
+        if ($this->recipeStep->removeElement($recipeStep)) {
             // set the owning side to null (unless already changed)
             if ($recipeStep->getRecipe() === $this) {
                 $recipeStep->setRecipe(null);
@@ -178,33 +186,88 @@ class Recipe
     }
 
     /**
-     * @return Collection<int, RecipeHasIngredient>
+ * Get the collection of RecipeHasIngredient
+ * @return Collection<int, RecipeHasIngredient>
+ */
+public function getIngredients(): Collection
+{
+    return $this->ingredients;
+}
+
+/**
+ * Add an ingredient to the recipe
+ * @param RecipeHasIngredient $ingredient
+ * @return self
+ */
+public function addIngredient(RecipeHasIngredient $ingredient): self
+{
+    if (!$this->ingredients->contains($ingredient)) {
+        $this->ingredients[] = $ingredient;
+        $ingredient->setRecipe($this);
+    }
+
+    return $this;
+}
+
+/**
+ * Remove an ingredient from the recipe
+ * @param RecipeHasIngredient $ingredient
+ * @return self
+ */
+public function removeIngredient(RecipeHasIngredient $ingredient): self
+{
+    if ($this->ingredients->removeElement($ingredient)) {
+        // Set the owning side to null (unless it was already changed)
+        if ($ingredient->getRecipe() === $this) {
+            $ingredient->setRecipe(null);
+        }
+    }
+
+    return $this;
+}
+
+
+    /**
+     * Get the value of photo
+     */ 
+    public function getPhoto()
+    {
+        return $this->photo;
+    }
+
+    /**
+     * Set the value of photo
+     *
+     * @return  self
+     */ 
+    public function setPhoto($photo)
+    {
+        $this->photo = $photo;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of isActive
+     *
+     * @return ?bool
      */
-    public function getRecipeHasIngredients(): Collection
+    public function getIsActive(): ?bool
     {
-        return $this->recipeHasIngredients;
+        return $this->isActive;
     }
 
-    public function addRecipeHasIngredient(RecipeHasIngredient $recipeHasIngredient): static
+    /**
+     * Set the value of isActive
+     *
+     * @param ?bool $isActive
+     *
+     * @return self
+     */
+    public function setIsActive(?bool $isActive): self
     {
-        if (!$this->recipeHasIngredients->contains($recipeHasIngredient)) {
-            $this->recipeHasIngredients->add($recipeHasIngredient);
-            $recipeHasIngredient->setRecipe($this);
-        }
+        $this->isActive = $isActive;
 
         return $this;
     }
-
-    public function removeRecipeHasIngredient(RecipeHasIngredient $recipeHasIngredient): static
-    {
-        if ($this->recipeHasIngredients->removeElement($recipeHasIngredient)) {
-            // set the owning side to null (unless already changed)
-            if ($recipeHasIngredient->getRecipe() === $this) {
-                $recipeHasIngredient->setRecipe(null);
-            }
-        }
-
-        return $this;
-    }
-
 }

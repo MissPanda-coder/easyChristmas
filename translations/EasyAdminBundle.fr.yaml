@@ -1,0 +1,6 @@
+# translations/EasyAdminBundle.fr.yaml
+action:
+    new: 'Ajouter'
+    edit: 'Modifier'
+    delete: 'Supprimer'
+    detail: 'Détails'
