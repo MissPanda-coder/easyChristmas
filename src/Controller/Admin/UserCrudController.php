@@ -32,14 +32,7 @@ class UserCrudController extends AbstractCrudController
     {
         return User::class;
     }
-    public function configureActions(Actions $actions): Actions
-    {
-        return $actions
-            ->add(Crud::PAGE_EDIT, Action::INDEX)
-            ->add(Crud::PAGE_INDEX, Action::DETAIL)
-            ->add(Crud::PAGE_EDIT, Action::DETAIL)
-            ;
-    }
+    
     public function configureCrud(Crud $crud): Crud
     {
         return $crud

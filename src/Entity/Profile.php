@@ -26,8 +26,9 @@ class Profile
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $lastName = null;
 
-    #[ORM\OneToOne(targetEntity: User::class, inversedBy: 'profile')]
-    private ?User $iduser = null;
+    #[ORM\OneToOne(inversedBy: 'profile')]
+    #[ORM\JoinColumn(name: "iduser", referencedColumnName: "id", nullable: false, unique: true)]
+    private ?User $user = null;
     
     public function getId(): ?int
     {
@@ -83,17 +84,14 @@ class Profile
     }
 
 
- /**
-     * Get the value of user
-     */ 
-    public function getuser()
+    public function getUser(): ?User
     {
-        return $this->iduser;
+        return $this->user;
     }
 
-public function setUser(User $iduser): static
+    public function setUser(User $user): static
     {
-        $this->iduser = $iduser;
+        $this->user = $user;
 
         return $this;
     }
