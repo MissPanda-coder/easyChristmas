@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Entity\Draw;
+use App\Entity\Profile;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\Collection;
@@ -34,14 +35,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
+    #[ORM\Column(type: 'boolean')]
+    private $isVerified = false;
+
+    private $plainPassword;
+
+    #[ORM\OneToOne(mappedBy: 'User', cascade: ['persist', 'remove'])]
+    private ?Profile $profile = null;
+
     /**
      * @var Collection<int, Recipe>
      */
     #[ORM\OneToMany(targetEntity: Recipe::class, mappedBy: 'User')]
     private Collection $recipes;
-
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?Profile $Profile = null;
 
     /**
      * @var Collection<int, Draw>
@@ -70,12 +76,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\JoinTable(name: "user_has_wishes")]
     private Collection $wishes;
 
-    /**
-     * @var Collection<int, Role>
-     */
-    
-    
-
+   
     public function __construct()
     {
         $this->drawsOrganized = new ArrayCollection();
@@ -84,8 +85,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->wishes = new ArrayCollection();
         
     }
-
-    
 
     public function getId(): ?int
     {
@@ -161,6 +160,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+    
+    public function setPlainPassword(string $plainPassword): self
+    {
+        $this->plainPassword = $plainPassword;
+        
+        return $this;
+    }
+
+
 
     /**
      * @return Collection<int, Recipe>
@@ -188,18 +200,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $recipe->setUser(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getProfile(): ?Profile
-    {
-        return $this->Profile;
-    }
-
-    public function setProfile(?Profile $Profile): static
-    {
-        $this->Profile = $Profile;
 
         return $this;
     }
@@ -315,7 +315,39 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-      
+    public function getProfile(): ?Profile
+    {
+        return $this->profile;
+    }
+
+    public function setProfile(?Profile $profile): static
+    {
+        
+    // Set the owning side of the relation if necessary
+    if ($profile !== null && $profile->getUser() !== $this) {
+        $profile->setUser($this);
+    }
+    $this->profile = $profile;
+    return $this;
+}
+
+    /**
+     * Get the value of isVerified
+     */
+    public function getIsVerified()
+    {
+        return $this->isVerified;
+    }
+
+    /**
+     * Set the value of isVerified
+     */
+    public function setIsVerified($isVerified): static
+    {
+        $this->isVerified = $isVerified;
+
+        return $this;
+    }
     }
 
    

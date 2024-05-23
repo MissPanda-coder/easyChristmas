@@ -2,8 +2,9 @@
 
 namespace App\Entity;
 
-use App\Repository\ProfileRepository;
+use App\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ProfileRepository;
 
 #[ORM\Entity(repositoryClass: ProfileRepository::class)]
 class Profile
@@ -16,15 +17,18 @@ class Profile
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photo = null;
 
-    #[ORM\Column(length: 150)]
+    #[ORM\Column(length: 150, nullable: true, unique:true)]
     private ?string $userName = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $firstName = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $lastName = null;
 
+    #[ORM\OneToOne(targetEntity: User::class, inversedBy: 'profile')]
+    private ?User $iduser = null;
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -74,6 +78,22 @@ class Profile
     public function setLastName(?string $lastName): static
     {
         $this->lastName = $lastName;
+
+        return $this;
+    }
+
+
+ /**
+     * Get the value of user
+     */ 
+    public function getuser()
+    {
+        return $this->iduser;
+    }
+
+public function setUser(User $iduser): static
+    {
+        $this->iduser = $iduser;
 
         return $this;
     }
