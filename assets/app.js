@@ -7,15 +7,14 @@ import './bootstrap.js';
  */
 import './styles/app.scss';
 
-const $ = require('jquery');
-// this "modifies" the jquery module: adding behavior to it
-// the bootstrap module doesn't export/return anything
-require('bootstrap');
-// or you can include specific pieces
-// require('bootstrap/js/dist/tooltip');
-// require('bootstrap/js/dist/popover');
-$(document).ready(function() {
-$('[data-toggle="popover"]').popover();
+import { Popover } from 'bootstrap';
+import './styles/app.scss';
+
+document.addEventListener('DOMContentLoaded', () => {
+  const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
+  popoverTriggerList.forEach(popoverTriggerEl => {
+    new Popover(popoverTriggerEl);
+  });
 });
 
 

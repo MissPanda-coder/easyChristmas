@@ -6,7 +6,10 @@ use App\Entity\Profile;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class ProfileCrudController extends AbstractCrudController
@@ -36,6 +39,13 @@ class ProfileCrudController extends AbstractCrudController
             TextField::new('userName', 'Nom d\'utilisateur'),
             TextField::new('firstName', 'Prénom'),
             TextField::new('lastName', 'Nom'),
+            AssociationField::new('idUser'),
+            BooleanField::new('isActive'),
+            ImageField::new('avatarName', 'Avatar')
+            ->setBasePath('/images/avatars')
+            ->setUploadDir('public/images/avatars')  // définissez le répertoire d'upload ici
+            ->onlyOnIndex(),
+
         ];
     }
     

@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+    {% for flash_error in app.flashes('reset_password_error') %}
+        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+    {% endfor %}
+  
+
+    {{ form_start(requestForm) }}
+        <form id="form_password" class="form_layout">
+        <fieldset  action="processFPw.php" method="POST" name="forgot">
+            <h3 class="form_title">Mot de passe oublié</h3>
+            <p class="form_field">
+                <label for="email_forgot" class="form_label">Email</label>
+                <input type="email" name="email_forgot" class="form_input" id="email_forgot">
+             
+             
+            </p>
+            <button type="submit" class="form_btn">Envoyer</button>
+        </fieldset>
+    </form>
+    
+    {{ form_end(requestForm) }}
+{% endblock %}
