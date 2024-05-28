@@ -30,155 +30,20 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   
   
-  // LOG IN
-  import { displayLogin } from "./JS/display.js";
-  document.querySelector(".login_button").addEventListener("click", function () {
-    displayLogin();
-  });
   
-  import { checkEmailLogin, checkPassLogin } from "./JS/formLogIn.js";
-  
-  document.forms.form_login.addEventListener("submit", (e) => {
-    e.preventDefault();
-  
-    let emailloginOk = checkEmailLogin();
-    let isPasslogiinOk = checkPassLogin();
-  
-    let isFormLoginValid = emailloginOk && isPasslogiinOk;
-  
-    if (isFormLoginValid) {
-      console.log("Tout est Ok pour l'envoi");
-    }
-  });
-  
-  const debounceLogin = (fn, delay = 500) => {
-    let timeoutIdLogin;
-    return (...args) => {
-      if (timeoutIdLogin) {
-        clearTimeout(timeoutIdLogin);
-      }
-      timeoutIdLogin = setTimeout(() => {
-        fn.apply(null, args);
-      }, delay);
-    };
-  };
-  
-  document.forms.form_login.addEventListener("input", (e) => {
-    switch (e.target.id) {
-      case "email":
-        checkEmail();
-        break;
-      case "password":
-        checkPass();
-        break;
-    }
-  });
-  
-  //FORGOT PASSWORD
-  import { displayForgot } from "./JS/display.js";
-  document
-    .querySelector(".form_password-forgot")
-    .addEventListener("click", function () {
-      displayForgot();
-    });
-  
-  //REGISTER
-  import { displayRegister } from "./JS/display.js";
-  document
-    .querySelector(".register_button")
-    .addEventListener("click", function () {
-      displayRegister();
-    });
-  
-  // FORM REGISTER
-  import {
-    checkName,
-    checkEmail,
-    checkDob,
-    checkPass,
-    confPass,
-    checkCgu,
-  } from "./JS/formRegister.js";
-  
-  document.forms.form_register.addEventListener("submit", (e) => {
-    e.preventDefault();
-  
-    let nameOk = checkName();
-    let phoneOk = checkPhone();
-    let emailOk = checkEmail();
-    let isPassOk = checkPass();
-    let isConfOk = confPass();
-    let iscguOk = checkCgu();
-  
-    let isFormValid =
-      nameOk &&
-      phoneOk &&
-      emailOk &&
-      isAgeOk &&
-      isPassOk &&
-      isConfOk &&
-      iscguOk;
-  
-    if (isFormValid) {
-      console.log("Tout est Ok pour l'envoi");
-    }
-  });
-  
-  const debounce = (fn, delay = 500) => {
-    let timeoutId;
-    return (...args) => {
-      
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-     
-      timeoutId = setTimeout(() => {
-        fn.apply(null, args);
-      }, delay);
-    };
-  };
-  
-  document.forms.form_register.addEventListener("input", (e) => {
-    switch (e.target.id) {
-      case "name":
-        checkName();
-        break;
-      case "phone":
-        checkPhone();
-        break;
-      case "email":
-        checkEmail();
-        break;
-      case "dob":
-        checkDob();
-        break;
-      case "password":
-        checkPass();
-        break;
-      case "passwordconfirm":
-        confPass();
-        break;
-      case "cgu":
-        checkCgu();
-        break;
-    }
-  });
-  
-  
-  
-  //EYE PASSWORD
-  document.querySelectorAll(".toggle-password").forEach(function (element) {
-    element.addEventListener("click", function () {
-      this.classList.toggle("fa-eye-slash");
-      this.classList.toggle("fa-eye");
-      const input = document.querySelector(".password-eye");
-      if (input.getAttribute("type") === "password") {
-        input.setAttribute("type", "text");
-      } else {
-        input.setAttribute("type", "password");
-      }
-    });
-  });
+  // //EYE PASSWORD
+  // document.querySelectorAll(".toggle-password").forEach(function (element) {
+  //   element.addEventListener("click", function () {
+  //     this.classList.toggle("fa-eye-slash");
+  //     this.classList.toggle("fa-eye");
+  //     const input = document.querySelector(".password-eye");
+  //     if (input.getAttribute("type") === "password") {
+  //       input.setAttribute("type", "text");
+  //     } else {
+  //       input.setAttribute("type", "password");
+  //     }
+  //   });
+  // });
   
   // PARALLAX
   let parallax_el = document.querySelectorAll(".parallax");

@@ -1,53 +1,44 @@
-    <section id="{{ sectionName }}">
+<section id="{{ sectionName }}">
     <header>
-    <nav class="container-fluid navbar">
-        
-        <button class="hamburger"><a href="#"><div class="bar"></div></a></button>
-   
-        <ul class="nav_links-hidden">
-            <li><img src="{{asset('images/favicon/favicon.png')}}" alt="photo du Père Noël étonné qui tient ses lunettes sur son nez" /></li>
-            <li><a href="{{ path('home') }}">Accueil</a></li>
-            <li><a href="{{ path('countdown') }}">Compte à rebours</a></li>
-            <li><a href="{{ path('draw') }}">Tirage au sort</a></li>
-            <li><a href="{{ path('wishlist') }}">Liste au père Noël</a></li>
-            <li><a href="{{ path('recipe_intro') }}">Idées recettes</a></li>
-            <li><button class="login_button" href="login">Se connecter</button></li>
-        </ul>
-    
-    <ul class="nav_links">
-        <li><img src="{{asset('images/favicon/favicon.png')}}" alt="photo du Père Noël étonné qui tient ses lunettes sur son nez" /></li>
-            <li><a href="{{ path('home') }}">Accueil</a></li>
-            <li><a href="{{ path('countdown') }}">Compte à rebours</a></li>
-            <li><a href="{{ path('draw') }}">Tirage au sort</a></li>
-            <li><a href="{{ path('wishlist') }}">Liste au père Noël</a></li>
-            <li><a href="{{ path('recipe_intro') }}">Idées recettes</a></li>
-        <li><button class="login_button" href="login">Se connecter</button></li>
-    </ul>
+        <nav class="container-fluid navbar">
+            <button class="hamburger"><a href="#"><div class="bar"></div></a></button>
 
-</nav>
+            <ul class="nav_links-hidden">
+                <li><img src="{{ asset('images/favicon/favicon.png') }}" alt="photo du Père Noël étonné qui tient ses lunettes sur son nez" /></li>
+                <li><a href="{{ path('home') }}">Accueil</a></li>
+                <li><a href="{{ path('countdown') }}">Compte à rebours</a></li>
+                <li><a href="{{ path('draw') }}">Tirage au sort</a></li>
+                <li><a href="{{ path('wishlist') }}">Liste au père Noël</a></li>
+                <li><a href="{{ path('recipe_intro') }}">Idées recettes</a></li>
+                <li><button class="login_button" href="{{ path('login') }}">Se connecter</button></li>
+            </ul>
 
-    <form id="form_login" class="form_layout">
-        <fieldset action="processLogIn.php" name="login" method="POST">
-            <h3 class="form_title">Connexion</h3>
-            <p class="form_field">
-                <label for="email_login" class="form_label">Email</label>
-                <input class="form_input" type="email" name="email_login" id="email_login">
+            <ul class="nav_links">
+                <li><img src="{{ asset('images/favicon/favicon.png') }}" alt="photo du Père Noël étonné qui tient ses lunettes sur son nez" /></li>
+                <li><a href="{{ path('home') }}">Accueil</a></li>
+                <li><a href="{{ path('countdown') }}">Compte à rebours</a></li>
+                <li><a href="{{ path('draw') }}">Tirage au sort</a></li>
+                <li><a href="{{ path('wishlist') }}">Liste au père Noël</a></li>
+                <li><a href="{{ path('recipe_intro') }}">Idées recettes</a></li>
+                {%- if is_granted('IS_AUTHENTICATED_FULLY') -%}
+                <div>
+                
+                   {# {% if profile and profile.photo %}
+                            <img src="{{ profile.photo }}" class="avatar" alt="Photo de profil">
+                        {% else %}
+                            <img src="{{ asset('images/default-avatar.png') }}" class="avatar" alt="Avatar par défaut">
+                        {% endif %} #}
+                        <small>
+                            <a href="{{ path('logout') }}">Déconnexion</a>
+                        </small>
                
-            </p>
-    
-            <p class="form_field">
-                <label for="password_login" class="form_label">Mot de passe</label>
-                <input type="password" name="password_login" id="password_login" class="password_eye form_input" toggle>
-                <i toggle="password_field" class="fa fa_eye_slash field_icon_login toggle_password"></i>
-              
-            </p>
-            <p class="form_field-center">
-                <button type="submit" class="form_btn">Envoyer</button>
-                <a href="#" class="form_password-forgot">Mot de passe oublié ?</a>
-                <a class="register_button" href="#">Pas encore inscrit ? Inscrivez-vous <span class="register_button-click" >ici</span></a>
-               
-            </p> 
-        </fieldset>
-    </form>
-    
-</header>
+                </div>
+
+               {% else %}
+                    
+                <li><a class="login_button" href="{{ path('login') }}" >Se connecter</a></li>
+                {%- endif -%}
+                
+            </ul>
+        </nav>
+    </header>

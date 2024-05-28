@@ -1,0 +1,25 @@
+{% extends "base.html.twig" %}
+{% block title %}Inscription{% endblock %}
+
+{% block body %}
+  <div class="block">
+    
+  {{ form_start(form, {'attr': {'class': 'form_layout'}}) }}
+  <h3 class="form_title">Inscription</h3>
+         
+    <p class="form_field">
+        {{ form_label(form.email, null, {'label_attr': {'class': 'form_label'}}) }}
+        {{ form_widget(form.email, {'attr': {'class': 'form_input'}}) }}
+    </p>
+    <p class="form_field">
+        {{ form_label(form.password, null, {'label_attr': {'class': 'form_label'}}) }}
+        {{ form_widget(form.password, {'attr': {'class': 'form_input'}}) }}
+    </p>
+    <button type="submit" class="form_btn">Envoyer</button>
+    <small>
+      <a href="{{ path('login') }}" class="register_button">Vous avez déjà un compte ?</a>
+    </small>
+    {{ form_end(form) }}
+</div>
+  <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+{% endblock %}

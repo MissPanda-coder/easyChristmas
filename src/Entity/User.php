@@ -8,9 +8,10 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
@@ -23,6 +24,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180)]
+    #[Assert\Email(message: 'Veuillez entrer un email valide.')]
+    #[Assert\NotBlank(message: 'Veuillez renseigner votre email.')]
     private ?string $email = null;
 
     /**
@@ -35,12 +38,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Assert\Length(min: 6, minMessage: 'Le mot de passe doit faire au moins 6 caractères.')]
+    #[Assert\NotBlank(message: 'Veuillez renseigner un mot de passe.')]
     private ?string $password = null;
 
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
-
-    private $plainPassword;
 
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
     private ?Profile $profile = null;
@@ -78,14 +81,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\JoinTable(name: "user_has_wishes")]
     private Collection $wishes;
 
-   
     public function __construct()
     {
         $this->drawsOrganized = new ArrayCollection();
         $this->drawsParticipated = new ArrayCollection();
         $this->role = new ArrayCollection();
         $this->wishes = new ArrayCollection();
-        
     }
 
     public function getId(): ?int
@@ -105,33 +106,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * A visual identifier that represents this user.
-     *
-     * @see UserInterface
-     */
     public function getUserIdentifier(): string
     {
         return (string) $this->email;
     }
 
-    /**
-     * @see UserInterface
-     *
-     * @return list<string>
-     */
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
     }
 
-    /**
-     * @param list<string> $roles
-     */
     public function setRoles(array $roles): static
     {
         $this->roles = $roles;
@@ -139,9 +126,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @see PasswordAuthenticatedUserInterface
-     */
     public function getPassword(): string
     {
         return $this->password;
@@ -154,31 +138,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @see UserInterface
-     */
     public function eraseCredentials(): void
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
-    public function getPlainPassword(): ?string
-    {
-        return $this->plainPassword;
-    }
-    
-    public function setPlainPassword(string $plainPassword): self
-    {
-        $this->plainPassword = $plainPassword;
-        
-        return $this;
-    }
 
-
-
-    /**
-     * @return Collection<int, Recipe>
-     */
     public function getRecipes(): Collection
     {
         return $this->recipes;
@@ -197,7 +162,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeRecipe(Recipe $recipe): static
     {
         if ($this->recipes->removeElement($recipe)) {
-            // set the owning side to null (unless already changed)
             if ($recipe->getUser() === $this) {
                 $recipe->setUser(null);
             }
@@ -206,9 +170,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Draw>
-     */
     public function getDrawsOrganized(): Collection
     {
         return $this->drawsOrganized;
@@ -227,7 +188,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeDrawsOrganized(Draw $drawsOrganized): static
     {
         if ($this->drawsOrganized->removeElement($drawsOrganized)) {
-            // set the owning side to null (unless already changed)
             if ($drawsOrganized->getOrganizer() === $this) {
                 $drawsOrganized->setOrganizer(null);
             }
@@ -236,9 +196,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Draw>
-     */
     public function getDrawsParticipated(): Collection
     {
         return $this->drawsParticipated;
@@ -263,9 +220,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Role>
-     */
     public function getRole(): Collection
     {
         return $this->role;
@@ -290,9 +244,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Wishes>
-     */
     public function getWishes(): Collection
     {
         return $this->wishes;
@@ -324,26 +275,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function setProfile(?Profile $profile): static
     {
-        
-    // Set the owning side of the relation if necessary
-    if ($profile !== null && $profile->getUser() !== $this) {
-        $profile->setUser($this);
+        if ($profile !== null && $profile->getUser() !== $this) {
+            $profile->setUser($this);
+        }
+        $this->profile = $profile;
+        return $this;
     }
-    $this->profile = $profile;
-    return $this;
-}
 
-    /**
-     * Get the value of isVerified
-     */
     public function getIsVerified()
     {
         return $this->isVerified;
     }
 
-    /**
-     * Set the value of isVerified
-     */
     public function setIsVerified($isVerified): static
     {
         $this->isVerified = $isVerified;
@@ -362,7 +305,4 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-    }
-
-   
-     
+}

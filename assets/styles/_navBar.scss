@@ -99,6 +99,10 @@ header ul a{
     transition: all 0.4s ease-out;
 }
 
+.avatar{
+    width: 40px;
+}
+
 // PHONES
 @media only screen and (max-width: 768px) {
     .nav_links{

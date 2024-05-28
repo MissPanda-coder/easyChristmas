@@ -1,10 +1,12 @@
+
+@import "_variables";
+@import "_mixin";
+
+
 .form_layout{
     @include form;
     }
-    
-  #form_login, #form_password, #form_register{
-     display: none;
-   } 
+
 
 .form_title{
       color: $c-white;
@@ -16,7 +18,7 @@
       margin-bottom: 2rem;
     }
   
-form label{
+.form_label{
   display: block; 
   margin-bottom: 5px;
   color: $c-white;
@@ -74,11 +76,21 @@ form label{
    
     .form_password-forgot, .register_button{
       color:$c-white;
-      text-align: center;
       margin-bottom: 1rem;
     }
 
-    .form_password-forgot:hover, .register_button-click:hover{
+    .form_password-forgot:hover, .register_button:hover{
       color:$c-red;
       transition: all 0.4s ease-out;
+    }
+
+    .form_field-center{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .custom_error{
+      color:$c-red !important;
     }

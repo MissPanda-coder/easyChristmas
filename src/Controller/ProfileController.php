@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\UX\TwigComponent\ComponentFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -23,6 +24,7 @@ class ProfileController extends AbstractController
     }
     
     #[Route('/profile', name: 'profile')]
+    #[IsGranted('ROLE_USER')]
     public function index(Request $request): Response
     {
         $user = $this->getUser();

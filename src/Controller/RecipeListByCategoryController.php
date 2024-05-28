@@ -6,6 +6,7 @@ use App\Entity\Recipe;
 use App\Repository\RecipeCategoryRepository;
 use App\Repository\RecipeRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,6 +24,7 @@ class RecipeListByCategoryController extends AbstractController
         $this->recipeRepository = $em->getRepository(Recipe::class);
     }
     #[Route('/recipe/list/by/category/{categoryName}', name: 'recipe_list_by_category')]
+    #[IsGranted('ROLE_USER')]
     public function index(string $categoryName): Response
     {
 

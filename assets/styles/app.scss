@@ -1,4 +1,3 @@
-
 @import "~bootstrap/scss/bootstrap";
 @import '_variables';
 @import '_mixin';
@@ -15,6 +14,9 @@
 @import '_pageNotFound';
 @import '_pdc';
 @import '_cgu';
+@import '_login';
+@import '_signup';
+
 
 
 body {
