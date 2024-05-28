@@ -33,18 +33,26 @@ class ProfileController extends AbstractController
             $profile->setUser($user);
          
         
-        $form = $this->createForm(ProfileType::class, $profile);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->entityManager->persist($profile);
-            $this->entityManager->flush();
-            return $this->redirectToRoute('profile');
+            if (!$profile) {
+                
+                $profile = new Profile();
+                $profile->setUser($user);
+            }
+            
+            $form = $this->createForm(ProfileType::class, $profile);
+            $form->handleRequest($request);
+    
+            if ($form->isSubmitted() && $form->isValid()) {
+                $this->entityManager->persist($profile);
+                $this->entityManager->flush();
+                return $this->redirectToRoute('profile');
+            }
+    
+            return $this->render('profile/index.html.twig', [
+                'profile' => $profile,
+                'form' => $form->createView(),
+                'page_title' => 'Votre profil',
+                'sectionName' => 'profile',
+            ]);
         }
-        return $this->render('profile/index.html.twig', [
-            'profile' => $profile,
-            'form' => $form->createView()
-        ]);
-
-}
-}
+    }

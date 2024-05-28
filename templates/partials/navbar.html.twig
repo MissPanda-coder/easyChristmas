@@ -23,14 +23,12 @@
                 {%- if is_granted('IS_AUTHENTICATED_FULLY') -%}
                 <div>
                 
-                   {# {% if profile and profile.photo %}
-                            <img src="{{ profile.photo }}" class="avatar" alt="Photo de profil">
+                   {% if profile and profile.photo %}
+                            <a href="{{ path('profile') }}"><img src="{{ profile.photo }}" class="avatar" alt="Photo de profil"></a>
                         {% else %}
-                            <img src="{{ asset('images/default-avatar.png') }}" class="avatar" alt="Avatar par défaut">
-                        {% endif %} #}
-                        <small>
-                            <a href="{{ path('logout') }}">Déconnexion</a>
-                        </small>
+                            <a href="{{ path('profile') }}"><img src="{{ asset('images/avatars/defaultAvatar.png') }}" class="avatar" alt="Avatar par défaut"></a>
+                        {% endif %}
+                        
                
                 </div>
 
