@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Entity\Profile;
+use App\Repository\ProfileRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,7 +13,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use App\Repository\ProfileRepository;
 use Symfony\Component\Security\Http\Authenticator\FormLoginAuthenticator;
 
 class SecurityController extends AbstractController
@@ -23,28 +24,36 @@ class SecurityController extends AbstractController
     }
 
     #[Route('/signup', name: 'signup')]
-    public function signup( Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher)
+    public function signup(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher)
     {
         $user = new User();
         $userForm = $this->createForm(UserType::class, $user);
         $userForm->handleRequest($request);
+        
         if ($userForm->isSubmitted() && $userForm->isValid()) {
             $hash = $passwordHasher->hashPassword($user, $user->getPassword());
             $user->setPassword($hash);
+            
+            // Créer et associer un profil au nouvel utilisateur
+            $profile = new Profile();
+            $profile->setUser($user);
+            $user->setProfile($profile);
+    
             $em->persist($user);
+            $em->persist($profile); // Persist the profile entity
             $em->flush();
+            
             $this->addFlash('success', 'Bienvenue sur Easy Christmas!');
-
-            
             return $this->redirectToRoute('login');
-            
         }
-            return $this->render('security/signup.html.twig', [
+        
+        return $this->render('security/signup.html.twig', [
             'form' => $userForm->createView(),
             'page_title' => 'Espace inscription',
             'sectionName' => 'signup',
         ]);
     }
+   
 
 
     #[Route("/login", name: "login")]
