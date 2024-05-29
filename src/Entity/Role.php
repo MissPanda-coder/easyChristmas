@@ -16,7 +16,7 @@ class Role
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
-    private ?string $roleName = null;
+    private ?string $rolename = null;
 
     /**
      * @var Collection<int, User>
@@ -36,14 +36,14 @@ class Role
         return $this->id;
     }
 
-    public function getRoleName(): ?string
+    public function getRolename(): ?string
     {
-        return $this->roleName;
+        return $this->rolename;
     }
 
-    public function setRoleName(string $roleName): static
+    public function setRolename(string $rolename): static
     {
-        $this->roleName = $roleName;
+        $this->rolename = $rolename;
 
         return $this;
     }

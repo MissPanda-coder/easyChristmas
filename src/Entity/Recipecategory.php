@@ -2,26 +2,26 @@
 
 namespace App\Entity;
 
-use App\Repository\RecipeDifficultyRepository;
+use App\Repository\RecipecategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: RecipeDifficultyRepository::class)]
-class RecipeDifficulty
+#[ORM\Entity(repositoryClass: RecipecategoryRepository::class)]
+class Recipecategory
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 20)]
-    private ?string $difficultyName = null;
+    #[ORM\Column(length: 30)]
+    private ?string $categoryname = null;
 
     /**
      * @var Collection<int, Recipe>
      */
-    #[ORM\OneToMany(targetEntity: Recipe::class, mappedBy: 'RecipeDifficulty')]
+    #[ORM\OneToMany(targetEntity: Recipe::class, mappedBy: 'Recipecategory')]
     private Collection $recipes;
 
     public function __construct()
@@ -29,19 +29,20 @@ class RecipeDifficulty
         $this->recipes = new ArrayCollection();
     }
 
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getDifficultyName(): ?string
+    public function getCategoryname(): ?string
     {
-        return $this->difficultyName;
+        return $this->categoryname;
     }
 
-    public function setDifficultyName(string $difficultyName): static
+    public function setCategoryname(string $categoryname): static
     {
-        $this->difficultyName = $difficultyName;
+        $this->categoryname = $categoryname;
 
         return $this;
     }
@@ -58,7 +59,7 @@ class RecipeDifficulty
     {
         if (!$this->recipes->contains($recipe)) {
             $this->recipes->add($recipe);
-            $recipe->setRecipeDifficulty($this);
+            $recipe->setRecipecategory($this);
         }
 
         return $this;
@@ -68,11 +69,12 @@ class RecipeDifficulty
     {
         if ($this->recipes->removeElement($recipe)) {
             // set the owning side to null (unless already changed)
-            if ($recipe->getRecipeDifficulty() === $this) {
-                $recipe->setRecipeDifficulty(null);
+            if ($recipe->getRecipecategory() === $this) {
+                $recipe->setRecipecategory(null);
             }
         }
 
         return $this;
     }
+
 }

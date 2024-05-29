@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\RecipeStepRepository;
+use App\Repository\RecipestepRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: RecipeStepRepository::class)]
-class RecipeStep
+#[ORM\Entity(repositoryClass: RecipestepRepository::class)]
+class Recipestep
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -15,12 +15,12 @@ class RecipeStep
     private ?int $id = null;
 
     #[ORM\Column]
-    private ?int $stepNumber = null;
+    private ?int $stepnumber = null;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
-    #[ORM\ManyToOne(inversedBy: 'RecipeStep')]
+    #[ORM\ManyToOne(inversedBy: 'Recipestep')]
     private ?Recipe $recipe = null;
 
     public function getId(): ?int
@@ -28,14 +28,14 @@ class RecipeStep
         return $this->id;
     }
 
-    public function getStepNumber(): ?int
+    public function getStepnumber(): ?int
     {
-        return $this->stepNumber;
+        return $this->stepnumber;
     }
 
-    public function setStepNumber(int $stepNumber): static
+    public function setStepnumber(int $stepnumber): static
     {
-        $this->stepNumber = $stepNumber;
+        $this->stepnumber = $stepnumber;
 
         return $this;
     }

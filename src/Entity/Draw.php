@@ -17,10 +17,10 @@ class Draw
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $drawDate = null;
+    private ?\DateTimeInterface $drawdate = null;
 
     #[ORM\Column]
-    private ?int $drawYear = null;
+    private ?int $drawyear = null;
 
     #[ORM\ManyToOne(inversedBy: 'drawsOrganized')]
     private ?User $organizer = null;
@@ -46,26 +46,26 @@ class Draw
         return $this->id;
     }
 
-    public function getDrawDate(): ?\DateTimeInterface
+    public function getDrawdate(): ?\DateTimeInterface
     {
-        return $this->drawDate;
+        return $this->drawdate;
     }
 
-    public function setDrawDate(\DateTimeInterface $drawDate): static
+    public function setDrawdate(\DateTimeInterface $drawdate): static
     {
-        $this->drawDate = $drawDate;
+        $this->drawdate = $drawdate;
 
         return $this;
     }
 
-    public function getDrawYear(): ?int
+    public function getDrawyear(): ?int
     {
-        return $this->drawYear;
+        return $this->drawyear;
     }
 
-    public function setDrawYear(int $drawYear): static
+    public function setDrawyear(int $drawyear): static
     {
-        $this->drawYear = $drawYear;
+        $this->drawyear = $drawyear;
 
         return $this;
     }

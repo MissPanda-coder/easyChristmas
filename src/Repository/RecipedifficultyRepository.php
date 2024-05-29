@@ -2,22 +2,22 @@
 
 namespace App\Repository;
 
-use App\Entity\RecipeDifficulty;
+use App\Entity\Recipedifficulty;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<RecipeDifficulty>
+ * @extends ServiceEntityRepository<Recipedifficulty>
  */
-class RecipeDifficultyRepository extends ServiceEntityRepository
+class RecipedifficultyRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, RecipeDifficulty::class);
+        parent::__construct($registry, Recipedifficulty::class);
     }
 
     //    /**
-    //     * @return RecipeDifficulty[] Returns an array of RecipeDifficulty objects
+    //     * @return Recipedifficulty[] Returns an array of Recipedifficulty objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -31,7 +31,7 @@ class RecipeDifficultyRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?RecipeDifficulty
+    //    public function findOneBySomeField($value): ?Recipedifficulty
     //    {
     //        return $this->createQueryBuilder('r')
     //            ->andWhere('r.exampleField = :val')

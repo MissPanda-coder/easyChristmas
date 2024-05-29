@@ -16,7 +16,7 @@ class Wishes
     private ?int $id = null;
 
     #[ORM\Column]
-    private ?int $wishesYear = null;
+    private ?int $wishesyear = null;
 
     /**
      * @var Collection<int, User>
@@ -27,7 +27,7 @@ class Wishes
     /**
      * @var Collection<int, Assignation>
      */
-    #[ORM\ManyToMany(targetEntity: Assignation::class, mappedBy: 'Wishes')]
+    #[ORM\ManyToMany(targetEntity: Assignation::class, mappedBy: 'wishes')]
     private Collection $assignations;
 
     public function __construct()
@@ -41,14 +41,14 @@ class Wishes
         return $this->id;
     }
 
-    public function getWishesYear(): ?int
+    public function getWishesyear(): ?int
     {
-        return $this->wishesYear;
+        return $this->wishesyear;
     }
 
-    public function setWishesYear(int $wishesYear): static
+    public function setWishesyear(int $wishesyear): static
     {
-        $this->wishesYear = $wishesYear;
+        $this->wishesyear = $wishesyear;
 
         return $this;
     }

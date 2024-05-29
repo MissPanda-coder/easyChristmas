@@ -19,11 +19,11 @@ class Exclusion
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: "usersCanNotOffer")]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $userParticipant = null;
+    private ?User $userparticipant = null;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: "usersCanNotBeOffered")]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $userExcluded = null;
+    private ?User $userexcluded = null;
 
     public function getId(): ?int
     {
@@ -44,23 +44,23 @@ class Exclusion
         $this->draw = $draw;
     }
 
-    public function getUserParticipant(): ?User
+    public function getUserparticipant(): ?User
     {
-        return $this->userParticipant;
+        return $this->userparticipant;
     }
 
-    public function setUserParticipant(?User $userParticipant): void
+    public function setUserparticipant(?User $userparticipant): void
     {
-        $this->userParticipant = $userParticipant;
+        $this->userparticipant = $userparticipant;
     }
 
-    public function getUserExcluded(): ?User
+    public function getUserexcluded(): ?User
     {
-        return $this->userExcluded;
+        return $this->userexcluded;
     }
 
-    public function setUserExcluded(?User $userExcluded): void
+    public function setUserexcluded(?User $userexcluded): void
     {
-        $this->userExcluded = $userExcluded;
+        $this->userexcluded = $userexcluded;
     }
 }

@@ -16,7 +16,7 @@ class Unit
     private ?int $id = null;
 
     #[ORM\Column(length: 40)]
-    private ?string $UnitName = null;
+    private ?string $Unitname = null;
 
     /**
      * @var Collection<int, Ingredient>
@@ -34,14 +34,14 @@ class Unit
         return $this->id;
     }
 
-    public function getUnitName(): ?string
+    public function getUnitname(): ?string
     {
-        return $this->UnitName;
+        return $this->Unitname;
     }
 
-    public function setUnitName(string $UnitName): static
+    public function setUnitname(string $Unitname): static
     {
-        $this->UnitName = $UnitName;
+        $this->Unitname = $Unitname;
 
         return $this;
     }

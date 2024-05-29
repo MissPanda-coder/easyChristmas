@@ -4,9 +4,9 @@ namespace App\Entity;
 
 use App\Entity\User;
 use DateTimeImmutable;
-use App\Entity\RecipeStep;
-use App\Entity\RecipeCategory;
-use App\Entity\RecipeDifficulty;
+use App\Entity\Recipestep;
+use App\Entity\Recipecategory;
+use App\Entity\Recipedifficulty;
 use Doctrine\ORM\Mapping as ORM;
 use App\Entity\RecipeHasIngredient;
 use App\Repository\RecipeRepository;
@@ -44,16 +44,16 @@ class Recipe
     private ?user $User = null;
 
     #[ORM\ManyToOne(inversedBy: 'recipes')]
-    private ?RecipeCategory $recipeCategory = null;
+    private ?Recipecategory $recipecategory = null;
 
     #[ORM\ManyToOne(inversedBy: 'recipes')]
-    private ?RecipeDifficulty $recipeDifficulty = null;
+    private ?Recipedifficulty $recipedifficulty = null;
 
     /**
-     * @var Collection<int, RecipeStep>
+     * @var Collection<int, Recipestep>
      */
-    #[ORM\OneToMany(targetEntity: RecipeStep::class, mappedBy: 'recipe')]
-    private Collection $recipeStep;
+    #[ORM\OneToMany(targetEntity: Recipestep::class, mappedBy: 'recipe')]
+    private Collection $recipestep;
 
     /**
      * @var Collection<int, RecipeHasIngredient>
@@ -131,54 +131,54 @@ class Recipe
         return $this;
     }
 
-    public function getRecipeCategory(): ?RecipeCategory
+    public function getRecipecategory(): ?Recipecategory
     {
-        return $this->recipeCategory;
+        return $this->recipecategory;
     }
 
-    public function setRecipeCategory(?RecipeCategory $recipeCategory): static
+    public function setRecipecategory(?Recipecategory $recipecategory): static
     {
-        $this->recipeCategory = $recipeCategory;
+        $this->recipecategory = $recipecategory;
 
         return $this;
     }
 
-    public function getRecipeDifficulty(): ?RecipeDifficulty
+    public function getRecipedifficulty(): ?Recipedifficulty
     {
-        return $this->recipeDifficulty;
+        return $this->recipedifficulty;
     }
 
-    public function setRecipeDifficulty(?RecipeDifficulty $recipeDifficulty): static
+    public function setRecipedifficulty(?Recipedifficulty $recipedifficulty): static
     {
-        $this->recipeDifficulty = $recipeDifficulty;
+        $this->recipedifficulty = $recipedifficulty;
 
         return $this;
     }
 
     /**
-     * @return Collection<int, RecipeStep>
+     * @return Collection<int, Recipestep>
      */
-    public function getRecipeStep(): Collection
+    public function getRecipestep(): Collection
     {
-        return $this->recipeStep;
+        return $this->recipestep;
     }
 
-    public function addRecipeStep(RecipeStep $recipeStep): static
+    public function addRecipestep(Recipestep $recipestep): static
     {
-        if (!$this->recipeStep->contains($recipeStep)) {
-            $this->recipeStep->add($recipeStep);
-            $recipeStep->setRecipe($this);
+        if (!$this->recipestep->contains($recipestep)) {
+            $this->recipestep->add($recipestep);
+            $recipestep->setRecipe($this);
         }
 
         return $this;
     }
 
-    public function removeRecipeStep(RecipeStep $recipeStep): static
+    public function removeRecipestep(Recipestep $recipestep): static
     {
-        if ($this->recipeStep->removeElement($recipeStep)) {
+        if ($this->recipestep->removeElement($recipestep)) {
             // set the owning side to null (unless already changed)
-            if ($recipeStep->getRecipe() === $this) {
-                $recipeStep->setRecipe(null);
+            if ($recipestep->getRecipe() === $this) {
+                $recipestep->setRecipe(null);
             }
         }
 

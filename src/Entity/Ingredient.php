@@ -19,7 +19,7 @@ class Ingredient
     private ?int $id = null;
 
     #[ORM\Column(length: 100)]
-    private ?string $ingredientName = null;
+    private ?string $ingredientname = null;
 
     #[ORM\OneToMany(targetEntity: RecipeHasIngredient::class, mappedBy: "ingredient")]
     private Collection $recipes;
@@ -40,14 +40,14 @@ class Ingredient
         return $this->id;
     }
 
-    public function getIngredientName(): ?string
+    public function getIngredientname(): ?string
     {
-        return $this->ingredientName;
+        return $this->ingredientname;
     }
 
-    public function setIngredientName(string $ingredientName): static
+    public function setIngredientname(string $ingredientname): static
     {
-        $this->ingredientName = $ingredientName;
+        $this->ingredientname = $ingredientname;
 
         return $this;
     }
