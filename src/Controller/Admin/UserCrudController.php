@@ -3,7 +3,6 @@
 namespace App\Controller\Admin;
 
 use App\Entity\User;
-use App\Entity\Profile;
 use Symfony\Component\Form\FormEvents;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -113,14 +112,5 @@ class UserCrudController extends AbstractCrudController
         };
     }
 
-    public function createEntity(string $entityFqcn)
-    {
-        $user = new User();
-       
-        $profile = new Profile();
-        $user->setProfile($profile);
-
-        return $user;
-    }
 
     }

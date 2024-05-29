@@ -4,8 +4,6 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
-use App\Entity\Profile;
-use App\Repository\ProfileRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,20 +25,16 @@ class SecurityController extends AbstractController
     public function signup(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher)
     {
         $user = new User();
-        $userForm = $this->createForm(UserType::class, $user);
-        $userForm->handleRequest($request);
+        $registrationform = $this->createForm(UserType::class, $user);
+        $registrationform->handleRequest($request);
         
-        if ($userForm->isSubmitted() && $userForm->isValid()) {
+        if ($registrationform->isSubmitted() && $registrationform->isValid()) {
             $hash = $passwordHasher->hashPassword($user, $user->getPassword());
             $user->setPassword($hash);
-            
-            // Créer et associer un profil au nouvel utilisateur
-            $profile = new Profile();
-            $profile->setUser($user);
-            $user->setProfile($profile);
+            $user->setUsername($registrationform->get('username')->getData());
+            $user->setEmail($registrationform->get('email')->getData());
     
             $em->persist($user);
-            $em->persist($profile); // Persist the profile entity
             $em->flush();
             
             $this->addFlash('success', 'Bienvenue sur Easy Christmas!');
@@ -48,7 +42,7 @@ class SecurityController extends AbstractController
         }
         
         return $this->render('security/signup.html.twig', [
-            'form' => $userForm->createView(),
+            'registrationform' => $registrationform->createView(),
             'page_title' => 'Espace Inscription',
             'sectionName' => 'signup',
         ]);

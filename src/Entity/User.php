@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use App\Entity\Draw;
-use App\Entity\Profile;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\Collection;
@@ -45,9 +44,34 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
-    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
-    private ?Profile $profile = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $photo = null;
 
+    #[ORM\Column(length: 150, nullable: true, unique:true)]
+    private ?string $userName = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $firstName = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $lastName = null;
+
+    #[Assert\Length(min: 6, minMessage: 'Le mot de passe doit faire au moins 6 caractères.')]
+    private $newPassword;
+  
+  
+    public function getNewPassword(): ?string
+    {
+      return $this->newPassword;
+    }
+  
+    public function setNewPassword(string $newPassword): self
+    {
+      $this->newPassword = $newPassword;
+  
+      return $this;
+    }
+    
     /**
      * @var Collection<int, Recipe>
      */
@@ -125,6 +149,56 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+
+    public function setPhoto(?string $photo): static
+    {
+        $this->photo = $photo;
+
+        return $this;
+    }
+
+    public function getUserName(): ?string
+    {
+        return $this->userName;
+    }
+
+    public function setUserName(string $userName): static
+    {
+        $this->userName = $userName;
+
+        return $this;
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->firstName;
+    }
+
+    public function setFirstName(string $firstName): static
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    public function getLastName(): ?string
+    {
+        return $this->lastName;
+    }
+
+    public function setLastName(?string $lastName): static
+    {
+        $this->lastName = $lastName;
+
+        return $this;
+    }
+
+
 
     public function getPassword(): string
     {
@@ -268,20 +342,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getProfile(): ?Profile
-    {
-        return $this->profile;
-    }
-
-    public function setProfile(?Profile $profile): static
-    {
-        if ($profile !== null && $profile->getUser() !== $this) {
-            $profile->setUser($this);
-        }
-        $this->profile = $profile;
-        return $this;
-    }
-
+    
     public function getIsVerified()
     {
         return $this->isVerified;
@@ -305,4 +366,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
 }

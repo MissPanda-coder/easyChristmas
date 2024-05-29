@@ -2,52 +2,67 @@
 
 namespace App\Controller;
 
-use App\Entity\Profile;
-use App\Form\ProfileType;
+use App\Entity\User;
+use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class ProfileController extends AbstractController
 {
-    private $entityManager;
-
-    public function __construct(EntityManagerInterface $entityManager)
-    {
-        $this->entityManager = $entityManager;
-    }
-
     #[Route('/profile', name: 'profile')]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
-    public function index(Request $request): Response
+    public function currentUserProfile(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher, SluggerInterface $slugger): Response
     {
+        /** @var \App\Entity\User $user */
         $user = $this->getUser();
+        $userForm = $this->createForm(UserType::class, $user);
+        $userForm->handleRequest($request);
 
-        // Rechercher un profil existant pour l'utilisateur
-        $profile = $this->entityManager->getRepository(Profile::class)->findOneBy(['user' => $user]);
+        if ($userForm->isSubmitted() && $userForm->isValid()) {
+            // Gérer le téléchargement de la photo
+            $photoFile = $userForm->get('photo')->getData();
+            if ($photoFile) {
+                $originalFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$photoFile->guessExtension();
 
-        // Si aucun profil n'existe, en créer un nouveau
-        if (!$profile) {
-            $profile = new Profile();
-            $profile->setUser($user);
-        }
+                // Déplacez le fichier dans le répertoire où les photos de profil sont stockées
+                try {
+                    $photoFile->move(
+                        $this->getParameter('photos_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // handle exception if something happens during file upload
+                }
 
-        $formProfile = $this->createForm(ProfileType::class, $profile);
-        $formProfile->handleRequest($request);
+                // Met à jour la propriété 'photo' pour stocker le nom du fichier
+                $user->setPhoto($newFilename);
+            }
 
-        if ($formProfile->isSubmitted() && $formProfile->isValid()) {
-            $this->entityManager->persist($profile);
-            $this->entityManager->flush();
+            // Gérer le nouveau mot de passe
+            $newPassword = $userForm->get('newPassword')->getData();
+            if ($newPassword) {
+                $hash = $passwordHasher->hashPassword($user, $newPassword);
+                $user->setPassword($hash);
+            }
+
+            $em->flush();
+            $this->addFlash('success', 'Modifications sauvegardées !');
+
             return $this->redirectToRoute('profile');
         }
 
         return $this->render('profile/index.html.twig', [
-            'profile' => $profile,
-            'formProfile' => $formProfile->createView(),
-            'page_title' => 'Bienvenue sur votre profil',
+            'formProfile' => $userForm->createView(),
+            'page_title' => 'Votre profil',
             'sectionName' => 'profile',
         ]);
     }
