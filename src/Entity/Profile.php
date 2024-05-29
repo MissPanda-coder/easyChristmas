@@ -2,9 +2,11 @@
 
 namespace App\Entity;
 
+
 use App\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ProfileRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ProfileRepository::class)]
 class Profile
@@ -94,5 +96,22 @@ class Profile
         $this->user = $user;
 
         return $this;
+    }
+
+    #[Assert\Length(min: 6, minMessage: 'Le mot de passe doit faire au moins 6 caractères.')]
+    private $newPassword;
+  
+  // ...
+  
+    public function getNewPassword(): ?string
+    {
+      return $this->newPassword;
+    }
+  
+    public function setNewPassword(string $newPassword): self
+    {
+      $this->newPassword = $newPassword;
+  
+      return $this;
     }
 }

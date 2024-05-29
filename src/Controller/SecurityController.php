@@ -49,7 +49,7 @@ class SecurityController extends AbstractController
         
         return $this->render('security/signup.html.twig', [
             'form' => $userForm->createView(),
-            'page_title' => 'Espace inscription',
+            'page_title' => 'Espace Inscription',
             'sectionName' => 'signup',
         ]);
     }
@@ -76,17 +76,5 @@ class SecurityController extends AbstractController
     public function logout()
     {
     }
-    // #[Route("/", name: "home")]
-    // public function home(): Response
-    // {
-    //     $user = $this->getUser();
-    //     $profile = null;
-    //     if ($user) {
-    //         $profile = $this->$profileRepositoryprofileRepository->findOneBy(['user' => $user]);
-    //     }
-
-    //     return $this->render('home/index.html.twig', [
-    //         'profile' => $profile,
-    //     ]);
-    // }
+   
 }
