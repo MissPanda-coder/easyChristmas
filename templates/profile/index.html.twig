@@ -4,29 +4,28 @@
 <h2>Profil</h2>
   <div class="block">
     
-  {{ form_start(formProfile, {'attr': {'class': 'formProfile_layout'}}) }}
- 
+  {{ form_start(userForm, {'attr': {'class': 'userForm_layout'}}) }}
+ <img src="{{ app.user.getPhotoPath() }}" alt="Photo de profil" class="profile-picture">
          
-    <p class="formProfile_field">
-        {{ form_label(formProfile.photo, null, {'label_attr': {'class': 'formProfile_label'}}) }}
-        {{ form_widget(formProfile.photo, {'attr': {'class': 'formProfile_input'}}) }}
-    <button type="submit" class="formProfile_btn">Modifier</button>
-    </p>
-     <p class="formProfile_field">
-        {{ form_label(formProfile.userName, null, {'label_attr': {'class': 'formProfile_label'}}) }}
-        {{ form_widget(formProfile.userName, {'attr': {'class': 'formProfile_input'}}) }}
-    </p>
-    <p class="formProfile_field">
-        {{ form_label(formProfile.firstName, null, {'label_attr': {'class': 'formProfile_label'}}) }}
-        {{ form_widget(formProfile.firstName, {'attr': {'class': 'formProfile_input'}}) }}
-    </p>
-     <p class="formProfile_field">
-        {{ form_label(formProfile.lastName, null, {'label_attr': {'class': 'formProfile_label'}}) }}
-        {{ form_widget(formProfile.lastName, {'attr': {'class': 'formProfile_input'}}) }}
-    </p>
-    <button type="submit" class="formProfile_btn">Modifier</button>
+    <p class="userForm_field">
    
-    {{ form_end(formProfile) }}
+  
+    </p>
+     <p class="userForm_field">
+        {{ form_label(userForm.userName, null, {'label_attr': {'class': 'userForm_label'}}) }}
+        {{ form_widget(userForm.userName, {'attr': {'class': 'userForm_input'}}) }}
+    </p>
+    <p class="userForm_field">
+        {{ form_label(userForm.firstName, null, {'label_attr': {'class': 'userForm_label'}}) }}
+        {{ form_widget(userForm.firstName, {'attr': {'class': 'userForm_input'}}) }}
+    </p>
+     <p class="userForm_field">
+        {{ form_label(userForm.lastName, null, {'label_attr': {'class': 'userForm_label'}}) }}
+        {{ form_widget(userForm.lastName, {'attr': {'class': 'userForm_input'}}) }}
+    </p>
+    
+   
+    {{ form_end(userForm) }}
 </div>
   <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 {% endblock %}

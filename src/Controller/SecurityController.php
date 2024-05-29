@@ -15,24 +15,17 @@ use Symfony\Component\Security\Http\Authenticator\FormLoginAuthenticator;
 
 class SecurityController extends AbstractController
 {
-
-    public function __construct(
-        private FormLoginAuthenticator $authenticator
-    ) {
-    }
-
     #[Route('/signup', name: 'signup')]
-    public function signup(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher)
+    public function signup(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher): Response
     {
         $user = new User();
         $registrationform = $this->createForm(UserType::class, $user);
         $registrationform->handleRequest($request);
         
         if ($registrationform->isSubmitted() && $registrationform->isValid()) {
+           
             $hash = $passwordHasher->hashPassword($user, $user->getPassword());
             $user->setPassword($hash);
-            $user->setUsername($registrationform->get('username')->getData());
-            $user->setEmail($registrationform->get('email')->getData());
     
             $em->persist($user);
             $em->flush();
@@ -47,14 +40,12 @@ class SecurityController extends AbstractController
             'sectionName' => 'signup',
         ]);
     }
-   
-
 
     #[Route("/login", name: "login")]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         if ($this->getUser()) {
-            return $this->redirectToRoute('login');
+            return $this->redirectToRoute('profile');
         }
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
@@ -69,6 +60,6 @@ class SecurityController extends AbstractController
     #[Route("/logout", name: "logout")]
     public function logout()
     {
+        // Symfony gère la déconnexion automatiquement
     }
-   
 }

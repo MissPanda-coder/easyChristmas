@@ -23,10 +23,14 @@
         {{ form_label(registrationform.password.second, null, {'label_attr': {'class': 'form_label'}}) }}
         {{ form_widget(registrationform.password.second, {'attr': {'class': 'form_input'}}) }}
     </p>
+
+        <input type="checkbox" id="checkboxCgu" name="checkboxCgu" class="checkboxCgu" required/>
+        <label for="checkboxCgu" class="rememberMe" >J'ai lu et j'accepte les conditions générales d'utilisation</label>
+       
     <button type="submit" class="form_btn">Envoyer</button>
-    <small>
+   <p class="form_field-center">
       <a href="{{ path('login') }}" class="register_button">Vous avez déjà un compte ?</a>
-    </small>
+  </p>
     {{ form_end(registrationform) }}
 </div>
   <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
