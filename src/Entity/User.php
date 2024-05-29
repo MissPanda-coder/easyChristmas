@@ -41,20 +41,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotBlank(message: 'Veuillez renseigner un mot de passe.')]
     private ?string $password = null;
 
-    #[ORM\Column(type: 'boolean')]
+    #[ORM\Column(type: 'boolean', name: "is_verified",)]
     private $isVerified = false;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $photo = null;
 
-    #[ORM\Column(length: 150, nullable: true, unique:true)]
-    private ?string $userName = null;
+    #[ORM\Column(length: 150, nullable: true, unique: true)]
+    private ?string $username = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $firstName = null;
+    private ?string $firstname = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $lastName = null;
+    private ?string $lastname = null;
 
     #[Assert\Length(min: 6, minMessage: 'Le mot de passe doit faire au moins 6 caractères.')]
     private $newPassword;
@@ -168,38 +168,37 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
         return '/images/avatars/defaultAvatar.png';
     }
-    public function getUserName(): ?string
+    public function getUsername(): ?string
     {
-        return $this->userName;
+        return $this->username;
     }
 
-    public function setUserName(string $userName): static
+    public function setUsername(?string $username): self
     {
-        $this->userName = $userName;
+        $this->username = $username;
+
+        return $this;
+    }
+    public function getFirstname(): ?string
+    {
+        return $this->firstname;
+    }
+
+    public function setFirstName(string $firstname): static
+    {
+        $this->firstname = $firstname;
 
         return $this;
     }
 
-    public function getFirstName(): ?string
+    public function getLastname(): ?string
     {
-        return $this->firstName;
+        return $this->lastname;
     }
 
-    public function setFirstName(string $firstName): static
+    public function setLastname(?string $lastname): static
     {
-        $this->firstName = $firstName;
-
-        return $this;
-    }
-
-    public function getLastName(): ?string
-    {
-        return $this->lastName;
-    }
-
-    public function setLastName(?string $lastName): static
-    {
-        $this->lastName = $lastName;
+        $this->lastname = $lastname;
 
         return $this;
     }
@@ -361,16 +360,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function isVerified(): bool
-    {
-        return $this->isVerified;
-    }
-
-    public function setVerified(bool $isVerified): static
-    {
-        $this->isVerified = $isVerified;
-
-        return $this;
-    }
+  
 
 }

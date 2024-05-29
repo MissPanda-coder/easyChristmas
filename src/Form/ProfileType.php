@@ -16,8 +16,8 @@ class ProfileType extends AbstractType
     {
         $builder
             ->add('username', TextType::class)
-            ->add('firstName', TextType::class, ['required' => false])
-            ->add('lastName', TextType::class, ['required' => false])
+            ->add('firstname', TextType::class, ['required' => false])
+            ->add('lastname', TextType::class, ['required' => false])
             ->add('photo', FileType::class, [
                 'label' => 'Photo de profil',
                 'required' => false,

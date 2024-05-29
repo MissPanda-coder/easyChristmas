@@ -80,6 +80,8 @@ class ProfileController extends AbstractController
             return $this->redirectToRoute('profile');
         }
 
+   
+
         return $this->render('profile/index.html.twig', [
             'userForm' => $userForm->createView(),
             'page_title' => 'Votre profil',
