@@ -6,12 +6,16 @@
       <h2 class="form_title">Nous contacter</h2>
   {{ form_start(contactForm, {'attr': {'class': 'form_layout'}}) }}
            <p class="form_field">
-        {{ form_label(contactForm.firstname, null, {'label_attr':{'class': 'form_label'}}) }}
-        {{ form_widget(contactForm.firstname, {'attr': {'class': 'form_input'}}) }}
+        {{ form_label(contactForm.lastname, null, {'label_attr':{'class': 'form_label'}}) }}
+        {{ form_widget(contactForm.lastname, {'attr': {'class': 'form_input'}}) }}
     </p> 
     <p class="form_field">
         {{ form_label(contactForm.email, null, {'label_attr': {'class': 'form_label'}}) }}
         {{ form_widget(contactForm.email, {'attr': {'class': 'form_input'}}) }}
+    </p>
+     <p class="form_field">
+        {{ form_label(contactForm.subject, null, {'label_attr': {'class': 'form_label'}}) }}
+        {{ form_widget(contactForm.subject, {'attr': {'class': 'form_input'}}) }}
     </p>
     <p class="form_field">
         {{ form_label(contactForm.message, null, {'label_attr': {'class': 'form_label'}}) }}
