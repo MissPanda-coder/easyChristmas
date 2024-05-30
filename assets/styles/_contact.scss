@@ -1,0 +1,25 @@
+@import "_variables";
+@import "_mixin";
+
+#contact{
+    background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+    min-height:100vh;
+    width: 100%;
+    position: relative;
+}
+
+.contact_snowGround{
+ position:absolute;
+ bottom:0;
+ left: 0;
+width: 100%;
+height: 500px;
+z-index: 10;
+}
+
+.contact_santa{
+    position: absolute;
+    left:10%;
+    bottom:5%;
+    
+}

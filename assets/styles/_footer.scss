@@ -11,6 +11,9 @@ footer {
     margin-top:1.5rem;
     padding-top: 1.5rem;
     padding-bottom: 0.8rem;
+    position:absolute;
+    bottom:0;
+    z-index:10000;
   }
   
 footer ul {

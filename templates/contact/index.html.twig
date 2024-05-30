@@ -1,0 +1,29 @@
+{% extends "base.html.twig" %}
+
+
+{% block body %}
+
+      <h2 class="form_title">Nous contacter</h2>
+  {{ form_start(contactForm, {'attr': {'class': 'form_layout'}}) }}
+           <p class="form_field">
+        {{ form_label(contactForm.firstname, null, {'label_attr':{'class': 'form_label'}}) }}
+        {{ form_widget(contactForm.firstname, {'attr': {'class': 'form_input'}}) }}
+    </p> 
+    <p class="form_field">
+        {{ form_label(contactForm.email, null, {'label_attr': {'class': 'form_label'}}) }}
+        {{ form_widget(contactForm.email, {'attr': {'class': 'form_input'}}) }}
+    </p>
+    <p class="form_field">
+        {{ form_label(contactForm.message, null, {'label_attr': {'class': 'form_label'}}) }}
+        {{ form_widget(contactForm.message, {'attr': {'class': 'form_input'}}) }}
+    </p>
+      
+    <button type="submit" class="form_btn">Envoyer</button>
+ 
+    {{ form_end(contactForm) }}
+
+ 
+
+<img src="{{ asset('images/else/santa.png') }}" alt="Père Noêl dans son traineau"  class="contact_santa">
+   <img src="{{ asset('images/else/snowGround.png') }}" alt="neige au sol" class="contact_snowGround">
+{% endblock %}
