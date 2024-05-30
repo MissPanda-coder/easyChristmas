@@ -19,9 +19,10 @@ class ContactController extends AbstractController
     {
         $data = new Contact();
 
-        // $data->lastname = 'Jane';
-        // $data->email = 'jane@me.com';
-        // $data->message = 'Hi, Jane. I wanted to reach out to you about your new website.';
+        $data->name = 'Jane';
+        $data->subject = 'Doedff';
+        $data->email = 'jane@me.com';
+        $data->message = 'Hi, Jane. I wanted to reach out to you about your new website.';
         
         
         $contactForm = $this->createForm(ContactType::class, $data);
@@ -29,7 +30,7 @@ class ContactController extends AbstractController
 
         if ($contactForm->isSubmitted() && $contactForm->isValid()) {
             $email = (new TemplatedEmail())
-            ->from('hello@example.com')
+            ->from($data->email)
             ->to('adeliine@hotmail.com')
             ->subject('demande de contact')
             ->htmlTemplate('contact/email.html.twig')
@@ -37,11 +38,14 @@ class ContactController extends AbstractController
                 'data' => $data,]);
 
             $mailer->send($email);
-            
-       
+
+        $this->addFlash('success', 'Votre message a bien été envoyé');
+       $this->redirectToRoute('contact');
+
     }
+
     return $this->render('contact/index.html.twig', [
-        'contactForm' => $contactForm->createView(),
+        'contactForm' => $contactForm,
         'page_title' => 'Nous contacter',
         'sectionName' => 'contact',
         'controller_name' => 'ContactController',

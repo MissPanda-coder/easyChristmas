@@ -10,7 +10,7 @@ class Contact{
         min:3,
         max:150
     )]
-    public string $firstname = '';
+    public string $name = '';
   
     #[Assert\NotBlank]
     #[Assert\Email]
