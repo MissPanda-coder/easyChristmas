@@ -4,7 +4,7 @@
 
 #cgu{
     width: 100%;
-    background: $c-blue;
+    background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
 }
 
 .cgu_layout{
@@ -34,6 +34,10 @@
 
 .preambule_title-click:hover{
     color: $c-red; 
+}
+
+.para_p{
+    color: $c-white;  
 }
 
 
