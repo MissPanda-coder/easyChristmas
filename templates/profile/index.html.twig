@@ -3,40 +3,39 @@
 {% block body %}
 <h2>Profil</h2>
 
-    {{ form_start(userForm, {'attr': {'class': 'userForm_layout'}}) }}
+    {{ form_start(userForm, {'attr': {'class': 'userForm_layout mx-auto'}}) }}
     
-    <div class="row">
-    <div class="col-lg-3 col-md-3 col-sm-12 text-center" id="profile_photo-layout">
-        <img src="{{ app.user.getPhotoPath() }}" alt="Photo de profil" class="profile_picture">
+    <div class="row gap-3 ">
+    <div class="col-lg-5 col-md-5 col-sm-12 mx-auto" id="profile_photo-bento">
+        
+    <img src="{{ app.user.getPhotoPath() }}" alt="Photo de profil" class="profile_picture mx-auto">
+    
+     <label for="photo_profile" class="custom_file-upload">
+            Choisir un fichier
+        </label>
+   {{ form_widget(userForm.photo, {'attr': {'id': 'profile_photo', 'style': 'display:none'}}) }}
     </div>
-    <div class="col-lg-2 col-md-2 col-sm-6">
+    <div class="col-lg-7 col-md-7 col-sm-12 mx-auto" id="userForm_col-bento">
         <p class="userForm_field">
             {{ form_label(userForm.username, 'Nom d\'utilisateur', {'label_attr': {'class': 'userForm_label'}}) }}
+             {{ form_widget(userForm.username, {'attr': {'class': 'player_name'}}) }}
           </p>
+
            <p class="userForm_field">
             {{ form_label(userForm.firstname, 'Prénom', {'label_attr': {'class': 'userForm_label'}}) }}
-             </p>
-            
+            {{ form_widget(userForm.firstname, {'attr': {'class': 'player_name'}}) }}
+            </p>
+
               <p class="userForm_field">
-              {{ form_label(userForm.lastname, 'Nom de famille', {'label_attr': {'class': 'userForm_label'}}) }}
-              </p>
-          <p class="userForm_field">{{ form_label(userForm.newPassword, 'Nouveau mot de passe', {'label_attr': {'class': 'userForm_label'}}) }}
-        </p>
-        </div>
-        <div class="col-lg-7 col-md-2 col-sm-6">
-        <p class="userForm_field">
-           {{ form_widget(userForm.username, {'attr': {'class': 'userForm_input'}}) }}
-             </p>
-            
-              <p class="userForm_field">{{ form_widget(userForm.firstname, {'attr': {'class': 'userForm_input'}}) }}
-       
-        </p>
-         <p class="userForm_field">{{ form_widget(userForm.lastname, {'attr': {'class': 'userForm_input'}}) }}
+         {{ form_label(userForm.lastname, 'Nom de famille', {'label_attr': {'class': 'userForm_label'}}) }} 
+            {{ form_widget(userForm.lastname, {'attr': {'class': 'player_name'}}) }}
          </p>
-     <p class="userForm_field">   {{ form_widget(userForm.newPassword, {'attr': {'class': 'userForm_input'}}) }}
+
+        <p class="userForm_field">
+            <p class="userForm_field">{{ form_label(userForm.newPassword, 'Nouveau mot de passe', {'label_attr': {'class': 'userForm_label'}}) }}
+        {{ form_widget(userForm.newPassword, {'attr': {'class': 'player_name'}}) }}
         </p>
         </div>
-    </div>
     </div>
     {{ form_end(userForm) }}
 

@@ -48,11 +48,12 @@ h1{
 
   h2{
     font-family: $f-first, sans-serif;
-       font-size: clamp(1.5rem,calc(3rem + 1vw),4rem) !important;
+       font-size: clamp(1.5rem,calc(2.5rem + 1vw),3.5rem) !important;
        font-weight: 700;
        letter-spacing: 0.2rem;
        color: $c-white !important;
        text-align: center;
+       margin-top:2rem;
        margin-bottom: 4rem !important;
 }
 
