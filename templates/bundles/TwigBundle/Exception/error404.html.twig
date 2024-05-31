@@ -1,7 +1,4 @@
 
-
-{% block title %}Une erreur est survenue{% endblock %}
-
 <!DOCTYPE html>
 <html>
     <head>
@@ -24,15 +21,12 @@
         {% endblock %}
     </head>
     <body>
-    
-
-
-  
+    <section id="oops">
         {% block body %}
-     <h1>Une erreur est survenue</h1>
-    <p>Nous sommes désolés, mais une erreur est survenue sur le serveur.</p>
-    <a href="{{ path('home') }}">Retour à l'accueil</a>
+     
+    <p class="oops_text">Oops...une erreur est survenue</p>
+    <a href="{{ path('home') }}" class="oops_button">Retour à l'accueil</a>
         {% endblock %}
- 
+ </section>
     </body>
 </html>
