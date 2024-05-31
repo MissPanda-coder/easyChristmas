@@ -99,10 +99,48 @@ header ul a{
     transition: all 0.4s ease-out;
 }
 
-.avatar{
-    width: 30px;
-    height: 30px;
+.dropdown {
+    position: relative;
+    display: inline-block;
 }
+
+.dropbtn {
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: $c-white;
+    max-width: 140px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  
+}
+
+.dropdown-content a {
+    font-size: 0.8rem;
+    text-transform: lowercase;
+    color: rgb(29, 28, 28);
+    padding: 0.9rem 1.1rem;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.avatar{
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+}
+
 
 // PHONES
 @media only screen and (max-width: 768px) {

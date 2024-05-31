@@ -21,22 +21,20 @@
                 <li><a href="{{ path('wishlist') }}">Liste au père Noël</a></li>
                 <li><a href="{{ path('recipe_intro') }}">Idées recettes</a></li>
                 {%- if is_granted('IS_AUTHENTICATED_FULLY') -%}
-                <div>
-                
-                   {% if app.user and app.user.photo %}
-                            <a href="{{ path('profile') }}"><img src="{{ app.user.photo }}" class="avatar" alt="Photo de profil"></a>
-                        {% else %}
-                            <a href="{{ path('profile') }}"><img src="{{ asset('images/avatars/defaultAvatar.png') }}" class="avatar" alt="Avatar par défaut"></a>
-                        {% endif %}
-                        
-               
+                <div class="dropdown">
+                    {% if app.user and app.user.photo %}
+                        <a href="#" class="dropbtn"><img src="{{ app.user.photo }}" class="avatar" alt="Photo de profil"></a>
+                    {% else %}
+                        <a href="#" class="dropbtn"><img src="{{ asset('images/avatars/defaultAvatar.png') }}" class="avatar" alt="Avatar par défaut"></a>
+                    {% endif %}
+                    <div class="dropdown-content">
+                        <a href="{{ path('profile') }}">Profil</a>
+                        <a href="{{ path('logout') }}">Déconnexion</a>
+                    </div>
                 </div>
-
-               {% else %}
-                    
+                {%- else -%}
                 <li><a class="login_button" href="{{ path('login') }}" >Se connecter</a></li>
                 {%- endif -%}
-                
             </ul>
         </nav>
     </header>

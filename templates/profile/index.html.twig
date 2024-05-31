@@ -10,10 +10,7 @@
         
     <img src="{{ app.user.getPhotoPath() }}" alt="Photo de profil" class="profile_picture mx-auto">
     
-     <label for="photo_profile" class="custom_file-upload">
-            Choisir un fichier
-        </label>
-   {{ form_widget(userForm.photo, {'attr': {'id': 'profile_photo', 'style': 'display:none'}}) }}
+   {{ form_widget(userForm.photo, {'attr': {'id': 'profile_photo'}}) }}
     </div>
     <div class="col-lg-7 col-md-7 col-sm-12 mx-auto" id="userForm_col-bento">
         <p class="userForm_field">
