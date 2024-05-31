@@ -1,0 +1,38 @@
+
+
+{% block title %}Une erreur est survenue{% endblock %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Vivez la magie de Noël sur notre site ! Tirage au sort pour des cadeaux inoubliables, idées festives, recettes délicieuses, et décompte jusqu'au jour J. Préparez-vous à une fête pleine de surprises!">
+    <meta name="robots" content="index, follow">
+        
+        <link rel="shortcut icon" href="{{ asset('images/favicon/favicon.png') }}" type="image/x-icon">
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    
+        {% block stylesheets %}
+         {{ encore_entry_link_tags('app') }}
+          
+        {% endblock %}
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+    
+        {% endblock %}
+    </head>
+    <body>
+    
+
+
+  
+        {% block body %}
+     <h1>Une erreur est survenue</h1>
+    <p>Nous sommes désolés, mais une erreur est survenue sur le serveur.</p>
+    <a href="{{ path('home') }}">Retour à l'accueil</a>
+        {% endblock %}
+ 
+    </body>
+</html>

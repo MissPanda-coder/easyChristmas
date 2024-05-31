@@ -8,17 +8,17 @@
            <p class="form_field">
         {{ form_label(contactForm.name, null, {'label_attr':{'class': 'form_label'}}) }}
         {{ form_widget(contactForm.name, {'attr': {'class': 'form_input'}}) }}
-    {{ form_errors(contactForm.name) }}
+        {{ form_errors(contactForm.name) }}
     </p> 
     <p class="form_field">
         {{ form_label(contactForm.email, null, {'label_attr': {'class': 'form_label'}}) }}
         {{ form_widget(contactForm.email, {'attr': {'class': 'form_input'}}) }}
-{{ form_errors(contactForm.email) }}    
+        {{ form_errors(contactForm.email) }}    
     </p>
      <p class="form_field">
         {{ form_label(contactForm.subject, null, {'label_attr': {'class': 'form_label'}}) }}
         {{ form_widget(contactForm.subject, {'attr': {'class': 'form_input'}}) }}
-    {{ form_errors(contactForm.subject) }}
+         {{ form_errors(contactForm.subject) }}
     </p>
     <p class="form_field">
         {{ form_label(contactForm.message, null, {'label_attr': {'class': 'form_label'}}) }}

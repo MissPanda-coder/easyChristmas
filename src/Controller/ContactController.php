@@ -34,8 +34,8 @@ class ContactController extends AbstractController
                 'data' => $data,]);
         
             $mailer->send($email);
-            $this->addFlash('success', 'Votre message a bien été envoyé');
-            $this->redirectToRoute('contact');
+    
+            return $this->redirectToRoute('thanks');
 
 
         } catch (\Exception $e) {
@@ -53,4 +53,16 @@ class ContactController extends AbstractController
 
 
 }
+
+
+#[Route('/contact/thanks', name: 'thanks')]
+    public function thanks(): Response
+    {
+        return $this->render('contact/thanks.html.twig', [
+            'page_title' => 'Message envoyé !',
+            'sectionName' => 'thanks',
+            'controller_name' => 'ContactController',
+        ]);
+    }
+
 }
