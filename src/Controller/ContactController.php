@@ -19,37 +19,38 @@ class ContactController extends AbstractController
     {
         $data = new Contact();
 
-        $data->name = 'Jane';
-        $data->subject = 'Doedff';
-        $data->email = 'jane@me.com';
-        $data->message = 'Hi, Jane. I wanted to reach out to you about your new website.';
-        
-        
         $contactForm = $this->createForm(ContactType::class, $data);
         $contactForm->handleRequest($request);
 
         if ($contactForm->isSubmitted() && $contactForm->isValid()) {
+
+            try {
             $email = (new TemplatedEmail())
             ->from($data->email)
             ->to('adeliine@hotmail.com')
-            ->subject('demande de contact')
+            ->subject($data->subject)
             ->htmlTemplate('contact/email.html.twig')
             ->context([
                 'data' => $data,]);
+        
+            $mailer->send($email);
+            $this->addFlash('success', 'Votre message a bien été envoyé');
+            $this->redirectToRoute('contact');
+
+
+        } catch (\Exception $e) {
+            $this->addFlash('error', 'Une erreur est survenue');
 
             $mailer->send($email);
-
-        $this->addFlash('success', 'Votre message a bien été envoyé');
-       $this->redirectToRoute('contact');
-
     }
-
+}
     return $this->render('contact/index.html.twig', [
         'contactForm' => $contactForm,
         'page_title' => 'Nous contacter',
         'sectionName' => 'contact',
         'controller_name' => 'ContactController',
     ]);
+
 
 }
 }

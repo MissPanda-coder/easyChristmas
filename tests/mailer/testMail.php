@@ -11,8 +11,8 @@ try {
     $mail->isSMTP();
     $mail->Host       = 'sandbox.smtp.mailtrap.io';
     $mail->SMTPAuth   = true;
-    $mail->Username   = '3de76f35955204';  // Votre username Mailtrap
-    $mail->Password   = '7b78b623719e8d';  // Votre mot de passe Mailtrap
+    $mail->Username   = '3de76f35955204';  // username Mailtrap
+    $mail->Password   = '7b78b623719e8d';  // mot de passe Mailtrap
 
     // Test avec STARTTLS
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
@@ -34,8 +34,8 @@ try {
     $mail->isSMTP();
     $mail->Host       = 'sandbox.smtp.mailtrap.io';
     $mail->SMTPAuth   = true;
-    $mail->Username   = 'aab54592199f55';  // Votre username Mailtrap
-    $mail->Password   = 'cb56cdbdbcd3db';  // Votre mot de passe Mailtrap
+    $mail->Username   = '3de76f35955204';  // username Mailtrap
+    $mail->Password   = '7b78b623719e8d';  // mot de passe Mailtrap
 
     // Test avec SMTPS
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
