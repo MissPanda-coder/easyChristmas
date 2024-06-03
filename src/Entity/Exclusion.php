@@ -14,15 +14,12 @@ class Exclusion
     private ?int $id = null;
 
     #[ORM\ManyToOne(targetEntity: Draw::class, inversedBy: "exclusions")]
-    #[ORM\JoinColumn(nullable: false)]
     private ?Draw $draw = null;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: "usersCanNotOffer")]
-    #[ORM\JoinColumn(nullable: false)]
     private ?User $userparticipant = null;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: "usersCanNotBeOffered")]
-    #[ORM\JoinColumn(nullable: false)]
     private ?User $userexcluded = null;
 
     public function getId(): ?int

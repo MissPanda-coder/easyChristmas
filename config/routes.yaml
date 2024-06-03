@@ -4,4 +4,8 @@ controllers:
         namespace: App\Controller
     type: attribute
 
+verify_email:
+    path: /verify-email/{token}
+    controller: App\Controller\SecurityController::verifyUserEmail
+    methods: [GET]
 

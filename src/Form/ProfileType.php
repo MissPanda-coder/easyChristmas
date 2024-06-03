@@ -5,10 +5,10 @@ namespace App\Form;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class ProfileType extends AbstractType
 {
@@ -18,18 +18,19 @@ class ProfileType extends AbstractType
             ->add('username', TextType::class)
             ->add('firstname', TextType::class, ['required' => false])
             ->add('lastname', TextType::class, ['required' => false])
-            ->add('photo', FileType::class, [
-                'label' => 'Photo de profil',
+            ->add('photo', FileType::class, [   
                 'required' => false,
                 'mapped' => false,
-            ])
-            ->add('newPassword', PasswordType::class, [
-                'label' => 'Nouveau mot de passe',
-                'required' => false,
-                'mapped' => false,
-            ]);
-
-       
+                'constraints' => [
+                    new Image(
+                      [
+          
+                        'mimeTypesMessage' => 'Veuillez soumettre une image',
+                        'maxSize' => '1M',
+                        'maxSizeMessage' => 'Votre image fait {{ size }} {{ suffix }}. La limite est de {{ limit }} {{ suffix }}'
+                      ]),
+                    ],
+                ]);
     }
 
 

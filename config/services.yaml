@@ -25,6 +25,11 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
-
+    App\Security\UserChecker:
+        autowire: true
+        autoconfigure: true
+        public: false
+        tags:
+            - { name: 'security.user_checker' }
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

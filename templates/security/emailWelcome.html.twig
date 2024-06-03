@@ -2,7 +2,7 @@
 
 <p>
     Confirmez votre adresse mail en cliquant sur ce lien : <br><br>
-    <a href="{{ signedUrl|raw }}">Confirmez mon e-mail</a>.
+    <a href="{{ url('login', { token : token }) |raw }}">Confirmez mon e-mail</a>.
     
 </p>
 

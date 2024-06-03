@@ -6,7 +6,7 @@
         <h3 class="form_title">Connexion</h3>
         
         {% if error %}
-            <small class="form_error">
+            <small class="form_errors">
                 {{ error.messageKey|trans(error.messageData, 'security') }}
             </small>
         {% endif %}
@@ -30,7 +30,7 @@
 <button type="submit" class="form_btn">Envoyer</button>
         <p class="form_field-center">
             
-            <a href="#" class="form_password-forgot">Mot de passe oublié ?</a>
+            <a href="{{ path('reset-password-request') }}" class="form_password-forgot">Mot de passe oublié ?</a>
 
             <a class="register_button" href="{{ path('signup') }}">Pas encore inscrit ?</a>
         </p> 

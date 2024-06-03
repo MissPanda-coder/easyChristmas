@@ -30,6 +30,7 @@ security:
             login_throttling:
                 max_attempts: 3
                 interval: '10 minutes'
+            user_checker: App\Security\UserChecker    
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
 

@@ -38,50 +38,38 @@ class ProfileController extends AbstractController
         /** @var \App\Entity\User $user */
         $user = $this->getUser();
         $userForm = $this->createForm(ProfileType::class, $user);
-        $userForm->remove('password');
-        $userForm->add('newPassword', PasswordType::class, ['label' => 'Nouveau mot de passe', 'required' => false]);
         $userForm->handleRequest($request);
-
+    
         if ($userForm->isSubmitted() && $userForm->isValid()) {
-            $photoFile = $userForm->get('photo')->getData();
-            if ($photoFile) {
-                $originalFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename . '-' . uniqid() . '.' . $photoFile->guessExtension();
-
-                // Move the file to the directory where profile photos are stored
-                try {
-                    $photoFile->move(
-                        $this->getParameter('photos_directory'),
-                        $newFilename
-                    );
-
-                    // Remove the old photo if it exists
-                    if ($user->getPhoto()) {
-                        unlink($this->getParameter('photos_directory') . '/' . $user->getPhoto());
+            $picture = $userForm->get('photo')->getData();
+            if ($picture) {
+                // Supprimer l'ancienne photo si elle existe
+                if ($user->getPhoto()) {
+                    $oldPhotoPath = $this->getParameter('profile.folder') . '/' . basename($user->getPhoto());
+                    if (file_exists($oldPhotoPath)) {
+                        unlink($oldPhotoPath);
                     }
-
-                    // Update the 'photo' property to store the file name
-                    $user->setPhoto($newFilename);
-                } catch (FileException $e) {
-                    // Handle exception if something happens during file upload
                 }
+    
+                // Générer un nouveau nom de fichier pour la nouvelle photo
+                $ext = $picture->guessExtension();
+                $filename = bin2hex(random_bytes(10)) . '.' . $ext;
+    
+                // Déplacer la nouvelle photo dans le dossier de destination
+                $picture->move(
+                    $this->getParameter('profile.folder'),
+                    $filename
+                );
+    
+                // Mettre à jour le chemin de la nouvelle photo de l'utilisateur
+                $user->setPhoto($this->getParameter('profile.folder.public_path') . '/' . $filename);
             }
-
-            $newPassword = $user->getNewPassword();
-            if ($newPassword) {
-                $hash = $passwordHasher->hashPassword($user, $newPassword);
-                $user->setPassword($hash);
-            }
-
             $em->flush();
             $this->addFlash('success', 'Modifications sauvegardées !');
-
+    
             return $this->redirectToRoute('profile');
         }
-
-   
-
+    
         return $this->render('profile/index.html.twig', [
             'userForm' => $userForm->createView(),
             'page_title' => 'Votre profil',

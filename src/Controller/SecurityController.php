@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Entity\ResetPassword;
-use App\Entity\EmailVerification;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\ResetPasswordRepository;
@@ -13,14 +12,12 @@ use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
-use App\Repository\EmailVerificationRepository;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\RateLimiter\RateLimiterFactory;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -42,24 +39,29 @@ class SecurityController extends AbstractController
             $em->persist($user);
             $em->flush();
 
-            // generate a signed url and email it to the user
-            $token = substr(str_replace(['+', '/', '='], '', base64_encode(random_bytes(30))), 0, 20);
-            $emailVerification = new EmailVerification();
-            $emailVerification->setUser($user);
-            $emailVerification->setToken($token);
-            $emailVerification->setExpiredAt(new \DateTimeImmutable('+2 hours'));
+            // Générer un token brut et le hacher
+            $rawToken = substr(str_replace(['+', '/', '='], '', base64_encode(random_bytes(30))), 0, 20);
+            $hashedToken = sha1($rawToken);
 
-            $em->persist($emailVerification);
+            // Créer une nouvelle instance de vérification
+            $rawToken = substr(str_replace(['+', '/', '='], '', base64_encode(random_bytes(30))), 0, 20);
+            $hashedToken = sha1($rawToken);
+
+            $user->setVerificationToken($hashedToken);
+            $user->setVerificationTokenExpiresAt(new \DateTimeImmutable('+2 hours'));
+
+            $em->persist($user);
             $em->flush();
 
+            // Envoyer l'e-mail de vérification
             $email = (new TemplatedEmail())
-                ->from('contact@easychristmas.fr')
+                ->from('no-reply@easychristmas.fr')
                 ->to($user->getEmail())
                 ->subject('Easy Christmas, merci de confirmer votre email')
                 ->htmlTemplate('security/emailWelcome.html.twig')
                 ->context([
-                    'signedUrl' => $this->generateUrl('verify_email', ['token' => $token], UrlGeneratorInterface::ABSOLUTE_URL),
-                ]);
+                    'token' => $rawToken
+                  ]);
 
             $mailer->send($email);
 
@@ -76,21 +78,26 @@ class SecurityController extends AbstractController
     }
 
     #[Route('/verify-email/{token}', name: 'verify_email')]
-    public function verifyUserEmail(string $token, EmailVerificationRepository $emailVerificationRepository, EntityManagerInterface $em): Response
+    public function verifyUserEmail(string $token, UserRepository $userRepository, EntityManagerInterface $em): Response
     {
-        $emailVerification = $emailVerificationRepository->findOneBy(['token' => $token]);
+        // Hacher le token reçu pour vérifier la correspondance avec celui envoyé
+        $hashedToken = sha1($token);
+        $user = $userRepository->findOneBy(['verificationToken' => $hashedToken]);
 
-        if (!$emailVerification || $emailVerification->getExpiredAt() < new \DateTimeImmutable()) {
+        
+        // Vérifier si le token est valide et n'est pas expiré
+        if (!$user || $user->getVerificationTokenExpiresAt() < new \DateTimeImmutable()) {
             $this->addFlash('error', 'Votre demande est expirée, veuillez refaire une demande.');
             return $this->redirectToRoute('signup');
         }
 
-        $user = $emailVerification->getUser();
         $user->setIsVerified(true);
+        $user->setVerificationToken(null);
+        $user->setVerificationTokenExpiresAt(null);
 
         $em->persist($user);
-        $em->remove($emailVerification);
         $em->flush();
+
 
         $this->addFlash('success', 'Votre adresse email a été vérifiée.');
 
@@ -106,7 +113,7 @@ class SecurityController extends AbstractController
       return $this->redirectToRoute('login');
     }
 
-    $resetPassword = $resetPasswordRepository->findOneBy(['token' => $token]);
+    $resetPassword = $resetPasswordRepository->findOneBy(['token' => sha1($token)]);
    
     if (!$resetPassword || $resetPassword->getExpiredAt() < new \DateTime('now')) {
       if ($resetPassword) {
@@ -158,7 +165,7 @@ class SecurityController extends AbstractController
           $this->addFlash('error', 'Vous devez attendre une heure pour refaire une récupération');
           return $this->redirectToRoute('login');
         }
-        
+
         $emailForm = $this->createFormBuilder()->add('email', EmailType::class, [
           'constraints' => [
             new NotBlank([
@@ -180,7 +187,8 @@ class SecurityController extends AbstractController
             $resetPassword->setUser($user);
             $resetPassword->setExpiredAt(new \DateTimeImmutable('+2 hours'));
             $token = substr(str_replace(['+', '/', '='], '', base64_encode(random_bytes(30))), 0, 20);
-            $resetPassword->setToken($token);
+            $hash = sha1($token);
+            $resetPassword->setToken($hash);
             $em->persist($resetPassword);
             $em->flush();
             $email = new TemplatedEmail();
@@ -207,7 +215,7 @@ class SecurityController extends AbstractController
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         if ($this->getUser()) {
-            return $this->redirectToRoute('profile');
+            return $this->redirectToRoute('countdown');
         }
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
