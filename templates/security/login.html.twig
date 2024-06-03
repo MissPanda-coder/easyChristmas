@@ -6,7 +6,7 @@
         <h3 class="form_title">Connexion</h3>
         
         {% if error %}
-            <small class="custom_error">
+            <small class="form_error">
                 {{ error.messageKey|trans(error.messageData, 'security') }}
             </small>
         {% endif %}
@@ -19,12 +19,12 @@
         <p class="form_field">
             <label for="password_login" class="form_label">Mot de passe</label>
             <input type="password" name="_password" id="password_login" class="password_eye form_input" toggle required>
-            <i toggle="password_field" class="fa fa_eye_slash field_icon_login toggle_password"></i>
         </p>
          
-          <input type="checkbox" name="_remember_me" id="remember" class="checkbox">
+         <p class="form_field">
+            <input type="checkbox" name="_remember_me" id="remember" class="checkbox">
             <label for="remember" class="rememberMe">Se souvenir de moi</label>
-            
+        </p>
         
 
 <button type="submit" class="form_btn">Envoyer</button>

@@ -4,34 +4,41 @@
 {% block body %}
   <div class="block">
     
-  {{ form_start(registrationform, {'attr': {'class': 'form_layout'}}) }}
+  {{ form_start(registrationForm, {'attr': {'class': 'form_layout'}}) }}
   <h3 class="form_title">Inscription</h3>
 
-           <p class="form_field">
-        {{ form_label(registrationform.username, null, {'label_attr':{'class': 'form_label'}}) }}
-        {{ form_widget(registrationform.username, {'attr': {'class': 'form_input'}}) }}
-    </p> 
     <p class="form_field">
-        {{ form_label(registrationform.email, null, {'label_attr': {'class': 'form_label'}}) }}
-        {{ form_widget(registrationform.email, {'attr': {'class': 'form_input'}}) }}
+        {{ form_label(registrationForm.username, null, {'label_attr':{'class': 'form_label'}}) }}
+        {{ form_widget(registrationForm.username, {'attr': {'class': 'form_input'}}) }}
+        <small class="form_errors">{{ form_errors(registrationForm.username) }}</small>
+    <p class="form_field">
+        {{ form_label(registrationForm.email, null, {'label_attr': {'class': 'form_label'}}) }}
+        {{ form_widget(registrationForm.email, {'attr': {'class': 'form_input'}}) }}
+        <small class="form_errors">{{ form_errors(registrationForm.email) }}</small>
     </p>
     <p class="form_field">
-        {{ form_label(registrationform.password.first, null, {'label_attr': {'class': 'form_label'}}) }}
-        {{ form_widget(registrationform.password.first, {'attr': {'class': 'form_input'}}) }}
+        {{ form_label(registrationForm.password.first, null, {'label_attr': {'class': 'form_label'}}) }}
+        {{ form_widget(registrationForm.password.first, {'attr': {'class': 'form_input'}}) }}
+        <small class="form_errors">{{ form_errors(registrationForm.password.first) }}</small>
+   
     </p>
-       <p class="form_field">
-        {{ form_label(registrationform.password.second, null, {'label_attr': {'class': 'form_label'}}) }}
-        {{ form_widget(registrationform.password.second, {'attr': {'class': 'form_input'}}) }}
+    <p class="form_field">
+        {{ form_label(registrationForm.password.second, null, {'label_attr': {'class': 'form_label'}}) }}
+        {{ form_widget(registrationForm.password.second, {'attr': {'class': 'form_input'}}) }}
+        <small class="form_errors">{{ form_errors(registrationForm.password.second) }}</small>
     </p>
-
+    </p>
+    <p class="form_field">
         <input type="checkbox" id="checkboxCgu" name="checkboxCgu" class="checkboxCgu" required/>
         <label for="checkboxCgu" class="rememberMe" >J'ai lu et j'accepte les conditions générales d'utilisation</label>
-       
-    <button type="submit" class="form_btn">Envoyer</button>
+       </p>
+
+        <button type="submit" class="form_btn">Envoyer</button>
+
    <p class="form_field-center">
       <a href="{{ path('login') }}" class="register_button">Vous avez déjà un compte ?</a>
   </p>
-    {{ form_end(registrationform) }}
+    {{ form_end(registrationForm) }}
 </div>
   <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 {% endblock %}

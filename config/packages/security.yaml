@@ -29,7 +29,7 @@ security:
                 path: logout
             login_throttling:
                 max_attempts: 3
-                interval: '5 minutes'
+                interval: '10 minutes'
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
 

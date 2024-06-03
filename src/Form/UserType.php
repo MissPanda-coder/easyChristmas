@@ -20,9 +20,12 @@ class UserType extends AbstractType
         ->add('email', EmailType::class, ['label' => 'Email'])
         ->add('password', RepeatedType::class, [
             'type' => PasswordType::class,
+            'invalid_message' => 'Le mot de passe et la confirmation ne sont pas identiques.',
             'first_options'  => ['label' => 'Mot de passe'],
             'second_options' => ['label' => 'Confirmer le mot de passe'],
         ]);
+
+       
     }
 
     public function configureOptions(OptionsResolver $resolver): void

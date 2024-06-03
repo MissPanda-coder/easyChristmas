@@ -40,7 +40,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
-    #[Assert\Length(min: 6, minMessage: 'Le mot de passe doit faire au moins 6 caractères.')]
+    #[Assert\Regex(
+        pattern: "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/",
+        message: "Le mot de passe doit contenir au moins 6 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial."
+    )]
     #[Assert\NotBlank(message: 'Veuillez renseigner un mot de passe.')]
     private ?string $password = null;
 
@@ -51,6 +54,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $photo = null;
 
     #[ORM\Column(length: 150, nullable: true, unique: true)]
+    #[Assert\Length(min: 2, minMessage: 'Le nom d\'utilisateur doit faire au moins 2 caractères.')]
     private ?string $username = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -108,12 +112,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\JoinTable(name: "user_has_wishes")]
     private Collection $wishes;
 
+    /**
+     * @var Collection<int, EmailVerification>
+     */
+    #[ORM\OneToMany(targetEntity: EmailVerification::class, mappedBy: 'user')]
+    private Collection $emailVerifications;
+
     public function __construct()
     {
         $this->drawsOrganized = new ArrayCollection();
         $this->drawsParticipated = new ArrayCollection();
         $this->role = new ArrayCollection();
         $this->wishes = new ArrayCollection();
+        $this->emailVerifications = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -359,6 +370,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified($isVerified): static
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, EmailVerification>
+     */
+    public function getEmailVerifications(): Collection
+    {
+        return $this->emailVerifications;
+    }
+
+    public function addEmailVerification(EmailVerification $emailVerification): static
+    {
+        if (!$this->emailVerifications->contains($emailVerification)) {
+            $this->emailVerifications->add($emailVerification);
+            $emailVerification->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEmailVerification(EmailVerification $emailVerification): static
+    {
+        if ($this->emailVerifications->removeElement($emailVerification)) {
+            // set the owning side to null (unless already changed)
+            if ($emailVerification->getUser() === $this) {
+                $emailVerification->setUser(null);
+            }
+        }
 
         return $this;
     }

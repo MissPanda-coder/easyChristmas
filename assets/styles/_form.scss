@@ -17,7 +17,11 @@
       text-align: center;
       margin-bottom: 2rem;
     }
-  
+ 
+ .form_field{
+  margin-bottom: 1.1rem;;
+ }   
+
 .form_label{
   display: block; 
   margin-bottom: 5px;
@@ -76,7 +80,7 @@
    
     .form_password-forgot, .register_button{
       color:$c-white;
-      margin-bottom: 1rem;
+      margin-bottom: 0.5rem;
     }
 
     .form_password-forgot:hover, .register_button:hover{
@@ -84,11 +88,16 @@
       transition: all 0.4s ease-out;
     }
 
+    .form-field{
+      padding: 0;
+    }
+
     .form_field-center{
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column;
+        margin-bottom: 0.5rem;
     }
 
    .rememberMe{
@@ -98,6 +107,8 @@
     font-size: 0.85rem;
    }
 
-    .custom_error{
+    .form_errors{
       color:$c-red !important;
+      font-family: $f-second, sans-serif;
+      display: block;
     }
