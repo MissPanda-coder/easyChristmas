@@ -1,0 +1,49 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+    <h2>Créer une nouvelle recette</h2>
+
+    {{ form_start(recipeForm, {'attr': {'class': 'form_layout-recipe'}}) }}
+        <p class="form_field">
+            {{ form_label(recipeForm.title, null, {'label_attr':{'class': 'form_label'}}) }}
+            {{ form_widget(recipeForm.title, {'attr': {'class': 'form_input'}}) }}  
+        </p> 
+        <p class="form_field">
+            {{ form_label(recipeForm.description, null, {'label_attr': {'class': 'form_label'}}) }}
+            {{ form_widget(recipeForm.description, {'attr': {'class': 'form_input'}}) }}
+            {{ form_errors(recipeForm.description) }}    
+        </p>
+        <p class="form_field">
+            {{ form_label(recipeForm.photo, null, {'label_attr': {'class': 'form_label'}}) }}
+            {{ form_widget(recipeForm.photo, {'attr': {'class': 'form_input'}}) }}
+            {{ form_errors(recipeForm.photo) }}
+        </p>
+        <p class="form_field">
+            {{ form_label(recipeForm.duration, null, {'label_attr': {'class': 'form_label'}}) }}
+            {{ form_widget(recipeForm.duration, {'attr': {'class': 'form_input'}}) }}
+        </p>
+        <p class="form_field">
+            {{ form_label(recipeForm.recipecategory, null, {'label_attr': {'class': 'form_label'}}) }}
+            {{ form_widget(recipeForm.recipecategory, {'attr': {'class': 'form_input'}}) }}
+        </p> 
+        <p class="form_field">
+            {{ form_label(recipeForm.recipedifficulty, null, {'label_attr': {'class': 'form_label'}}) }}
+            {{ form_widget(recipeForm.recipedifficulty, {'attr': {'class': 'form_input'}}) }}
+        </p>
+        <p class="form_field">
+            {{ form_label(recipeForm.ingredients, null, {'label_attr': {'class': 'form_label'}}) }}
+            {{ form_widget(recipeForm.ingredients, {'attr': {'class': 'form_input'}}) }}
+        </p> 
+        <p class="form_field">
+            {{ form_label(recipeForm.recipestep, null, {'label_attr': {'class': 'form_label'}}) }}
+            {{ form_widget(recipeForm.recipestep, {'attr': {'class': 'form_input'}}) }}
+        </p>
+        <button type="submit" class="form_btn">Envoyer</button>
+        <p class="form_field">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+        </p>
+    
+    {{ form_end(recipeForm) }}
+
+{% endblock %}

@@ -1,0 +1,13 @@
+@import "_variables";
+@import "_mixin";
+
+#userRecipe{
+    width: 100%;
+    min-height: 100vh;
+    background-color: $c-red;
+}
+
+.form_layout-recipe{
+    width: 80%;
+    margin: 0 auto;
+}

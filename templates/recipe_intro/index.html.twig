@@ -4,44 +4,38 @@
 {% block body %}
 <h2>Idées Gourmandes pour les Fêtes</h2>
 
-<div class="row">
-
-<div class="col-sm-12 col-md-6 col-lg-6">
-<div class="recipes_item apero">
-<h4>Apéro</h4>
-<a class="recipes_a" href="{{ path('recipe_list_by_category', {'categoryName': 'aperitifs'}) }}">Les apéritifs</a>
-</div>
-</div>
-
-
-<div class="col-sm-12 col-md-6 col-lg-6">
-<div class="recipes_item entrees">
-<h4>Entrées</h4>
-<a class="recipes_a" href="{{ path('recipe_list_by_category', {'categoryName': 'entrees'}) }}">Les entrées</a>
-</div>
-</div>
-
-</div>
-
+<a class="recipes_a" href="{{ path('user_create_recipe') }}">Créer une recette</a>
 
 <div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-6">
+        <div class="recipes_item apero">
+            <h4>Apéro</h4>
+                <a class="recipes_a" href="{{ path('recipe_list_by_category', {'categoryname': 'apero'}) }}">Les apéritifs</a>
+        </div>
+    </div>
 
-<div class="col-sm-12 col-md-6 col-lg-6">
-<div class="recipes_item plats">
-<h4>Plats</h4>
-<a class="recipes_a" href="{{ path('recipe_list_by_category', {'categoryName': 'plats'}) }}">Les plats</a>
+    <div class="col-sm-12 col-md-6 col-lg-6">
+        <div class="recipes_item entrees">
+            <h4>Entrées</h4>
+                <a class="recipes_a" href="{{ path('recipe_list_by_category', {'categoryname': 'entrees'}) }}">Les entrées</a>
+        </div>
+    </div>
 </div>
-</div>
 
+<div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-6">
+        <div class="recipes_item plats">
+            <h4>Plats</h4>
+                <a class="recipes_a" href="{{ path('recipe_list_by_category', {'categoryname': 'plats'}) }}">Les plats</a>
+        </div>
+    </div>
 
-<div class="col-sm-12 col-md-6 col-lg-6">
-<div class="recipes_item desserts">
-<h4>Desserts</h4>
-<a class="recipes_a" href="{{ path('recipe_list_by_category', {'categoryName': 'desserts'}) }}">Les desserts</a>
-</div>
-</div>
-
-
+    <div class="col-sm-12 col-md-6 col-lg-6">
+        <div class="recipes_item desserts">
+            <h4>Desserts</h4>
+            <a class="recipes_a" href="{{ path('recipe_list_by_category', {'categoryname': 'desserts'}) }}">Les desserts</a>
+        </div>
+    </div>
 </div>
  
 {% endblock %}

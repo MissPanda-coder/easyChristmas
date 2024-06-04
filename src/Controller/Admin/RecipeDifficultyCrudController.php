@@ -2,7 +2,7 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\RecipeDifficulty;
+use App\Entity\Recipedifficulty;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -13,7 +13,7 @@ class RecipeDifficultyCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return RecipeDifficulty::class;
+        return Recipedifficulty::class;
     }
 
     public function configureCrud(Crud $crud): Crud
@@ -33,7 +33,7 @@ class RecipeDifficultyCrudController extends AbstractCrudController
     {
         return [
             
-            TextField::new('difficultyName', 'Intitulé du niveau de difficulté'),
+            TextField::new('difficultyname', 'Intitulé du niveau de difficulté'),
             
         ];
     }

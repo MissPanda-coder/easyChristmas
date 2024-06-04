@@ -2,16 +2,15 @@
 
 namespace App\Form;
 
-use App\Entity\Recipe;
-use App\Entity\RecipeStep;
+
+use App\Entity\Recipestep;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
-class RecipeStepsType extends AbstractType
+class RecipestepsType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -24,7 +23,7 @@ class RecipeStepsType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => RecipeStep::class,
+            'data_class' => Recipestep::class,
         ]);
     }
 }

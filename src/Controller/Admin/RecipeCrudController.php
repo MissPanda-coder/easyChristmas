@@ -4,13 +4,13 @@ namespace App\Controller\Admin;
 
 use App\Entity\Recipe;
 use App\Entity\Ingredient;
-use App\Entity\RecipeStep;
+use App\Entity\Recipestep;
 use App\Form\IngredientType;
-use App\Entity\RecipeCategory;
-use App\Entity\RecipeDifficulty;
+use App\Form\RecipestepsType;
+use App\Entity\Recipecategory;
+use App\Entity\Recipedifficulty;
 use App\Entity\RecipeHasIngredient;
 use App\Form\RecipeHasIngredientType;
-use App\Form\RecipeStepsType;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
@@ -48,14 +48,14 @@ class RecipeCrudController extends AbstractCrudController
             
             BooleanField::new('isActive', 'Active'),
             DateTimeField::new('createdAt', 'Créé le')->setFormat('dd/MM/YYYY HH:mm:ss')->hideOnForm(),
-            AssociationField::new('recipeCategory', 'Catégorie de la recette')
+            AssociationField::new('recipecategory', 'Catégorie de la recette')
             ->setFormTypeOptions([
-                'class' => RecipeCategory::class,
-                'choice_label' => 'categoryName',]),
-            AssociationField::new('recipeDifficulty', 'Niveau de difficulté')
+                'class' => Recipecategory::class,
+                'choice_label' => 'categoryname',]),
+            AssociationField::new('recipedifficulty', 'Niveau de difficulté')
                 ->setFormTypeOptions([
-                    'class' => RecipeDifficulty::class,
-                    'choice_label' => 'difficultyName',]),
+                    'class' => Recipedifficulty::class,
+                    'choice_label' => 'difficultyname',]),
             TextField::new('title', 'Titre de la recette'),
             TextEditorField::new('description', 'brève description de la recette'),
             TextField::new('photo', 'Image de la recette (png, jpg)'),
@@ -66,8 +66,8 @@ class RecipeCrudController extends AbstractCrudController
                 'by_reference' => false,
             ]),
             
-            CollectionField::new('recipeStep', 'Etapes de préparation de la recette')
-            ->setEntryType(RecipeStepsType::class)
+            CollectionField::new('recipestep', 'Etapes de préparation de la recette')
+            ->setEntryType(RecipestepsType::class)
             ->setFormTypeOptions([
                 'by_reference' => false,
             ])

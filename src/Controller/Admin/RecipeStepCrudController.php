@@ -2,7 +2,7 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\RecipeStep;
+use App\Entity\Recipestep;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
@@ -12,7 +12,7 @@ class RecipeStepCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return RecipeStep::class;
+        return Recipestep::class;
     }
 
     /*

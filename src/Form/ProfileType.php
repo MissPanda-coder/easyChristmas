@@ -18,13 +18,12 @@ class ProfileType extends AbstractType
             ->add('username', TextType::class)
             ->add('firstname', TextType::class, ['required' => false])
             ->add('lastname', TextType::class, ['required' => false])
-            ->add('photo', FileType::class, [   
+            ->add('photoFile', FileType::class, [   
                 'required' => false,
                 'mapped' => false,
                 'constraints' => [
                     new Image(
                       [
-          
                         'mimeTypesMessage' => 'Veuillez soumettre une image',
                         'maxSize' => '1M',
                         'maxSizeMessage' => 'Votre image fait {{ size }} {{ suffix }}. La limite est de {{ limit }} {{ suffix }}'

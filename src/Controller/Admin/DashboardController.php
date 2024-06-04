@@ -10,9 +10,9 @@ use App\Entity\Recipe;
 use App\Entity\Wishes;
 use App\Entity\Profile;
 use App\Entity\Ingredient;
-use App\Entity\RecipeStep;
-use App\Entity\RecipeCategory;
-use App\Entity\RecipeDifficulty;
+use App\Entity\Recipestep;
+use App\Entity\Recipecategory;
+use App\Entity\Recipedifficulty;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -55,11 +55,10 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::section('Administration du site');
         yield MenuItem::linkToDashboard('Retour DashBoard', 'fa-solid fa-house-laptop');
         yield MenuItem::linkToCrud('Utilisateur', 'fas fa-user', User::class);
-        yield MenuItem::linkToCrud('Profil', 'fa-solid fa-address-card', Profile::class);
         yield MenuItem::section('RECETTES');
         yield MenuItem::linkToCrud('Recettes', 'fa-solid fa-flask', Recipe::class);
-        yield MenuItem::linkToCrud('Catégories', 'fa-solid fa-list', RecipeCategory::class);
-        yield MenuItem::linkToCrud('Niveaux de difficulté', 'fa-solid fa-poo-storm', RecipeDifficulty::class);
+        yield MenuItem::linkToCrud('Catégories', 'fa-solid fa-list', Recipecategory::class);
+        yield MenuItem::linkToCrud('Niveaux de difficulté', 'fa-solid fa-poo-storm', Recipedifficulty::class);
         yield MenuItem::linkToCrud('Ingrédients', 'fa-solid fa-pepper-hot', Ingredient::class);
         yield MenuItem::linkToCrud('Unités de mesure', 'fa-solid fa-ruler', Unit::class);
 
