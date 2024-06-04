@@ -18,7 +18,7 @@
 
         <p class="form_field">
             <label for="password_login" class="form_label">Mot de passe</label>
-            <input type="password" name="_password" id="password_login" class="password_eye form_input" toggle required>
+            <input type="password" name="_password" id="password_login" class="password_eye form_input" required>
         </p>
          
          <p class="form_field">
@@ -32,7 +32,7 @@
             
             <a href="{{ path('reset-password-request') }}" class="form_password-forgot">Mot de passe oublié ?</a>
 
-            <a class="register_button" href="{{ path('signup') }}">Pas encore inscrit ?</a>
+            <a href="{{ path('signup') }}" class="register_button" >Pas encore inscrit ?</a>
         </p> 
         
         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">

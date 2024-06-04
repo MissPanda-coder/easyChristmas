@@ -7,7 +7,7 @@
 @import '_navBar';
 @import '_count';
 @import '_draw';
-@import 'wish';
+@import '_wish';
 @import '_recipes';
 @import '_recipesCat';
 @import '_recipesDetail';
@@ -17,9 +17,10 @@
 @import '_signup';
 @import '_profile';
 @import '_contact';
-@import 'thanks';
-@import 'oops';
-
+@import '_thanks';
+@import '_oops';
+@import '_resetPassword';
+@import '_flash';
 
 
 body {

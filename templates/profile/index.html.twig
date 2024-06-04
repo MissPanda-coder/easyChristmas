@@ -1,38 +1,36 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-<h2>Profil</h2>
+
+    <h2>Profil</h2>
 
     {{ form_start(userForm, {'attr': {'class': 'userForm_layout mx-auto'}}) }}
     
     <div class="row gap-3 ">
-    <div class="col-lg-5 col-md-5 col-sm-12 mx-auto" id="profile_photo-bento">
-        
-        <img src="{{ asset('uploads/photos/' ~ app.user.photo) }}" alt="Photo de profil" class="profile_picture mx-auto">
-        {{ form_widget(userForm.photo, {'attr': {'id': 'profile_photo'}}) }}
-    </div>
-    <div class="col-lg-7 col-md-7 col-sm-12 mx-auto" id="userForm_col-bento">
-        <p class="userForm_field">
-        {{ form_label(userForm.username, 'Nom d\'utilisateur', {'label_attr': {'class': 'userForm_label'}}) }}
-        {{ form_widget(userForm.username, {'attr': {'class': 'player_name'}}) }}
-          </p>
-
-        <p class="userForm_field">
-            {{ form_label(userForm.firstname, 'Prénom', {'label_attr': {'class': 'userForm_label'}}) }}
-            {{ form_widget(userForm.firstname, {'attr': {'class': 'player_name'}}) }}
+        <div class="col-lg-5 col-md-5 col-sm-12 mx-auto" id="profile_photo-bento">
+            <img src="{{ asset('uploads/photos/' ~ app.user.photo) }}" alt="Photo de profil" class="profile_picture mx-auto">
+                {{ form_widget(userForm.photo, {'attr': {'id': 'profile_photo'}}) }}
+        </div>
+        <div class="col-lg-7 col-md-7 col-sm-12 mx-auto" id="userForm_col-bento">
+            <p class="userForm_field">
+                {{ form_label(userForm.username, 'Nom d\'utilisateur', {'label_attr': {'class': 'userForm_label'}}) }}
+                {{ form_widget(userForm.username, {'attr': {'class': 'player_name'}}) }}
             </p>
-
-              <p class="userForm_field">
-         {{ form_label(userForm.lastname, 'Nom de famille', {'label_attr': {'class': 'userForm_label'}}) }} 
-            {{ form_widget(userForm.lastname, {'attr': {'class': 'player_name'}}) }}
-         </p>
-
-        <p class="userForm_field">
-        <button class="btn btn-primary">Modifier mon mot de passe</button>
-        </p>
+            <p class="userForm_field">
+                {{ form_label(userForm.firstname, 'Prénom', {'label_attr': {'class': 'userForm_label'}}) }}
+                {{ form_widget(userForm.firstname, {'attr': {'class': 'player_name'}}) }}
+            </p>
+            <p class="userForm_field">
+                {{ form_label(userForm.lastname, 'Nom de famille', {'label_attr': {'class': 'userForm_label'}}) }} 
+                {{ form_widget(userForm.lastname, {'attr': {'class': 'player_name'}}) }}
+            </p>
+            <button type="submit" class="form_btn">Envoyer</button>
+            <p class="userForm_field">
+            <a href="{{ path('reset-password-request') }}">Modifier mon mot de passe<a>
+            </p>
         </div>
     </div>
     {{ form_end(userForm) }}
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 {% endblock %}

@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\RateLimiter\RateLimiterFactory;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -104,34 +105,34 @@ class SecurityController extends AbstractController
         return $this->redirectToRoute('login');
     }
     
-#[Route('/reset-password/{token}', name: 'reset-password')]
-  public function resetPassword(RateLimiterFactory $passwordRecoveryLimiter, UserPasswordHasherInterface $userPasswordHasher, Request $request, EntityManagerInterface $em, string $token, ResetPasswordRepository $resetPasswordRepository)
-  {
-    $limiter = $passwordRecoveryLimiter->create($request->getClientIp());
-    if (false === $limiter->consume(1)->isAccepted()) {
+    #[Route('/reset-password/{token}', name: 'reset-password')]
+    public function resetPassword(RateLimiterFactory $passwordRecoveryLimiter, UserPasswordHasherInterface $userPasswordHasher, Request $request, EntityManagerInterface $em, string $token, ResetPasswordRepository $resetPasswordRepository)
+    {
+      $limiter = $passwordRecoveryLimiter->create($request->getClientIp());
+        if (false === $limiter->consume(1)->isAccepted()) {
       $this->addFlash('error', 'Vous devez attendre une heure pour refaire une nouvelle demande');
       return $this->redirectToRoute('login');
-    }
+        }
 
-    $resetPassword = $resetPasswordRepository->findOneBy(['token' => sha1($token)]);
+      $resetPassword = $resetPasswordRepository->findOneBy(['token' => sha1($token)]);
    
-    if (!$resetPassword || $resetPassword->getExpiredAt() < new \DateTime('now')) {
-      if ($resetPassword) {
-        $em->remove($resetPassword);
-        $em->flush();
-      }
+        if (!$resetPassword || $resetPassword->getExpiredAt() < new \DateTime('now')) {
+          if ($resetPassword) {
+            $em->remove($resetPassword);
+            $em->flush();
+          }
       $this->addFlash('error', 'Votre demande est expirée, veuillez refaire une demande.');
       return $this->redirectToRoute('login');
-    }
+        }
 
-    $passwordForm = $this->createFormBuilder()
+      $passwordForm = $this->createFormBuilder()
       ->add('password', PasswordType::class, [
         'label' => 'Nouveau mot de passe',
         'constraints' => [
-          new Length([
-            'min' => 6,
-            'minMessage' => 'Le mot de passe doit faire au moins 6 caractères.'
-          ]),
+          new Regex([
+            'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/',
+            'message' => 'Le mot de passe doit contenir au moins 6 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.'
+        ]),
           new NotBlank([
             'message' => 'Veuillez renseigner un mot de passe.'
           ])
@@ -139,8 +140,8 @@ class SecurityController extends AbstractController
       ])
       ->getForm();
 
-    $passwordForm->handleRequest($request);
-    if ($passwordForm->isSubmitted() && $passwordForm->isValid()) {
+      $passwordForm->handleRequest($request);
+        if ($passwordForm->isSubmitted() && $passwordForm->isValid()) {
       $password = $passwordForm->get('password')->getData();
       $user = $resetPassword->getUser();
       $hash = $userPasswordHasher->hashPassword($user, $password);
@@ -149,67 +150,74 @@ class SecurityController extends AbstractController
       $em->flush();
       $this->addFlash('success', 'Votre mot de passe a été modifié.');
       return $this->redirectToRoute('login');
-    }
-
-    return $this->render('security/resetpasswordform.html.twig', [
-      'form' => $passwordForm->createView()
-    ]);
-  }
-    
-      #[Route('/reset-password-request', name: 'reset-password-request')]
-      public function resetPasswordRequest(RateLimiterFactory $passwordRecoveryLimiter, MailerInterface $mailer, Request $request, UserRepository $userRepository, ResetPasswordRepository $resetPasswordRepository, EntityManagerInterface $em)
-      {
-
-        $limiter = $passwordRecoveryLimiter->create($request->getClientIp());
-        if (false === $limiter->consume(1)->isAccepted()) {
-          $this->addFlash('error', 'Vous devez attendre une heure pour refaire une récupération');
-          return $this->redirectToRoute('login');
         }
 
-        $emailForm = $this->createFormBuilder()->add('email', EmailType::class, [
-          'constraints' => [
-            new NotBlank([
-              'message' => 'Veuillez renseigner votre email'
-            ])
-          ]
-        ])->getForm();
-        $emailForm->handleRequest($request);
+      return $this->render('security/email-reset-password.html.twig', [
+        'form' => $passwordForm->createView(),
+        'token' => $token 
+      ]);
+    }
+    
+    #[Route('/reset-password-request', name: 'reset-password-request')]
+    public function resetPasswordRequest(RateLimiterFactory $passwordRecoveryLimiter, MailerInterface $mailer, Request $request, UserRepository $userRepository, ResetPasswordRepository $resetPasswordRepository, EntityManagerInterface $em)
+    {
+
+      $limiter = $passwordRecoveryLimiter->create($request->getClientIp());
+        if (false === $limiter->consume(1)->isAccepted()) {
+            $this->addFlash('error', 'Vous devez attendre une heure pour refaire une récupération');
+            return $this->redirectToRoute('login');
+        }
+
+      $emailForm = $this->createFormBuilder()->add('email', EmailType::class, [
+        'constraints' => [
+          new NotBlank([
+            'message' => 'Veuillez renseigner votre email'
+          ])
+        ]
+      ])->getForm();
+
+      $emailForm->handleRequest($request);
         if ($emailForm->isSubmitted() && $emailForm->isValid()) {
-          $emailValue = $emailForm->get('email')->getData();
-          $user = $userRepository->findOneBy(['email' => $emailValue]);
-          if ($user) {
-            $oldResetPassword = $resetPasswordRepository->findOneBy(['user' => $user]);
-            if ($oldResetPassword) {
-              $em->remove($oldResetPassword);
-              $em->flush();
-            }
-            $resetPassword = new ResetPassword();
-            $resetPassword->setUser($user);
-            $resetPassword->setExpiredAt(new \DateTimeImmutable('+2 hours'));
-            $token = substr(str_replace(['+', '/', '='], '', base64_encode(random_bytes(30))), 0, 20);
-            $hash = sha1($token);
-            $resetPassword->setToken($hash);
-            $em->persist($resetPassword);
-            $em->flush();
-            $email = new TemplatedEmail();
-            $email->to($emailValue)
-              ->subject('Demande de réinitialisation de mot de passe')
-              ->htmlTemplate('security/resetpasswordrequest.html.twig')
-              ->context([
-                'token' => $token
-              ]);
-            $mailer->send($email);
-          }
+            $emailValue = $emailForm->get('email')->getData();
+            $user = $userRepository->findOneBy(['email' => $emailValue]);
+              if ($user) {
+                $oldResetPassword = $resetPasswordRepository->findOneBy(['user' => $user]);
+                  if ($oldResetPassword) {
+                    $em->remove($oldResetPassword);
+                    $em->flush();
+                  }
+
+                $resetPassword = new ResetPassword();
+                $resetPassword->setUser($user);
+                $resetPassword->setExpiredAt(new \DateTimeImmutable('+2 hours'));
+                $token = substr(str_replace(['+', '/', '='], '', base64_encode(random_bytes(30))), 0, 20);
+                $hash = sha1($token);
+                $resetPassword->setToken($hash);
+                $em->persist($resetPassword);
+                $em->flush();
+
+                $email = (new TemplatedEmail())
+                  ->from('no-reply@easychristmas.fr')
+                  ->to($emailValue)
+                  ->subject('Demande de réinitialisation de mot de passe')
+                  ->htmlTemplate('security/email-reset-password.html.twig')
+                  ->context([
+                    'token' => $token
+                  ]);
+
+                $mailer->send($email);
+              }
+
           $this->addFlash('success', 'Un email vous a été envoyé pour réinitialiser votre mot de passe');
           return $this->redirectToRoute('home');
         }
     
-        return $this->render('security/resetpasswordrequest.html.twig', [
-          'form' => $emailForm->createView()
+        return $this->render('security/reset-password-request.html.twig', [
+          'emailForm' => $emailForm->createView(),
+          'page_title' => 'Demande de réinitialisation de mot de passe',
+          'sectionName' => 'resetPassword'
         ]);
-      }
-
-
+    }
 
     #[Route("/login", name: "login")]
     public function login(AuthenticationUtils $authenticationUtils): Response
@@ -232,4 +240,4 @@ class SecurityController extends AbstractController
     {
         // Symfony gère la déconnexion automatiquement
     }
-}
+  }
