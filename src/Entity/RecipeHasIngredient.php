@@ -24,6 +24,10 @@ class RecipeHasIngredient
     #[ORM\JoinColumn(nullable: false)]
     private ?Ingredient $ingredient = null;
 
+    #[ORM\ManyToOne(targetEntity: Unit::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Unit $unit = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -61,6 +65,18 @@ class RecipeHasIngredient
     public function setIngredient(?Ingredient $ingredient): static
     {
         $this->ingredient = $ingredient;
+
+        return $this;
+    }
+
+    public function getUnit(): ?Unit
+    {
+        return $this->unit;
+    }
+
+    public function setUnit(?Unit $unit): self
+    {
+        $this->unit = $unit;
 
         return $this;
     }

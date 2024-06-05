@@ -23,12 +23,12 @@ class RecipeListByCategoryController extends AbstractController
         $this->entityManager = $em;
         $this->recipeRepository = $em->getRepository(Recipe::class);
     }
-    #[Route('/recipe/list/by/category/{categoryName}', name: 'recipe_list_by_category')]
+    #[Route('/recipe/list/by/category/{categoryname}', name: 'recipe_list_by_category')]
     #[IsGranted('ROLE_USER')]
-    public function index(string $categoryName): Response
+    public function index(string $categoryname): Response
     {
 
-        $recipes = $this->recipeRepository->findByCategoryName($categoryName);
+        $recipes = $this->recipeRepository->findByCategoryname($categoryname);
 
         return $this->render('recipe_list_by_category/index.html.twig', [
             'recipes' => $recipes,

@@ -17,13 +17,10 @@ class RecipeCategoryCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            // Définir le titre pour la page 'index' (liste des entités)
+        
             ->setPageTitle('index', 'Catégories')
-            // Définir le titre pour la page 'new' (création d'une entité)
             ->setPageTitle('new', 'Créer une nouvelle catégorie')
-            // Définir le titre pour la page 'edit' (modification d'une entité)
             ->setPageTitle('edit', 'Modifier une catégorie')
-            // Définir le titre pour la page 'detail' (détails d'une entité)
             ->setPageTitle('detail', 'Catégorie');
     }
     

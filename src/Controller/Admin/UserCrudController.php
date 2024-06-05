@@ -4,6 +4,8 @@ namespace App\Controller\Admin;
 
 use App\Entity\User;
 use Symfony\Component\Form\FormEvents;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Response;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use Symfony\Component\Form\FormBuilderInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
@@ -35,19 +37,16 @@ class UserCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            // Définir le titre pour la page 'index' (liste des entités)
+
             ->setPageTitle('index', 'Utilisateurs')
-            // Définir le titre pour la page 'new' (création d'une entité)
             ->setPageTitle('new', 'Créer un nouvel utilisateur')
-            // Définir le titre pour la page 'edit' (modification d'une entité)
             ->setPageTitle('edit', 'Modifier un utilisateur')
-            // Définir le titre pour la page 'detail' (détails d'une entité)
             ->setPageTitle('detail', 'Utilisateurs');
     }
     
     public function configureFields(string $pageName): iterable
     {
-        $roles = ['ROLE_ADMIN', 'ROLE_USER', 'ROLE_ORGANIZER'];
+        $roles = ['ROLE_SUPER_ADMIN', 'ROLE_ADMIN'];
         $fields = [
             IdField::new('id')->hideOnForm(),
             EmailField::new('email', 'Adresse email'),
@@ -111,6 +110,5 @@ class UserCrudController extends AbstractCrudController
             $form->getData()->setPassword($hash);
         };
     }
-
 
     }

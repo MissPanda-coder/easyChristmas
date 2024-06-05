@@ -27,7 +27,7 @@ class Recipe
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: false)]
     private ?string $photo = null;
 
     #[ORM\Column]
@@ -52,18 +52,18 @@ class Recipe
     /**
      * @var Collection<int, Recipestep>
      */
-    #[ORM\OneToMany(targetEntity: Recipestep::class, mappedBy: 'recipe')]
+    #[ORM\OneToMany(targetEntity: Recipestep::class, mappedBy: 'recipe', cascade: ['persist'])]
     private Collection $recipestep;
 
-    /**
-     * @var Collection<int, RecipeHasIngredient>
-     */
-    #[ORM\OneToMany(targetEntity: RecipeHasIngredient::class, mappedBy: 'recipe')]
+    #[ORM\OneToMany(targetEntity: RecipeHasIngredient::class, mappedBy: 'recipe', cascade: ['persist'])]
     private Collection $ingredients;
+
 
     public function __construct()
     {
         $this->ingredients = new ArrayCollection();
+        $this->recipestep = new ArrayCollection();
+        $this->createdAt = new DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -115,7 +115,6 @@ class Recipe
     public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
-
         return $this;
     }
 

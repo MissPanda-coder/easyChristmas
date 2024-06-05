@@ -19,13 +19,10 @@ class RecipeDifficultyCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            // Définir le titre pour la page 'index' (liste des entités)
+
             ->setPageTitle('index', 'Niveaux de difficulté')
-            // Définir le titre pour la page 'new' (création d'une entité)
             ->setPageTitle('new', 'Créer un niveau de difficulté')
-            // Définir le titre pour la page 'edit' (modification d'une entité)
             ->setPageTitle('edit', 'Modifier une niveau de difficulté')
-            // Définir le titre pour la page 'detail' (détails d'une entité)
             ->setPageTitle('detail', 'Niveaux de difficulté');
     }
     

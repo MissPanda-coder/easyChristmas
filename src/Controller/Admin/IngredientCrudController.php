@@ -21,13 +21,10 @@ class IngredientCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            // Définir le titre pour la page 'index' (liste des entités)
+
             ->setPageTitle('index', 'Ingrédients')
-            // Définir le titre pour la page 'new' (création d'une entité)
             ->setPageTitle('new', 'Créer un nouvel ingrédient')
-            // Définir le titre pour la page 'edit' (modification d'une entité)
             ->setPageTitle('edit', 'Modifier l\'ingrédient')
-            // Définir le titre pour la page 'detail' (détails d'une entité)
             ->setPageTitle('detail', 'Détails de l\'ingrédient');
     }
     

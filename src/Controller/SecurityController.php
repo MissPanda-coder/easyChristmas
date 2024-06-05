@@ -51,6 +51,8 @@ class SecurityController extends AbstractController
             $user->setVerificationToken($hashedToken);
             $user->setVerificationTokenExpiresAt(new \DateTimeImmutable('+2 hours'));
 
+            $user->setRoles(['ROLE_USER']);
+            
             $em->persist($user);
             $em->flush();
 

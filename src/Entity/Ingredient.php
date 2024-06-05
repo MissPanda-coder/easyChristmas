@@ -26,7 +26,6 @@ class Ingredient
 
     
     #[ORM\ManyToOne(inversedBy: 'ingredients')]
-    #[ORM\JoinColumn(nullable: false)]
     private ?Unit $unit = null;
 
 

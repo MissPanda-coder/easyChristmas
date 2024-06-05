@@ -17,6 +17,30 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class ProfileController extends AbstractController
 {
 
+
+    #[Route('/user/{id}', name: 'user_info')]
+        public function setSuperAdmin(EntityManagerInterface $entityManager, int $id): Response
+    {
+        // Récupérer l'utilisateur par son ID
+        $user = $entityManager->getRepository(User::class)->find($id);
+
+        if (!$user) {
+            throw $this->createNotFoundException(
+                'No user found for id '.$id
+            );
+        }
+
+        // Mettre à jour les rôles de l'utilisateur
+        $roles = $user->getRoles();
+        if (!in_array('ROLE_SUPER_ADMIN', $roles)) {
+            $roles[] = 'ROLE_SUPER_ADMIN';
+            $user->setRoles($roles);
+            $entityManager->flush();
+        }
+
+        return new Response('Rôle ROLE_SUPER_ADMIN ajouté à l\'utilisateur avec ID '.$id);
+    }
+    
     #[Route('/user/{id}', name: 'user')]
     #[IsGranted('ROLE_USER')]
     public function userProfile(User $user): Response

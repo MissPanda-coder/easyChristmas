@@ -21,6 +21,7 @@ class Recipestep
     private ?string $description = null;
 
     #[ORM\ManyToOne(inversedBy: 'Recipestep')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Recipe $recipe = null;
 
     public function getId(): ?int

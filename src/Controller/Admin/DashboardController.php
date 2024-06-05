@@ -2,44 +2,35 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Assignation;
 use App\Entity\Draw;
 use App\Entity\Unit;
 use App\Entity\User;
 use App\Entity\Recipe;
 use App\Entity\Wishes;
-use App\Entity\Profile;
 use App\Entity\Ingredient;
-use App\Entity\Recipestep;
+use App\Entity\Assignation;
 use App\Entity\Recipecategory;
 use App\Entity\Recipedifficulty;
+use App\Repository\UserRepository;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
-
+#[IsGranted('ROLE_SUPER_ADMIN', message: 'You are not allowed to access the admin dashboard.')]
 class DashboardController extends AbstractDashboardController
 {
+
     #[Route('/admin', name: 'admin')]
-    public function index(): Response
+    public function adminDashboard(UserRepository $userRepository): Response
     {
-        // return parent::index();
+        $user = $this->getUser();
+        if ($user) {
+            dump($user->getRoles()); // Ajoutez cette ligne pour vérifier les rôles
+        }
 
-        // Option 1. You can make your dashboard redirect to some common page of your backend
-        //
-        // $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
-        // return $this->redirect($adminUrlGenerator->setController(OneOfYourCrudController::class)->generateUrl());
-
-        // Option 2. You can make your dashboard redirect to different pages depending on the user
-        //
-        // if ('jane' === $this->getUser()->getUsername()) {
-        //     return $this->redirect('...');
-        // }
-
-        // Option 3. You can render some custom template to display a proper dashboard with widgets, etc.
-        // (tip: it's easier if your template extends from @EasyAdmin/page/content.html.twig)
-        //
         return $this->render('admin/index.html.twig');
     }
 
