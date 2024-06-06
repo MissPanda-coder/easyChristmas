@@ -58,6 +58,9 @@ class Recipe
     #[ORM\OneToMany(targetEntity: RecipeHasIngredient::class, mappedBy: 'recipe', cascade: ['persist'])]
     private Collection $ingredients;
 
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null;
+
 
     public function __construct()
     {
@@ -266,6 +269,18 @@ public function removeIngredient(RecipeHasIngredient $ingredient): self
     public function setIsActive(?bool $isActive): self
     {
         $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
 
         return $this;
     }

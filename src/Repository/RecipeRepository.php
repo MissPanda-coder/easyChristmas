@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Recipe;
 use App\Entity\Recipecategory;
+use App\Entity\Recipedifficulty;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
@@ -28,6 +29,17 @@ class RecipeRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+
+    function findById(int $id): array
+{
+        return $this->createQueryBuilder('recipe')
+            ->addSelect('difficulty')
+            ->join('recipe.recipedifficulty', 'difficulty')
+            ->where('recipe.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult();
+}
 
     //    /**
     //     * @return Recipe[] Returns an array of Recipe objects

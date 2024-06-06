@@ -8,8 +8,8 @@
 @import '_count';
 @import '_draw';
 @import '_wish';
-@import '_recipes';
-@import '_recipesCat';
+@import '_recipesIntro';
+@import '_recipesByCat';
 @import '_recipesDetail';
 @import '_pdc';
 @import '_cgu';
@@ -60,7 +60,7 @@ h1{
        color: $c-white !important;
        text-align: center;
        margin-top:2rem;
-       margin-bottom: 4rem !important;
+       margin-bottom: 2.5rem !important;
 }
 
 h3{

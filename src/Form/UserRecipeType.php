@@ -8,6 +8,7 @@ use App\Entity\Recipedifficulty;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -26,7 +27,18 @@ class UserRecipeType extends AbstractType
                 'label' => 'Description',
             ])
             ->add('photo', TextType::class, [
-                'label' => 'Image de la recette (URL)',
+                'label' => 'Image de la recette',
+                    'required' => false,
+                    'mapped' => false,
+                    'constraints' => [
+                        new Image(
+                          [
+                            'mimeTypes' => ['image/jpeg', 'image/png'],
+                            'mimeTypesMessage' => 'Veuillez soumettre une image de type JPG ou PNG.',
+                            'maxSize' => '1M',
+                            'maxSizeMessage' => 'Votre image fait {{ size }} {{ suffix }}. La limite est de {{ limit }} {{ suffix }}'
+                          ]),
+                        ],
             ])
             ->add('duration', TextType::class, [
                 'label' => 'Temps de préparation',

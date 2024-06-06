@@ -61,6 +61,8 @@ Encore
 
     // uncomment if you use React
     //.enableReactPreset()
+// Enables processing of images
+
 
     // uncomment to get integrity="..." attributes on your script & link tags
     // requires WebpackEncoreBundle 1.4 or higher

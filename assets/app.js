@@ -126,26 +126,26 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
   //CAROUSSEL
-  const buttons = document.querySelectorAll(".recipes_items-navigation button");
-  const slides = document.querySelector(".recipes_carousel");
+  // const buttons = document.querySelectorAll(".recipes_items-navigation button");
+  // const slides = document.querySelector(".recipes_carousel");
   
-  let currentPosition = 0; 
+  // let currentPosition = 0; 
   
-  buttons.forEach(button => {
-    button.addEventListener("click", e => {
-      if (!button.classList.contains("active")) {
-        buttons.forEach(item => item.classList.remove("active"));
-        button.classList.add("active");
+  // buttons.forEach(button => {
+  //   button.addEventListener("click", e => {
+  //     if (!button.classList.contains("active")) {
+  //       buttons.forEach(item => item.classList.remove("active"));
+  //       button.classList.add("active");
   
-        if (button.classList.contains("first")) {
-          currentPosition = 0;
-        } else if (button.classList.contains("second")) {
-          currentPosition = -33;
-        } else if (button.classList.contains("third")) {
-          currentPosition = -66;
-        }
+  //       if (button.classList.contains("first")) {
+  //         currentPosition = 0;
+  //       } else if (button.classList.contains("second")) {
+  //         currentPosition = -33;
+  //       } else if (button.classList.contains("third")) {
+  //         currentPosition = -66;
+  //       }
         
-        slides.style.transform = `translateX(${currentPosition}%)`; 
-      }
-    });
-  });
+  //       slides.style.transform = `translateX(${currentPosition}%)`; 
+  //     }
+  //   });
+  // });

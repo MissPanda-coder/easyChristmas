@@ -1,0 +1,22 @@
+@import "_variables";
+
+
+#recipesListByCategory{
+    width: 100%;
+    min-height: 100vh;
+    background-color: $c-red;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+   
+}
+
+.recipes_discover{
+    color:$c-green;
+    font-family: $f-second, sans-serif;
+}
+
+.recipes_discover:hover{
+    text-decoration: none;
+    color:$c-red;
+}

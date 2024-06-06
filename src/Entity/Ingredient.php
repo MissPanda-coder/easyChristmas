@@ -39,6 +39,10 @@ class Ingredient
         return $this->id;
     }
 
+    public function __toString(): string
+    {
+        return $this->ingredientname;
+    }
     public function getIngredientname(): ?string
     {
         return $this->ingredientname;

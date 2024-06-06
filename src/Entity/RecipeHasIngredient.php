@@ -57,6 +57,10 @@ class RecipeHasIngredient
         return $this;
     }
 
+    public function __toString(): string
+    {
+        return $this->ingredient;
+    }
     public function getIngredient(): ?Ingredient
     {
         return $this->ingredient;

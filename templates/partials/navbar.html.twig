@@ -9,7 +9,13 @@
                 <li><a href="{{ path('countdown') }}">Compte à rebours</a></li>
                 <li><a href="{{ path('draw') }}">Tirage au sort</a></li>
                 <li><a href="{{ path('wishlist') }}">Liste au père Noël</a></li>
-                <li><a href="{{ path('recipe_intro') }}">Idées recettes</a></li>
+                <li class="dropdown">
+                    <a href="{{ path('recipe_intro') }}" class="dropbtn">Idées recettes</a>
+                    <div class="dropdown-content">
+                        <a href="{{ path('recipe_intro') }}">Consulter nos recettes</a>
+                        <a href="{{ path('user_recipe_create') }}">Créer une recette</a>
+                    </div>
+                </li>
                 <li><button class="login_button" href="{{ path('login') }}">Se connecter</button></li>
             </ul>
 
@@ -19,7 +25,13 @@
                 <li><a href="{{ path('countdown') }}">Compte à rebours</a></li>
                 <li><a href="{{ path('draw') }}">Tirage au sort</a></li>
                 <li><a href="{{ path('wishlist') }}">Liste au père Noël</a></li>
-                <li><a href="{{ path('recipe_intro') }}">Idées recettes</a></li>
+                <li class="dropdown">
+                    <a href="{{ path('recipe_intro') }}" class="dropbtn">Idées recettes</a>
+                    <div class="dropdown-content">
+                        <a href="{{ path('recipe_intro') }}">Consulter nos recettes</a>
+                        <a href="{{ path('user_recipe_create') }}">Créer une recette</a>
+                    </div>
+                </li>
                 {%- if is_granted('IS_AUTHENTICATED_FULLY') -%}
                 <div class="dropdown">
                     {% if app.user and app.user.photo %}
@@ -36,8 +48,9 @@
                     </div>
                 </div>
                 {%- else -%}
-                <li><a class="login_button" href="{{ path('login') }}" >Se connecter</a></li>
+                <li><a class="login_button" href="{{ path('login') }}">Se connecter</a></li>
                 {%- endif -%}
             </ul>
         </nav>
     </header>
+

@@ -24,7 +24,8 @@ class ProfileType extends AbstractType
                 'constraints' => [
                     new Image(
                       [
-                        'mimeTypesMessage' => 'Veuillez soumettre une image',
+                        'mimeTypes' => ['image/jpeg', 'image/png'],
+                        'mimeTypesMessage' => 'Veuillez soumettre une image de type JPG ou PNG.',
                         'maxSize' => '1M',
                         'maxSizeMessage' => 'Votre image fait {{ size }} {{ suffix }}. La limite est de {{ limit }} {{ suffix }}'
                       ]),

@@ -4,23 +4,23 @@
 {% block body %}
 <h2>Idées Gourmandes pour les Fêtes</h2>
 
-<div class="recipes_carousel">
-
     {% for recipe in recipes %}
-        <div class="recipes_item verrine active">
-            <h4>{{ recipe.title }}</h4>
-            <a class="recipes_a" href="">Découvrez la recette</a>
+       <div class="card mb-3" style="max-width: 540px;">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img src="{{ recipe.title }}" class="img-fluid rounded-start" alt="...">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h4>{{ recipe.title }}</h4>
+                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                            <a class="recipes_discover" href="{{ path('recipe_detailed', {slug: recipe.slug, id: recipe.id}) }}">Découvrez la recette</a>
+        
+                    </div>
+                </div>
+            </div>
         </div>
+
     {% endfor %}
-
-
-</div>
-<div class="recipes_items-navigation">
-    <img class="recipes_item-previous active first" src="/assets/images/else/fleche.png" alt="flèche pour aller vers la gauche">
-    <button class="second">b</button>
-
-    <img class="recipes_item-next third" src="/assets/images/else/fleche.png" alt="flèche pour aller vers la droite">
-
-</div>
 
 {% endblock %}

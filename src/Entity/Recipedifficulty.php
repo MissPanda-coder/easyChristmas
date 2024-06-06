@@ -34,6 +34,11 @@ class Recipedifficulty
         return $this->id;
     }
 
+    public function __toString(): string
+    {
+        return $this->difficultyname;
+    }
+    
     public function getDifficultyname(): ?string
     {
         return $this->difficultyname;
