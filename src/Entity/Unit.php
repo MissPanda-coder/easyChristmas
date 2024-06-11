@@ -34,6 +34,10 @@ class Unit
         return $this->id;
     }
 
+    public function __toString()
+    {
+        return (string) $this->Unitname; 
+    }
     public function getUnitname(): ?string
     {
         return $this->Unitname;

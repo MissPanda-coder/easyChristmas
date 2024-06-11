@@ -86,7 +86,7 @@ class ProfileController extends AbstractController
                     );
 
                     // Mettre à jour le chemin de la nouvelle photo de l'utilisateur
-                    $user->setPhoto('uploads/photos/' . $filename);
+                    $user->setPhoto($filename);
                 } catch (FileException $e) {
                     // Handle exception if something happens during file upload
                 }

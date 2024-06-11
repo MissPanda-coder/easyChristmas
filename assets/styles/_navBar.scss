@@ -99,26 +99,25 @@ header ul a{
     transition: all 0.4s ease-out;
 }
 
-.dropdown {
+.dropdown-recipes {
     position: relative;
     display: inline-block;
 }
 
-.dropbtn {
+.dropdown-recipes .dropbtn {
     cursor: pointer;
 }
 
-.dropdown-content {
+.dropdown-recipes .dropdown-content {
     display: none;
     position: absolute;
     background-color: $c-white;
     max-width: 140px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
-  
 }
 
-.dropdown-content a {
+.dropdown-recipes .dropdown-content a {
     font-size: 0.8rem;
     text-transform: lowercase;
     color: rgb(29, 28, 28);
@@ -127,15 +126,51 @@ header ul a{
     display: block;
 }
 
-.dropdown-content a:hover {
+.dropdown-recipes .dropdown-content a:hover {
     background-color: #f1f1f1;
 }
 
-.dropdown:hover .dropdown-content {
+.dropdown-recipes:hover .dropdown-content {
     display: block;
 }
 
-.avatar{
+
+.dropdown-profile {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-profile .dropbtn {
+    cursor: pointer;
+}
+
+.dropdown-profile .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: $c-white;
+    max-width: 140px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-profile .dropdown-content a {
+    font-size: 0.8rem;
+    text-transform: lowercase;
+    color: rgb(29, 28, 28);
+    padding: 0.9rem 1.1rem;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-profile .dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown-profile:hover .dropdown-content {
+    display: block;
+}
+
+#avatar{
     border-radius: 50%;
     width: 35px;
     height: 35px;

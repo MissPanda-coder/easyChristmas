@@ -1,42 +1,57 @@
+
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<div class="page-container">
-    <div class="recipe-container">
-        <h1>{{ recipe.title }}</h1>
-        <div class="recipe-header">
-            <div class="recipe-photo">
-                <img src="{{ asset('uploads/photo/' ~ recipe.photo) }}" alt="Photo de la recette">
-            </div>
-            <div class="recipe-info">
-                <div>
-                    <strong>Temps de préparation :</strong>
-                    <p>{{ recipe.duration }}</p>
+<h1>{{ recipe.title }}</h1>
+
+<div class="container_detailed">
+    <div class="row gy-5">
+        <div class="col-sm-3 d-flex justify-content-center" id="recipe_ingredients-size">
+            <article class="recipe_ingredients">
+                <div class="quantity">
+                    <button class="minus1">-</button>
+                        <input class="quantity_input" id="quantity_input-choice" min="1" name="quantity_input-choice" value="1" >
+                            <button class="add1">+</button>
                 </div>
-                <div>
-                    <strong>Niveau :</strong>
-                    <p>{{ recipe.recipedifficulty }}</p>
-                </div>
-                <div>
-                    <strong>Ingrédients :</strong>
-                    <ul>
-                        {% for ingredient in recipe.ingredients %}
-                            <li>{{ ingredient.ingredient }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="recipe-description">
-            <p>{{ recipe.description }}</p>
-        </div>
-        <div class="recipe-steps">
-            <h2>Étapes de préparation :</h2>
-            <ol>
-                {% for step in recipe.steps %}
-                    <li>{{ step }}</li>
+                <strong>Ingrédients :</strong>
+                <ul class="ingredient_layout">
+                {% for ingredient in recipe.ingredients %}
+                    <li class="ingredient_li">
+                        <span class="ingredient_label">{{ ingredient.ingredient }}</span>
+                        <span class="js-ingredient-qty ingredient_qty">{{ ingredient.quantity }} {{ ingredient.unit }}</span>
+                    </li>
                 {% endfor %}
-            </ol>
+                </ul>
+            </article>        
+        </div>
+        <div class="col-sm-9">
+            <div class="row">
+                <div class="col-8 col-sm-6 d-flex justify-content-end">
+                    <article class="recipe_info">
+                        <strong>Temps de préparation :</strong>
+                        <p>{{ recipe.duration }}</p>
+                        <strong>Niveau :</strong>
+                        <p>{{ recipe.recipedifficulty }}</p>
+                    </article>  
+                </div>
+                <div class="col-4 col-sm-6 d-flex justify-content-end">
+                    <img src="{{ asset('uploads/photos/' ~ recipe.photo) }}" class="recipe_photo" alt="Photo de la recette">
+                 </div>
+            </div>
+        </div>
+    
+        <div class="col-12">
+        <article class="recipe_steps">
+            <strong>Étapes de préparation :</strong>
+                <ol>
+                {% for recipesteps in recipe.recipestep %}
+                    <li class="recipe_step-description">
+                    <p class="stepnumber_strong">{{ recipesteps }}</p>
+                    <p class="step-description_justify">{{ recipesteps.description}}</p>
+                    </li>
+                {% endfor %}
+                </ol>
+        </article>
         </div>
     </div>
 </div>

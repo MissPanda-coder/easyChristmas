@@ -28,7 +28,10 @@ class Recipestep
     {
         return $this->id;
     }
-
+    public function __toString()
+    {
+        return (string) $this->stepnumber;
+    }
     public function getStepnumber(): ?int
     {
         return $this->stepnumber;
@@ -41,6 +44,7 @@ class Recipestep
         return $this;
     }
 
+    
     public function getDescription(): ?string
     {
         return $this->description;

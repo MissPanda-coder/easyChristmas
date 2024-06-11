@@ -33,8 +33,13 @@ class RecipeRepository extends ServiceEntityRepository
     function findById(int $id): array
 {
         return $this->createQueryBuilder('recipe')
-            ->addSelect('difficulty')
+            ->addSelect('difficulty, stepnumber, description, quantity, unit, ingredient')
             ->join('recipe.recipedifficulty', 'difficulty')
+            ->join('recipe.recipe_has_ingredient', 'quantity')
+            ->join('recipe.recipe_has_ingredient', 'unit')
+            ->join('recipe.recipe_has_ingredient', 'ingredient')
+            ->join('recipe.recipestep', 'stepnumber')
+            ->join('recipe.recipestep', 'description')
             ->where('recipe.id = :id')
             ->setParameter('id', $id)
             ->getQuery()

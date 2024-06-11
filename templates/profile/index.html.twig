@@ -9,7 +9,7 @@
     
     <div class="row gap-3 ">
         <div class="col-lg-5 col-md-5 col-sm-12 mx-auto" id="profile_photo-bento">
-            <img src="{{ app.user.photo }}" alt="Photo de profil" class="profile_picture mx-auto">
+            <img src="{{ asset('uploads/photos/' ~ app.user.photo) }}" alt="Photo de profil" class="profile_picture mx-auto">
                 {{ form_widget(userForm.photoFile, {'attr': {'id': 'profile_photo'}}) }}
             <button type="submit" class="form_btn">Envoyer</button>
         </div>

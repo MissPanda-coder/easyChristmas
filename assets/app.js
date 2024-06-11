@@ -18,7 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-
 // ===== HAMBURGER BUTTON ===== //
 document.addEventListener('DOMContentLoaded', function() {
     const hamburger = document.querySelector(".hamburger");
@@ -72,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
     "2.5"
   );
   
-  // Effet de neige
+  // EFFET NEIGE
   const numberOfSnowflakes = 100;
   
   for (let i = 0; i < numberOfSnowflakes; i++) {
@@ -90,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   
-  let christmas = new Date("2024-12-24T23:59:00"); // Définissez la date cible de Noël
+  let christmas = new Date("2024-12-24T23:59:00"); 
   
   // Fonction pour formater les nombres avec un zéro devant si inférieur à 10
   function caractere(nb) {
@@ -98,7 +97,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   function countdown() {
-      let today = new Date(); // Obtenir la date et l'heure actuelles à chaque appel
+      let today = new Date(); 
       let total_seconds = Math.floor((christmas - today) / 1000); // Calculer le total des secondes restantes
       
       if (total_seconds > 0) {
@@ -121,31 +120,21 @@ document.addEventListener('DOMContentLoaded', function() {
       setTimeout(countdown, 1000); // Répéter le compte à rebours toutes les secondes
   }
   
-  // Initialisation du compte à rebours
   countdown();
   
   
-  //CAROUSSEL
-  // const buttons = document.querySelectorAll(".recipes_items-navigation button");
-  // const slides = document.querySelector(".recipes_carousel");
-  
-  // let currentPosition = 0; 
-  
-  // buttons.forEach(button => {
-  //   button.addEventListener("click", e => {
-  //     if (!button.classList.contains("active")) {
-  //       buttons.forEach(item => item.classList.remove("active"));
-  //       button.classList.add("active");
-  
-  //       if (button.classList.contains("first")) {
-  //         currentPosition = 0;
-  //       } else if (button.classList.contains("second")) {
-  //         currentPosition = -33;
-  //       } else if (button.classList.contains("third")) {
-  //         currentPosition = -66;
-  //       }
-        
-  //       slides.style.transform = `translateX(${currentPosition}%)`; 
-  //     }
-  //   });
-  // });
+//  CALCUL INGREDIENTS PAR PERSONNE
+let minus = document.querySelector(".minus1");
+let plus = document.querySelector(".add1");
+let persons = document.querySelector("#quantity_input-choice");
+
+minus.addEventListener("click", () => {
+  if (persons.value <= 10) {
+    persons.value--;
+  }
+});
+plus.addEventListener("click", () => {
+  if (persons.value <= 1) {
+    persons.value++;
+  }
+});

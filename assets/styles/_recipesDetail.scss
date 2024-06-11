@@ -7,59 +7,85 @@
     background-color: $c-red; 
 }
 
-
-.recipe-container {
-    width: 80%;
-    margin: 0 auto;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+.container_detailed{
+    width:65%;
+    margin:auto;
+   padding-bottom:5rem;
 }
 
-.recipe-header {
+.recipe_ingredients{
+width:370px;
+padding: 20px;
+background-color: $c-white; 
+color: $c-grey; 
+border-radius: 16px;
+}
+
+.quantity{
+    display:flex;
+    width:160px;
+    justify-content: center;
+    margin:auto;
+ }
+
+.quantity_input,.minus1,.add1{
+   width:50px;
+   padding:.3em;
+   font-size:1rem;
+   color: $c-grey;
+   text-align:center;
+   font-weight:700;
+   background:$c-white;
+   border:1px solid $c-grey;
+}
+
+.quantity input{
+   border-left:none;
+   border-right:none;
+}
+
+.ingredient_layout, .ingredient_li{
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px;
 }
 
-.recipe-photo img {
-    max-width: 100%;
-    border-radius: 10px;
+.ingredient_layout{
+flex-flow: column wrap;
+margin:0 0 2rem 0;
 }
 
-.recipe-info {
-    flex: 1;
-    margin-left: 20px;
-    background-color: #fff; /* Fond blanc pour la section d'info */
-    color: #000; /* Texte noir pour la section d'info */
-    padding: 10px;
-    border-radius: 10px;
+.ingredient_li{
+    border-bottom:0.6px solid $c-grey;
+}
+.recipe_info {
+    background-color: $c-white; 
+    color: $c-grey; 
+    padding: 20px;
+    border-radius: 16px;
+    width:370px;
 }
 
-.recipe-info div {
+.recipe_photo{
+    width:370px;
+    height: 340px;
+    border-radius: 16px;
+}
+
+.recipe_steps {
+    background-color: $c-white; 
+    color: $c-grey; 
+    padding: 20px;
+    border-radius: 16px;
+}
+
+.stepnumber_strong{
     margin-bottom: 10px;
+    font-size: 1.2rem;
+    font-weight: 600;
 }
 
-.recipe-description {
-    margin-bottom: 20px;
-}
-
-.recipe-steps {
-    background-color: #fff; /* Fond blanc pour les étapes */
-    color: #000; /* Texte noir pour les étapes */
-    padding: 10px;
-    border-radius: 10px;
-}
-
-.recipe-steps h2 {
-    margin-top: 0;
-}
-
-.recipe-steps ol {
-    padding-left: 20px;
-}
-
-.recipe-steps li {
-    margin-bottom: 10px;
+.step-description_justify{
+    text-align: justify;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }

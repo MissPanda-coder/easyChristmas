@@ -1,56 +1,57 @@
 <section id="{{ sectionName }}">
-    <header>
-        <nav class="container-fluid navbar">
-            <button class="hamburger"><a href="#"><div class="bar"></div></a></button>
+<header>
+    <nav class="container-fluid navbar">
+        <button class="hamburger"><a href="#"><div class="bar"></div></a></button>
 
-            <ul class="nav_links-hidden">
-                <li><img src="{{ asset('images/favicon/favicon.png') }}" alt="photo du Père Noël étonné qui tient ses lunettes sur son nez" /></li>
-                <li><a href="{{ path('home') }}">Accueil</a></li>
-                <li><a href="{{ path('countdown') }}">Compte à rebours</a></li>
-                <li><a href="{{ path('draw') }}">Tirage au sort</a></li>
-                <li><a href="{{ path('wishlist') }}">Liste au père Noël</a></li>
-                <li class="dropdown">
-                    <a href="{{ path('recipe_intro') }}" class="dropbtn">Idées recettes</a>
-                    <div class="dropdown-content">
-                        <a href="{{ path('recipe_intro') }}">Consulter nos recettes</a>
-                        <a href="{{ path('user_recipe_create') }}">Créer une recette</a>
-                    </div>
-                </li>
-                <li><button class="login_button" href="{{ path('login') }}">Se connecter</button></li>
-            </ul>
-
-            <ul class="nav_links">
-                <li><img src="{{ asset('images/favicon/favicon.png') }}" alt="photo du Père Noël étonné qui tient ses lunettes sur son nez" /></li>
-                <li><a href="{{ path('home') }}">Accueil</a></li>
-                <li><a href="{{ path('countdown') }}">Compte à rebours</a></li>
-                <li><a href="{{ path('draw') }}">Tirage au sort</a></li>
-                <li><a href="{{ path('wishlist') }}">Liste au père Noël</a></li>
-                <li class="dropdown">
-                    <a href="{{ path('recipe_intro') }}" class="dropbtn">Idées recettes</a>
-                    <div class="dropdown-content">
-                        <a href="{{ path('recipe_intro') }}">Consulter nos recettes</a>
-                        <a href="{{ path('user_recipe_create') }}">Créer une recette</a>
-                    </div>
-                </li>
-                {%- if is_granted('IS_AUTHENTICATED_FULLY') -%}
-                <div class="dropdown">
-                    {% if app.user and app.user.photo %}
-                        <a href="#" class="dropbtn"><img src="{{ app.user.photo }}" class="avatar" alt="Photo de profil"></a>
-                    {% else %}
-                        <a href="#" class="dropbtn"><img src="{{ asset('images/avatars/defaultAvatar.png') }}" class="avatar" alt="Avatar par défaut"></a>
-                    {% endif %}
-                    <div class="dropdown-content">
-                        <a href="{{ path('profile') }}">Profil</a>
-                        {%- if is_granted('ROLE_ADMIN') or is_granted('ROLE_SUPER_ADMIN') -%}
-                        <a href="{{ path('admin') }}">Dashboard</a>
-                        {%- endif -%}
-                        <a href="{{ path('logout') }}">Déconnexion</a>
-                    </div>
+        <ul class="nav_links-hidden">
+            <li><img src="{{ asset('images/favicon/favicon.png') }}" alt="photo du Père Noël étonné qui tient ses lunettes sur son nez" /></li>
+            <li><a href="{{ path('home') }}">Accueil</a></li>
+            <li><a href="{{ path('countdown') }}">Compte à rebours</a></li>
+            <li><a href="{{ path('draw') }}">Tirage au sort</a></li>
+            <li><a href="{{ path('wishlist') }}">Liste au père Noël</a></li>
+            <li class="dropdown-recipes">
+                <a href="{{ path('recipe_intro') }}" class="dropbtn">Idées recettes</a>
+                <div class="dropdown-content">
+                    <a href="{{ path('recipe_intro') }}">Consulter nos recettes</a>
+                    <a href="{{ path('user_recipe_create') }}">Créer une recette</a>
                 </div>
-                {%- else -%}
-                <li><a class="login_button" href="{{ path('login') }}">Se connecter</a></li>
-                {%- endif -%}
-            </ul>
-        </nav>
-    </header>
+            </li>
+            <li><button class="login_button" href="{{ path('login') }}">Se connecter</button></li>
+        </ul>
+
+        <ul class="nav_links">
+            <li><img src="{{ asset('images/favicon/favicon.png') }}" alt="photo du Père Noël étonné qui tient ses lunettes sur son nez" /></li>
+            <li><a href="{{ path('home') }}">Accueil</a></li>
+            <li><a href="{{ path('countdown') }}">Compte à rebours</a></li>
+            <li><a href="{{ path('draw') }}">Tirage au sort</a></li>
+            <li><a href="{{ path('wishlist') }}">Liste au père Noël</a></li>
+            <li class="dropdown-recipes">
+                <a href="{{ path('recipe_intro') }}" class="dropbtn">Idées recettes</a>
+                <div class="dropdown-content">
+                    <a href="{{ path('recipe_intro') }}">Consulter nos recettes</a>
+                    <a href="{{ path('user_recipe_create') }}">Créer une recette</a>
+                </div>
+            </li>
+            {%- if is_granted('IS_AUTHENTICATED_FULLY') -%}
+            <div class="dropdown-profile">
+                {% if app.user and app.user.photo %}
+                    <a href="#" class="dropbtn"><img src="{{ asset('uploads/photos/' ~ app.user.photo) }}" id="avatar" alt="Photo de profil"></a>
+                {% else %}
+                    <a href="#" class="dropbtn"><img src="{{ asset('images/avatars/defaultAvatar.png') }}" id="avatar" alt="Avatar par défaut"></a>
+                {% endif %}
+                <div class="dropdown-content">
+                    <a href="{{ path('profile') }}">Profil</a>
+                    {%- if is_granted('ROLE_ADMIN') or is_granted('ROLE_SUPER_ADMIN') -%}
+                    <a href="{{ path('admin') }}">Dashboard</a>
+                    {%- endif -%}
+                    <a href="{{ path('logout') }}">Déconnexion</a>
+                </div>
+            </div>
+            {%- else -%}
+            <li><a class="login_button" href="{{ path('login') }}">Se connecter</a></li>
+            {%- endif -%}
+        </ul>
+    </nav>
+</header>
+
 
