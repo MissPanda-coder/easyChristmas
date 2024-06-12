@@ -11,15 +11,16 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\RequestStack;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 
 class RecipeCrudController extends AbstractCrudController
 {
@@ -77,7 +78,9 @@ class RecipeCrudController extends AbstractCrudController
             TextField::new('title', 'Titre de la recette'),
             TextEditorField::new('description', 'Brève description de la recette'),
             TextField::new('photo', 'Nom du fichier de la photo')->onlyOnIndex(),
-            IntegerField::new('duration', 'Temps de préparation de la recette'),
+            TimeField::new('duration', 'Temps de préparation de la recette')
+                ->renderAsChoice()
+                ->setFormat('HH:mm'),
             CollectionField::new('ingredients', 'Ingrédients')
                 ->setEntryType(RecipeHasIngredientType::class)
                 ->setFormTypeOptions([

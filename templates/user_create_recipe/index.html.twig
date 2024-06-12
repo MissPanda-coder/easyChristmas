@@ -2,8 +2,8 @@
 
 {% block body %}
 
-    <h2>Créer une nouvelle recette</h2>
-
+<h2>Créer une nouvelle recette</h2>
+<div class="container_creation">
     {{ form_start(recipeForm, {'attr': {'class': 'form_layout-recipe'}}) }}
         <p class="form_field">
             {{ form_label(recipeForm.title, null, {'label_attr':{'class': 'form_label'}}) }}
@@ -31,19 +31,62 @@
             {{ form_label(recipeForm.recipedifficulty, null, {'label_attr': {'class': 'form_label'}}) }}
             {{ form_widget(recipeForm.recipedifficulty, {'attr': {'class': 'form_input'}}) }}
         </p>
-        <p class="form_field">
+        <div class="form_field">
             {{ form_label(recipeForm.ingredients, null, {'label_attr': {'class': 'form_label'}}) }}
-            {{ form_widget(recipeForm.ingredients, {'attr': {'class': 'form_input'}}) }}
-        </p> 
-        <p class="form_field">
+            <div class="ingredient-collection select-container" data-prototype="{{ form_widget(recipeForm.ingredients.vars.prototype)|e('html_attr') }}">
+                {{ form_widget(recipeForm.ingredients) }}
+                <button type="button" class="add-ingredient_link">Ajouter un ingrédient</button>
+            </div>
+        </div>
+        <div class="form_field">
             {{ form_label(recipeForm.recipestep, null, {'label_attr': {'class': 'form_label'}}) }}
-            {{ form_widget(recipeForm.recipestep, {'attr': {'class': 'form_input'}}) }}
-        </p>
+            <div class="step-collection select-container" data-prototype="{{ form_widget(recipeForm.recipestep.vars.prototype)|e('html_attr')}}">
+                {{ form_widget(recipeForm.recipestep) }}
+                <button type="button" class="add-step_link">Ajouter une étape</button>
+            </div>
+        </div>
         <button type="submit" class="form_btn">Envoyer</button>
         <p class="form_field">
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
         </p>
     
     {{ form_end(recipeForm) }}
+</div>
+{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const ingredientCollectionHolder = document.querySelector('.ingredient-collection');
+            const addIngredientButton = document.querySelector('.add-ingredient_link');
+            ingredientCollectionHolder.dataset.index = ingredientCollectionHolder.querySelectorAll('input').length;
+
+            addIngredientButton.addEventListener('click', function() {
+                const prototype = ingredientCollectionHolder.dataset.prototype;
+                const index = ingredientCollectionHolder.dataset.index;
+                const newForm = prototype.replace(/__name__/g, index);
+                ingredientCollectionHolder.dataset.index++;
+                const newFormElement = document.createElement('div');
+                newFormElement.innerHTML = newForm;
+                newFormElement.classList.add('new-ingredient_item');
+                ingredientCollectionHolder.insertBefore(newFormElement, addIngredientButton);
+            });
+
+            const stepCollectionHolder = document.querySelector('.step-collection');
+            const addStepButton = document.querySelector('.add-step_link');
+            stepCollectionHolder.dataset.index = stepCollectionHolder.querySelectorAll('input').length;
+
+            addStepButton.addEventListener('click', function() {
+                const prototype = stepCollectionHolder.dataset.prototype;
+                const index = stepCollectionHolder.dataset.index;
+                const newForm = prototype.replace(/__name__/g, index);
+                stepCollectionHolder.dataset.index++;
+                const newFormElement = document.createElement('div');
+                newFormElement.innerHTML = newForm;
+                newFormElement.classList.add('new-step_item');
+                stepCollectionHolder.insertBefore(newFormElement, addStepButton);
+            });
+        });
+    </script>
 {% endblock %}

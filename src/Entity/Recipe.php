@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Entity\User;
 use DateTimeImmutable;
+use DateTimeInterface;
 use App\Entity\Recipestep;
 use App\Entity\Recipecategory;
 use App\Entity\Recipedifficulty;
@@ -30,8 +31,8 @@ class Recipe
     #[ORM\Column(length: 255, nullable: false)]
     private ?string $photo = null;
 
-    #[ORM\Column]
-    private ?int $duration = null;
+    #[ORM\Column(type:"time")]
+    private ?DateTimeInterface $duration = null;
 
     #[ORM\Column]
     private ?DateTimeImmutable $createdAt = null;
@@ -98,12 +99,13 @@ class Recipe
         return $this;
     }
 
-    public function getDuration(): ?int
+
+    public function getDuration(): ?\DateTimeInterface
     {
         return $this->duration;
     }
 
-    public function setDuration(int $duration): static
+    public function setDuration(?\DateTimeInterface $duration): self
     {
         $this->duration = $duration;
 

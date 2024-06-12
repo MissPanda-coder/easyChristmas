@@ -29,7 +29,7 @@
                 <div class="col-8 col-sm-6 d-flex justify-content-end">
                     <article class="recipe_info">
                         <strong>Temps de préparation :</strong>
-                        <p>{{ recipe.duration }}</p>
+                        <p>{{ recipe.duration ? recipe.duration|date('H:i')}}</p>
                         <strong>Niveau :</strong>
                         <p>{{ recipe.recipedifficulty }}</p>
                     </article>  

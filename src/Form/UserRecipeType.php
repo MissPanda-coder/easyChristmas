@@ -10,8 +10,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
@@ -24,24 +25,27 @@ class UserRecipeType extends AbstractType
                 'label' => 'Titre de la recette',
             ])
             ->add('description', TextareaType::class, [
-                'label' => 'Description',
+                'label' => 'Brève description de la recette',
             ])
-            ->add('photo', TextType::class, [
+            ->add('photo', FileType::class, [
                 'label' => 'Image de la recette',
-                    'required' => false,
-                    'mapped' => false,
-                    'constraints' => [
-                        new Image(
-                          [
-                            'mimeTypes' => ['image/jpeg', 'image/png'],
-                            'mimeTypesMessage' => 'Veuillez soumettre une image de type JPG ou PNG.',
-                            'maxSize' => '1M',
-                            'maxSizeMessage' => 'Votre image fait {{ size }} {{ suffix }}. La limite est de {{ limit }} {{ suffix }}'
-                          ]),
-                        ],
+                'required' => true,
+                'mapped' => false,
+                'constraints' => [
+                    new Image([
+                        'mimeTypes' => ['image/jpeg', 'image/png'],
+                        'mimeTypesMessage' => 'Veuillez soumettre une image de type JPG ou PNG.',
+                        'maxSize' => '1M',
+                        'maxSizeMessage' => 'Votre image fait {{ size }} {{ suffix }}. La limite est de {{ limit }} {{ suffix }}'
+                    ]),
+                ],
             ])
-            ->add('duration', TextType::class, [
+            ->add('duration', TimeType::class, [
                 'label' => 'Temps de préparation',
+                'input' => 'datetime',
+                'widget' => 'choice',
+                'hours' => range(0, 23),
+                'minutes' => range(0, 59),
             ])
             ->add('recipecategory', EntityType::class, [
                 'class' => Recipecategory::class,
@@ -59,6 +63,10 @@ class UserRecipeType extends AbstractType
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,
+                'prototype' => true,
+                'attr' => [
+                    'data-controller' => 'form-collection',
+                ],
                 'label' => 'Ingrédients',
             ])
             ->add('recipestep', CollectionType::class, [
@@ -67,7 +75,11 @@ class UserRecipeType extends AbstractType
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,
-                'label' => 'Étapes',
+                'prototype' => true,
+                'attr' => [
+                    'data-controller' => 'form-collection',
+                ],
+                'label' => 'Étapes de préparation',
             ]);
     }
 
@@ -78,4 +90,3 @@ class UserRecipeType extends AbstractType
         ]);
     }
 }
-
