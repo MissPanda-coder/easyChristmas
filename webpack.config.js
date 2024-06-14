@@ -58,7 +58,13 @@ Encore
 
     // uncomment if you use TypeScript
     //.enableTypeScriptLoader()
-
+    
+    // Enables processing of images
+    .copyFiles({
+        from: './assets/images',
+        to: 'images/[path][name].[ext]',
+        pattern: /\.(png|jpg|jpeg|svg)$/
+})
     // uncomment if you use React
     //.enableReactPreset()
 // Enables processing of images

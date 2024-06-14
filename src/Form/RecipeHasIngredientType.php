@@ -18,6 +18,7 @@ class RecipeHasIngredientType extends AbstractType
         $builder
         ->add('ingredient', EntityType::class, [
             'class' => Ingredient::class,
+            'choices' => $options['ingredients'],
             'choice_label' => 'ingredientName',
             'label' => 'Ingrédient',  
             'placeholder' => 'Sélectionnez un ingrédient',
@@ -25,6 +26,7 @@ class RecipeHasIngredientType extends AbstractType
         ])
         ->add('unit', EntityType::class, [
             'class' => Unit::class,
+            'choices' => $options['units'],
             'choice_label' => 'unitName',
             'label' => 'Unité de mesure', 
             'placeholder' => 'Sélectionnez une unité',
@@ -42,6 +44,8 @@ class RecipeHasIngredientType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => RecipeHasIngredient::class,
+            'ingredients' => [],
+            'units' => [],
         ]);
     }
 }

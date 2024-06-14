@@ -15,6 +15,18 @@ class Assignation
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\ManyToOne(targetEntity: Draw::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Draw $draw = null;
+
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user_giver = null;
+
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user_receiver = null;
+
     /**
      * @var Collection<int, Wishes>
      */
@@ -30,6 +42,42 @@ class Assignation
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getDraw(): ?Draw
+    {
+        return $this->draw;
+    }
+
+    public function setDraw(?Draw $draw): self
+    {
+        $this->draw = $draw;
+
+        return $this;
+    }
+
+    public function getUserGiver(): ?User
+    {
+        return $this->user_giver;
+    }
+
+    public function setUserGiver(?User $user_giver): self
+    {
+        $this->user_giver = $user_giver;
+
+        return $this;
+    }
+
+    public function getUserReceiver(): ?User
+    {
+        return $this->user_receiver;
+    }
+
+    public function setUserReceiver(?User $user_receiver): self
+    {
+        $this->user_receiver = $user_receiver;
+
+        return $this;
     }
 
     /**

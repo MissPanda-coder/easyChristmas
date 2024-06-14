@@ -91,3 +91,20 @@ h3{
     font-size: 0.85rem;
     color: $c-white !important;
 }
+
+select {
+
+  select:focus,
+  select:hover {
+      background-color: #f0f0f0; 
+  }
+
+  option {
+      background-color: #ffffff; 
+      color: $c-grey; 
+  }
+  select option:checked {
+      background-color: #dddddd; 
+      color: $c-grey; 
+  }
+}

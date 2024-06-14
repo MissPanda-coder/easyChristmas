@@ -43,6 +43,7 @@
             <div class="step-collection select-container" data-prototype="{{ form_widget(recipeForm.recipestep.vars.prototype)|e('html_attr')}}">
                 {{ form_widget(recipeForm.recipestep) }}
                 <button type="button" class="add-step_link">Ajouter une étape</button>
+              
             </div>
         </div>
         <button type="submit" class="form_btn">Envoyer</button>
@@ -71,6 +72,7 @@
                 newFormElement.innerHTML = newForm;
                 newFormElement.classList.add('new-ingredient_item');
                 ingredientCollectionHolder.insertBefore(newFormElement, addIngredientButton);
+                addDeleteButton(newFormElement);
             });
 
             const stepCollectionHolder = document.querySelector('.step-collection');
@@ -86,6 +88,30 @@
                 newFormElement.innerHTML = newForm;
                 newFormElement.classList.add('new-step_item');
                 stepCollectionHolder.insertBefore(newFormElement, addStepButton);
+                addDeleteButton(newFormElement);
+            });
+
+            function addDeleteButton(element) {
+                const removeButton = document.createElement('button');
+                removeButton.type = 'button';
+                removeButton.classList.add('remove-link');
+
+                const removeIcon = document.createElement('img');
+                removeIcon.src = '/build/images/else/poubelle.png'; 
+                removeIcon.alt = 'Supprimer';
+                removeIcon.classList.add('remove-icon');
+
+                removeButton.appendChild(removeIcon);
+                element.appendChild(removeButton);
+
+                removeButton.addEventListener('click', function() {
+                    element.remove();
+                });
+            }
+
+            // Ajoutez les boutons de suppression existants
+            document.querySelectorAll('.new-ingredient_item, .new-step_item').forEach(function(element) {
+                addDeleteButton(element);
             });
         });
     </script>

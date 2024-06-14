@@ -22,9 +22,6 @@ class Draw
     #[ORM\Column]
     private ?int $drawyear = null;
 
-    #[ORM\ManyToOne(inversedBy: 'drawsOrganized')]
-    private ?User $organizer = null;
-
     /**
      * @var Collection<int, User>
      */
@@ -40,7 +37,6 @@ class Draw
         $this->exclusions = new ArrayCollection();
     }
 
-    
     public function getId(): ?int
     {
         return $this->id;
@@ -70,18 +66,6 @@ class Draw
         return $this;
     }
 
-    public function getOrganizer(): ?User
-    {
-        return $this->organizer;
-    }
-
-    public function setOrganizer(?User $organizer): static
-    {
-        $this->organizer = $organizer;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, User>
      */
@@ -106,8 +90,7 @@ class Draw
         return $this;
     }
 
-
-      /**
+    /**
      * @return Collection<int, Exclusion>
      */
     public function getExclusions(): Collection
@@ -115,20 +98,19 @@ class Draw
         return $this->exclusions;
     }
 
-    public function addExclusions(Exclusion $exclusions ): static
+    public function addExclusions(Exclusion $exclusions): static
     {
-        if (!$this->exclusions ->contains($exclusions )) {
-            $this->exclusions ->add($exclusions );
+        if (!$this->exclusions->contains($exclusions)) {
+            $this->exclusions->add($exclusions);
         }
 
         return $this;
     }
 
-    public function removeExclusions(Exclusion $exclusions) : static
+    public function removeExclusions(Exclusion $exclusions): static
     {
-        $this->exclusions ->removeElement($exclusions) ;
+        $this->exclusions->removeElement($exclusions);
 
         return $this;
     }
-
 }

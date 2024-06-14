@@ -21,26 +21,26 @@
 }
 
 .required{
-display: block; 
-  margin-bottom: 5px;
-  color: $c-white;
-  font-size: 1.1rem;
+    display: block; 
+    margin-bottom: 5px;
+    color: $c-white;
+    font-size: 1.1rem;
 }
 
 .ingredient-select, .unit-select, .quantity-input,.new-step_item input{
     font-family: $f-second; 
-      color:$c-white;
-      width:380px;
-      border-radius: 50px;
-      backdrop-filter: blur(5px);
-      -webkit-backdrop-filter: blur(5px);
-      -moz-backdrop-filter: blur(5px);
-      box-shadow: 4px 4px 60px rgba(0, 0, 0, .2);
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, .2);
-      transition: all .3s;   
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      background: transparent;
-      padding: 0.8rem;
+    color:$c-white;
+    width:380px;
+    border-radius: 50px;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    -moz-backdrop-filter: blur(5px);
+    box-shadow: 4px 4px 60px rgba(0, 0, 0, .2);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, .2);
+    transition: all .3s;   
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: transparent;
+    padding: 0.8rem;
 }
 
 .select-container {
@@ -60,3 +60,21 @@ display: block;
         color: $c-grey; 
     }
 }}
+
+.remove-link{
+    display: block;
+    width:35px;
+    height:35px;
+    border-radius: 50px;
+    color: $c-white;
+    border: none;
+    margin-left:2rem;
+    margin-top:0.8rem;
+    cursor: pointer;
+}
+
+.remove-icon{
+    width:27px;
+    height:27px;
+    padding-right:0.1rem;
+}

@@ -59,7 +59,10 @@ class UserRecipeType extends AbstractType
             ])
             ->add('ingredients', CollectionType::class, [
                 'entry_type' => RecipeHasIngredientType::class,
-                'entry_options' => ['label' => false],
+                'entry_options' => [
+                    'label' => false,
+                    'ingredients' => $options['ingredients'],
+                ],
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,

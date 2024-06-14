@@ -6,7 +6,9 @@ use Psr\Log\LoggerInterface;
 use App\Form\RecipestepsType;
 use App\Entity\Recipecategory;
 use App\Entity\Recipedifficulty;
+use App\Repository\UnitRepository;
 use App\Form\RecipeHasIngredientType;
+use App\Repository\IngredientRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -14,12 +16,11 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class RecipeCrudController extends AbstractCrudController
@@ -28,12 +29,14 @@ class RecipeCrudController extends AbstractCrudController
     private $logger;
     private $security;
 
-        public function __construct(RequestStack $requestStack, LoggerInterface $logger, Security $security)
+        public function __construct(RequestStack $requestStack, LoggerInterface $logger, Security $security, IngredientRepository $ingredientRepository, UnitRepository $unitRepository)
 
     {
         $this->requestStack = $requestStack;
         $this->logger = $logger;
         $this->security = $security;
+        $this->ingredientRepository = $ingredientRepository;
+        $this->unitRepository = $unitRepository;
     }
 
     public static function getEntityFqcn(): string
@@ -53,13 +56,22 @@ class RecipeCrudController extends AbstractCrudController
             if ($entityInstance->getCreatedAt() === null) {
                 $entityInstance->setCreatedAt(new \DateTimeImmutable());
             }
-        parent::persistEntity($entityManager, $entityInstance);
+
+            // Nettoyer la description pour enlever les balises HTML
+            $description = strip_tags($entityInstance->getDescription());
+            $entityInstance->setDescription($description);
+
+            parent::persistEntity($entityManager, $entityInstance);
         }
 
     }
 
     public function configureFields(string $pageName): iterable
     {
+
+        $ingredients = $this->ingredientRepository->ordered();
+        $units = $this->unitRepository->orderedUnits();
+
         return [
             BooleanField::new('isActive', 'Active'),
             DateTimeField::new('createdAt', 'Créé le')->setFormat('dd/MM/YYYY HH:mm:ss')->hideOnForm(),
@@ -76,7 +88,7 @@ class RecipeCrudController extends AbstractCrudController
                     'choice_label' => 'difficultyname',
                 ]),
             TextField::new('title', 'Titre de la recette'),
-            TextEditorField::new('description', 'Brève description de la recette'),
+            TextareaField::new('description', 'Brève description de la recette'),
             TextField::new('photo', 'Nom du fichier de la photo')->onlyOnIndex(),
             TimeField::new('duration', 'Temps de préparation de la recette')
                 ->renderAsChoice()
@@ -85,6 +97,11 @@ class RecipeCrudController extends AbstractCrudController
                 ->setEntryType(RecipeHasIngredientType::class)
                 ->setFormTypeOptions([
                     'by_reference' => false,
+                    'entry_options' => [
+                        'label' => false,
+                        'ingredients' => $ingredients,
+                        'units' => $units,
+                    ],
                 ]),
             CollectionField::new('recipestep', 'Étapes de préparation de la recette')
                 ->setEntryType(RecipestepsType::class)

@@ -77,9 +77,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Recipe::class, mappedBy: 'user')]
     private Collection $recipes;
 
-    #[ORM\OneToMany(targetEntity: Draw::class, mappedBy: 'organizer')]
-    private Collection $drawsOrganized;
-
     #[ORM\ManyToMany(targetEntity: Draw::class, mappedBy: 'participants')]
     private Collection $drawsParticipated;
 
@@ -92,7 +89,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->usersCanNotOffer = new ArrayCollection();
         $this->usersCanNotBeOffered = new ArrayCollection();
         $this->recipes = new ArrayCollection();
-        $this->drawsOrganized = new ArrayCollection();
         $this->drawsParticipated = new ArrayCollection();
         $this->wishes = new ArrayCollection();
     
@@ -200,9 +196,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     public function getPhotoPath(): string
-{
-    return $this->photo ? '/uploads/photos/' . $this->photo : '/images/default-avatar.png';
-}
+    {
+        return $this->photo ? '/uploads/photos/' . $this->photo : '/images/default-avatar.png';
+    }
 
     /**
      * Get the value of username
@@ -338,25 +334,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * Get the value of drawsOrganized
-     */ 
-    public function getDrawsOrganized(): Collection
-    {
-        return $this->drawsOrganized;
-    }
-
-    /**
-     * Set the value of drawsOrganized
-     *
-     * @return  self
-     */ 
-    public function setDrawsOrganized(Collection $drawsOrganized): self
-    {
-        $this->drawsOrganized = $drawsOrganized;
-        return $this;
-    }
-
-    /**
      * Get the value of drawsParticipated
      */ 
     public function getDrawsParticipated(): Collection
@@ -394,7 +371,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-  
     /**
      * Get the value of password
      *

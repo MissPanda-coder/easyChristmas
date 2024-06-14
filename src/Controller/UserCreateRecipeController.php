@@ -7,6 +7,8 @@ use App\Entity\Recipe;
 use DateTimeImmutable;
 use Cocur\Slugify\Slugify;
 use App\Form\UserRecipeType;
+use App\Repository\UnitRepository;
+use App\Repository\IngredientRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,9 +19,13 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 class UserCreateRecipeController extends AbstractController
 {
     #[Route('/user/recipe/create', name: 'user_recipe_create')]
-    public function userCreateRecipe(Request $request, EntityManagerInterface $em): Response
+    public function userCreateRecipe(Request $request, EntityManagerInterface $em,IngredientRepository $ingredientRepository, UnitRepository $unitRepository): Response
     {
-        // Gestion du formulaire de création de recette
+        // Ingrédients et unités triés par ordre alphabétique
+        $ingredients = $ingredientRepository->ordered();
+        $units = $unitRepository->orderedUnits();
+
+        // Formulaire de création de recette
         $recipe = new Recipe();
         $recipeForm = $this->createForm(UserRecipeType::class, $recipe);
         $recipeForm->handleRequest($request);
@@ -28,7 +34,7 @@ class UserCreateRecipeController extends AbstractController
             $recipe->setUser($this->getUser());
             $recipe->setCreatedAt(new DateTimeImmutable());
 
-            // Gestion du téléchargement de la photo
+            // Modification du nom de la photo pour éviter les conflits de noms
             $photoFile = $recipeForm->get('photo')->getData();
             if ($photoFile) {
                 $ext = $photoFile->guessExtension();
@@ -43,7 +49,7 @@ class UserCreateRecipeController extends AbstractController
                     // gérer l'exception si quelque chose se passe mal pendant le téléchargement
                 }
 
-                // Mettre à jour la propriété 'photo' pour stocker le nom du fichier photo
+                
                 $recipe->setPhoto($filename);
             }
 
