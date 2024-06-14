@@ -1,10 +1,72 @@
+{# templates/draw/index.html.twig #}
 {% extends 'base.html.twig' %}
 
 {% block body %}
 <h2>Le grand tirage au sort</h2>
 
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn-tirage">Lancer le tirage</button>
-{{ form_end(form) }}
+<form id="form_players">
+    <fieldset>
+        <label for="participant_email" class="players">Participant :</label>
+        <input type="email" id="participant_email" class="participant_email" placeholder="Indiquez le mail du participant" required>
+        <label for="participant_exclusion" class="players">Exclusion :</label>
+        <input type="email" id="participant_exclusion" class="participant_exclusion" placeholder="Email de la personne à exclure">
+    </fieldset>
+    <button class="btn_add" type="button" onclick="addParticipant()">Ajouter</button>
+
+    <fieldset id="participants_list">
+        <!-- Liste des participants ajoutés dynamiquement -->
+    </fieldset>
+</form>
+
+<button class="btn-tirage" onclick="effectuerTirage()">Lancer le tirage</button>
+
+<script>
+    let participants = [];
+
+    function addParticipant() {
+        const emailInput = document.getElementById('participant_email');
+        const exclusionInput = document.getElementById('participant_exclusion');
+        const email = emailInput.value;
+        const exclusion = exclusionInput.value;
+
+        if (email) {
+            const participant = {
+                email: email,
+                exclusion: exclusion
+            };
+            participants.push(participant);
+
+            const participantItem = document.createElement('div');
+            participantItem.textContent = email + (exclusion ? ' (exclusion: ' + exclusion + ')' : '');
+            document.getElementById('participants_list').appendChild(participantItem);
+
+            emailInput.value = '';
+            exclusionInput.value = '';
+        }
+    }
+
+    function effectuerTirage() {
+        fetch('/draw', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+            body: JSON.stringify({ participants: participants })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Le tirage au sort a été effectué avec succès!');
+                window.location.href = `/draw/results/${data.drawId}`;
+            } else {
+                alert('Une erreur est survenue lors du tirage au sort.');
+            }
+        })
+        .catch(error => {
+            console.error('Erreur:', error);
+            alert('Une erreur est survenue lors du tirage au sort.');
+        });
+    }
+</script>
 {% endblock %}

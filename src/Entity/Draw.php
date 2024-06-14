@@ -19,9 +19,6 @@ class Draw
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $drawdate = null;
 
-    #[ORM\Column]
-    private ?int $drawyear = null;
-
     /**
      * @var Collection<int, User>
      */
@@ -33,6 +30,7 @@ class Draw
 
     public function __construct()
     {
+        $this->drawdate = new \DateTime();        
         $this->participants = new ArrayCollection();
         $this->exclusions = new ArrayCollection();
     }
@@ -50,18 +48,6 @@ class Draw
     public function setDrawdate(\DateTimeInterface $drawdate): static
     {
         $this->drawdate = $drawdate;
-
-        return $this;
-    }
-
-    public function getDrawyear(): ?int
-    {
-        return $this->drawyear;
-    }
-
-    public function setDrawyear(int $drawyear): static
-    {
-        $this->drawyear = $drawyear;
 
         return $this;
     }
