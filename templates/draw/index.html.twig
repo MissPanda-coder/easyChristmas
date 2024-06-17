@@ -1,33 +1,80 @@
-{# templates/draw/index.html.twig #}
 {% extends 'base.html.twig' %}
 
 {% block body %}
 <h2>Le grand tirage au sort</h2>
 
-<form id="form_players">
-    <fieldset>
-        <label for="participant_email" class="players">Participant :</label>
-        <input type="email" id="participant_email" class="participant_email" placeholder="Indiquez le mail du participant" required>
-        <label for="participant_exclusion" class="players">Exclusion :</label>
-        <input type="email" id="participant_exclusion" class="participant_exclusion" placeholder="Email de la personne à exclure">
+<div class="draw_explanations">
+    <ul>
+        <li>
+            <h6>Étape 1 : Liste des participants</h6>
+            <p>Utilisez les boutons "Ajouter un participant" et "Supprimer" pour ajuster le nombre de participants, puis confirmer pour l'inscription effective. <br>Pour chaque personne, veuillez indiquer une adresse email. <br>Chaque participant doit posséder une adresse mail unique</p>
+        </li>
+        <li>
+            <h6>Étape 2 : Spécification des exclusions</h6>
+            <p>Ajoutez des exclusions pour les participants. Si vous souhaitez que deux participants ne puissent pas se choisir mutuellement, remplissez le champ "Exclusions".</p>
+        </li>
+        <li>
+            <h6>Étape 3 : Lancez le tirage au sort</h6>
+            <p>Une fois les participants tous inscrits, cliquez sur 'lancez le tirage pour obtenir le résultat</p>
+        </li>
+        <li>
+            <h6>Bonus : Liste au Père Noël</h6>
+            <p>N'oubliez pas de vous rendre dans la rubrique 'Liste au Père Noël pour envoyer vos souhaits à la personne qui a été tirée au sort pour vous offrir un cadeau à Noël !</p>
+        </li>
+    </ul>
+</div>
+<form id="form_players" method="post" action="{{ path('draw_index') }}">
+    <fieldset class="form_players-layout">
+        <div class="email-participant_errors">
+            <div class="email_participant-layout">
+                <label for="participant_email" class="players">Email du participant :</label>
+                <input type="email" id="participant_email" class="participant_email" required>
+            </div>
+            <span class="email_error-participant" id="email_error-participant">Veuillez entrer un email valide.</span>
+        </div>
+        <div class="email-participant_errors">
+            <div class="email_participant-layout">
+                <label for="participant_exclusion" class="players">Email de l'exclusion :</label>
+                <input type="email" id="participant_exclusion" class="participant_exclusion">
+            </div>
+            <span class="email_error-participant" id="email_error-exclusion">Veuillez entrer un email valide.</span>
+        </div>
+        <button class="btn_add" type="button" onclick="addParticipant()">Confirmer</button>
     </fieldset>
-    <button class="btn_add" type="button" onclick="addParticipant()">Ajouter</button>
-
-    <fieldset id="participants_list">
-        <!-- Liste des participants ajoutés dynamiquement -->
-    </fieldset>
+    <table id="participants_table">
+        <tbody id="participants_list">
+            <!-- tableau des participants -->
+        </tbody>
+    </table>
+    <input type="hidden" id="participants_data" name="participants_data">
+    <button class="btn_play" type="button" onclick="submitForm()">Lancer le tirage</button>
 </form>
-
-<button class="btn-tirage" onclick="effectuerTirage()">Lancer le tirage</button>
 
 <script>
     let participants = [];
 
     function addParticipant() {
-        const emailInput = document.getElementById('participant_email');
-        const exclusionInput = document.getElementById('participant_exclusion');
-        const email = emailInput.value;
-        const exclusion = exclusionInput.value;
+        const emailInput = document.querySelector('#participant_email');
+        const exclusionInput = document.querySelector('#participant_exclusion');
+        const email = emailInput.value.trim();
+        const exclusion = exclusionInput.value.trim();
+
+        // Ne pas afficher d'erreur si l'input est vide
+        if (email === '') {
+            document.querySelector('#email_error-participant').style.display = 'none';
+        } else if (!validateEmail(email)) {
+            document.querySelector('#email_error-participant').style.display = 'block';
+            return;
+        } else {
+            document.querySelector('#email_error-participant').style.display = 'none';
+        }
+
+        if (exclusion !== '' && !validateEmail(exclusion)) {
+            document.querySelector('#email_error-exclusion').style.display = 'block';
+            return;
+        } else {
+            document.querySelector('#email_error-exclusion').style.display = 'none';
+        }
 
         if (email) {
             const participant = {
@@ -36,37 +83,57 @@
             };
             participants.push(participant);
 
-            const participantItem = document.createElement('div');
-            participantItem.textContent = email + (exclusion ? ' (exclusion: ' + exclusion + ')' : '');
-            document.getElementById('participants_list').appendChild(participantItem);
+            const participantRow = document.createElement('tr');
+            participantRow.className = 'participant_item';
+            
+            const emailCell = document.createElement('td');
+            emailCell.textContent = email + (exclusion ? ' (exclusion: ' + exclusion + ')' : '');
+            participantRow.appendChild(emailCell);
+            
+            const actionsCell = document.createElement('td');
+            const removeButton = document.createElement('button');
+            removeButton.textContent = '-';
+            removeButton.className = 'btn_remove';
+            removeButton.onclick = function() {
+                removeParticipant(email);
+            };
+            actionsCell.appendChild(removeButton);
+            participantRow.appendChild(actionsCell);
+
+            document.querySelector('#participants_list').appendChild(participantRow);
 
             emailInput.value = '';
             exclusionInput.value = '';
         }
     }
 
-    function effectuerTirage() {
-        fetch('/draw', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest',
-            },
-            body: JSON.stringify({ participants: participants })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('Le tirage au sort a été effectué avec succès!');
-                window.location.href = `/draw/results/${data.drawId}`;
-            } else {
-                alert('Une erreur est survenue lors du tirage au sort.');
+    function validateEmail(email) {
+        const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        return emailPattern.test(email);
+    }
+
+    function removeParticipant(email) {
+        participants = participants.filter(participant => participant.email !== email);
+        const participantItems = document.querySelectorAll('.participant_item');
+        participantItems.forEach(item => {
+            if (item.querySelector('td').textContent.includes(email)) {
+                item.remove();
             }
-        })
-        .catch(error => {
-            console.error('Erreur:', error);
-            alert('Une erreur est survenue lors du tirage au sort.');
         });
+    }
+
+    function addNewParticipant() {
+        // Reset des inputs pour ajouter un nouveau participant
+        document.querySelector('#participant_email').value = '';
+        document.querySelector('#participant_exclusion').value = '';
+        document.querySelector('#participant_email').focus();
+    }
+
+    function submitForm() {
+        const participantsDataInput = document.querySelector('#participants_data');
+        participantsDataInput.value = JSON.stringify(participants);
+        document.querySelector('#participant_email').removeAttribute('required');
+        document.querySelector('#form_players').submit();
     }
 </script>
 {% endblock %}

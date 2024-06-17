@@ -65,6 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
   );
   
   // EFFET NEIGE
+  if (document.querySelector('#home')) {
   const numberOfSnowflakes = 100;
   
   for (let i = 0; i < numberOfSnowflakes; i++) {
@@ -80,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
     document.body.appendChild(snowflakes);
   }
-  
+}
   
   let christmas = new Date("2024-12-24T23:59:00"); 
   

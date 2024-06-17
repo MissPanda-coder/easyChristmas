@@ -1,86 +1,126 @@
 @import "_variables";
 @import "_mixin";
 
-#randomDraw{
+#draw{
     width: 100%;
     height: 100vh;
     background-color: $c-red;
 }
 
+.draw_explanations{
+    color:$c-white;
+    font-family: $f-second, sans-serif;
+    font-size: 1rem;
+    width:70%;
+    margin: 2rem auto;
+}
+
 #form_players{
     margin-left:2rem;
-    width:40%;
+    width:80%;
+}
+
+.form_players-layout{
+    display:flex;
+    flex-flow:row wrap;
+}
+.email_participant-layout{
+    display:flex;
+    flex-flow:row wrap;
+}
+
+#email-participant_errors, #email-partcipant_exclusion{
+    display:flex;
+    flex-flow: column nowrap;
 }
 
 .players{
     font-family: $f-second, sans-serif;
     color: $c-white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height:40px;
+    margin:1rem 0 1rem 1.5rem;
 }
 
-#player_name{
-    font-family: $f-second, sans-serif; 
-    color:$c-white;
-    width:380px; 
-    background: transparent;
-    padding: 0.3rem; 
-    margin-left: 1rem;
-    border: none;
-    border-bottom: 1px solid $c-white;
-      
-}
-
-.btn_add{
-    @include btn;  
-    background-color: $c-green;
-    margin-left:2rem;
-}
-
-.btn_add:hover{
-    color:$c-white;
-}
-
-#player_instructions{
+#participant_email, #participant_exclusion{
+    border:none;
+    border-bottom: 0.5px solid $c-white;
+    background-color: transparent;
     color: $c-white;
-    font-size: 0.8rem;
+    height:40px;
+    width:380px;
+    margin:1rem 0.8rem;
 }
 
-.perspective{
-    perspective: 1000px;
+#participant_email:focus, #participant_exclusion:focus,#participant_email:valid,
+#participant_exclusion:valid, #particpant_email:not(:placeholder-shown),#participant_exclusion:not(:placeholder-shown){
+    outline: none;
+    border-bottom: 1px solid $c-white;
+    color: $c-white;
 }
 
-.cardDraw {
-    width: 270px;
-    height: 400px;
-    box-shadow: 0px 10px 13px -7px #000000;
-    transform-style: preserve-3d;
-    transition: transform .05s linear;
-    
+:where(.participant_email, .participant_exclusion)::placeholder {
+    font-size:0.8em;    
 }
 
-.imgCard {
-    background-image: url(../images/else/presents.png);
-    background-repeat: no-repeat;
-    background-size: cover;
-    width: 100%;
-    height: 100%;
-    border-radius: 15px;
+.email_error-participant{
+    display: none;
 }
 
-
-
-.btn-tirage{
-    @include btn;  
+.btn_add,.newParticipant,.btn_play{
+    height:40px;
+    padding: 0.5rem;
+    color: $c-white;
     background-color: $c-green;
+    border:none;
+    margin:1rem 1.5rem;
+    border-radius: 18px;
+    transition: transform 0.2s ease-in-out;
 }
 
-.btn-tirage::before{
-@include btn;
+#participants_table {
+    border-collapse: collapse;
 }
 
-.btn-tirage:hover{
+td{
     color:$c-white;
 }
 
-.btn-tirage:hover::before{
-    width: 100%;
+#participants_table, #participants_table th, #participants_table td {
+    border: none;
+}
+
+.btn_remove{
+    height:30px;
+    width: 30px;
+    padding: 0.5rem;
+    color: $c-white;
+    background-color: $c-green;
+    border:none;
+    margin:0 1.5rem;
+    border-radius: 50%;
+    transition: transform 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn_add:hover,.btn_remove:hover,.newParticipant:hover,.btn_play:hover{
+    transform: scale(1.1);
+}
+
+.btn_play_container {
+    display: flex;
+    justify-content: center;
+    margin-top:2rem;
+}
+
+.btn_play{
+    font-family: $f-first, sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
 }
