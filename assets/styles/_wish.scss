@@ -7,35 +7,73 @@
 }
 
 .letter_layout {
-    width:350px;
-    font-family: $f-third;
+    max-width:600px;
+    font-family:'PlaywriteSK', serif;
+    font-size: 1em;
+    color: $c-grey;
     padding: 20px;
     position:absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.letter_layout h5 {
-    text-align: center;
-    font-size: 1.5em;
-    margin-bottom: 1em;
+    top: 30%;
+    left: 40%;
 }
 
 .letter_layout p {
     margin-bottom: 1em;
 }
 
-.form_wishes-layout ul li {
-    margin-bottom: 1em;
+.wish_fieldset{
+    display:flex;
+    flex-flow: row wrap;
 }
 
-.form_wishes-input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+.wish_fieldset-errors{
+    display:flex;
+    flex-flow: column wrap;
+}
+
+.wish_fieldset-div{
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.wish_participant-layout{
+    height:30px;
+    padding: 5px;
+    font-family:'PlaywriteSK', serif;
     font-size: 1em;
+}
+
+#wish_participant{
+    border:none;
+    border-bottom: 1px solid $c-grey;
+    background-color: transparent;
+    color: $c-grey;
+}
+
+#wish_error, #wish_titles{
+    display: none;
+}
+
+.wish_btn-add{
+    display: inline-block;
+    width:30px;
+    height:30px;
+    border:none;
+    border-radius: 50%;
+    background-color: $c-green;
+    color:$c-white;
+    margin-left:1.5rem;
+    cursor: pointer;
+}
+
+#wish_table{
+    margin:1rem;
+}
+
+.wish_row, .wish_col{
+    color:$c-grey;
+    font-family:'PlaywriteSK', serif;
+    font-size: 1rem;
 }
 
 

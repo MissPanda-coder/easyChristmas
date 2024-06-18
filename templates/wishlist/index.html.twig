@@ -3,20 +3,115 @@
 {% block body %}
 <div class="letter_layout">
     {{ form_start(wishForm, {'attr': {'class': 'form_wishes-layout'}}) }}
-    <h5>Mon cher papa Noël</h5>
+    <p>Mon cher papa Noël,</p>
 
-        <p>Cette année, j'ai été particulièrement sage ! Je mérite donc un joli cadeau et au cas où tu ne saurais pas quoi m'offrir, voici quelques idées :
-        </p>
-            <ul>
-                {% for wishname in wishForm.wishnames %}
-                    <li>{{ form_widget(wishname, {'attr': {'class': 'form_wishes-input'}}) }}</li>
-                {% endfor %}
-            </ul>
+    <p>Cette année, j'ai été particulièrement sage ! Je mérite donc un joli cadeau et au cas où tu ne saurais pas quoi m'offrir, voici quelques idées :</p>
+        <fieldset class="wish_fieldset">
+            <div class="wish_fieldset-errors">
+                <div class="wish_fieldset-div">
+                    <label for="wish_participant" class="wish_participant-layout">Voeu :</label>
+                    <input type="text" id="wish_participant" required>
+                </div>
+                <span id="wish_error">Seuls les lettres et chiffres sont autorisés</span>
+            </div>
+            <button class="wish_btn-add" type="button" onclick="addWish()">+</button> 
+        </fieldset>
 
-            <p>Je te remercie et j'ai hâte de te voir,</p>
-            <p>{{ app.user.username }}</p>
-            
-            <button type="submit" class="form_btn">Envoyer</button>
-            {{ form_end(wishForm) }}
+    <table id="wish_table">
+        <thead id="wish_titles">
+            <tr>
+                <th>Voeu n°</th>
+                <th>Souhait</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="wish_list">
+            <!-- tableau des souhaits -->
+        </tbody>
+    </table>
+
+    <p>Je te remercie et j'ai hâte de te voir,</p>
+    <p>{{ app.user.username }}</p>
+    <input type="hidden" id="participants_data" name="participants_data">
+    <button type="submit" class="form_btn">Envoyer</button>
+    {{ form_end(wishForm) }}
 </div>
+
+<script>
+    let wishes = [];
+
+    function addWish() {
+        const wishInput = document.querySelector('#wish_participant');
+        const wishValue = wishInput.value.trim();
+
+        if (wishValue === '') {
+            document.querySelector('#wish_error').style.display = 'none';
+        } else if (!validateWish(wishValue)) {
+            document.querySelector('#wish_error').style.display = 'block';
+            return;
+        } else {
+            document.querySelector('#wish_error').style.display = 'none';
+        }
+
+        if (wishValue) {
+            if (wishes.length >= 3) {
+                alert("Vous ne pouvez ajouter que 3 souhaits.");
+                return;
+            }
+
+            wishes.push(wishValue);
+
+            const wishRow = document.createElement('tr');
+            wishRow.className = 'wish_row';
+
+            const wishNumberCell = document.createElement('td');
+            wishNumberCell.className = 'wish_col'
+            wishNumberCell.textContent = `Voeu n°${wishes.length}`;
+            wishRow.appendChild(wishNumberCell);
+
+            const wishCell = document.createElement('td');
+            wishCell.textContent = wishValue;
+            wishRow.appendChild(wishCell);
+
+            const actionsCell = document.createElement('td');
+            const removeWishButton = document.createElement('button');
+            removeWishButton.textContent = '-';
+            removeWishButton.className = 'btn_wish';
+            removeWishButton.onclick = function() {
+                removeWish(wishValue);
+            };
+            actionsCell.appendChild(removeWishButton);
+            wishRow.appendChild(actionsCell);
+
+            document.querySelector('#wish_list').appendChild(wishRow);
+
+            wishInput.value = '';
+        }
+    }
+
+    function validateWish(wishValue) {
+        const wishPattern = /^[a-z0-9]+$/;
+        return wishPattern.test(wishValue);
+    }
+
+    function removeWish(wishValue) {
+        wishes = wishes.filter(wish => wish !== wishValue);
+        const wishItems = document.querySelectorAll('.wish_row');
+        wishItems.forEach(item => {
+            if (item.querySelector('td:nth-child(2)').textContent === wishValue) {
+                item.remove();
+            }
+        });
+        // Réinitialiser les numéros de voeux
+        document.querySelectorAll('.wish_row').forEach((item, index) => {
+            item.querySelector('td:nth-child(1)').textContent = `Voeu n°${index + 1}`;
+        });
+    }
+
+    function submitWishForm() {
+        const participantsDataInput = document.querySelector('#participants_data');
+        participantsDataInput.value = JSON.stringify(wishes);
+        document.querySelector('.form_wishes-layout').submit();
+    }
+</script>
 {% endblock %}

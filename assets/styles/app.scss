@@ -1,28 +1,29 @@
 @import "~bootstrap/scss/bootstrap";
 @import '_variables';
 @import '_mixin';
-@import '_footer';
-@import '_form';
-@import '_home';
-@import '_navBar';
+
+@import '_cgu';
+@import '_contact';
 @import '_count';
 @import '_draw';
 @import '_drawResults';
-@import '_wish';
-@import '_recipesIntro';
-@import '_recipesByCat';
-@import '_recipesDetail';
-@import '_pdc';
-@import '_cgu';
-@import '_login';
-@import '_signup';
-@import '_profile';
-@import '_contact';
-@import '_thanks';
-@import '_oops';
-@import '_resetPassword';
 @import '_flash';
+@import '_footer';
+@import '_form';
+@import '_home';
+@import '_login';
+@import '_navBar';
+@import '_oops';
+@import '_pdc';
+@import '_profile';
+@import '_recipesByCat';
+@import '_recipesIntro';
+@import '_recipesDetail';
+@import '_resetPassword';
+@import '_signup';
+@import '_thanks';
 @import '_userCreateRecipe';
+@import '_wish';
 
 
 body {
