@@ -59,7 +59,6 @@
         const email = emailInput.value.trim();
         const exclusion = exclusionInput.value.trim();
 
-        // Ne pas afficher d'erreur si l'input est vide
         if (email === '') {
             document.querySelector('#email_error-participant').style.display = 'none';
         } else if (!validateEmail(email)) {
@@ -122,18 +121,60 @@
         });
     }
 
-    function addNewParticipant() {
-        // Reset des inputs pour ajouter un nouveau participant
-        document.querySelector('#participant_email').value = '';
-        document.querySelector('#participant_exclusion').value = '';
-        document.querySelector('#participant_email').focus();
+    function performDraw(participants) {
+        let attempts = 0;
+        const maxAttempts = 1000;
+
+        while (attempts < maxAttempts) {
+            let givers = [...participants];
+            let receivers = [...participants];
+            let pairs = [];
+
+            shuffle(givers);
+
+            for (let giver of givers) {
+                let validReceivers = receivers.filter(receiver => 
+                    receiver.email !== giver.email && receiver.email !== giver.exclusion
+                );
+
+                if (validReceivers.length === 0) {
+                    break;
+                }
+
+                let receiver = validReceivers[Math.floor(Math.random() * validReceivers.length)];
+
+                pairs.push({ giver: giver.email, receiver: receiver.email });
+
+                receivers = receivers.filter(r => r.email !== receiver.email);
+            }
+
+            if (pairs.length === participants.length) {
+                return { success: true, pairs: pairs };
+            }
+
+            attempts++;
+        }
+
+        return { success: false, message: 'Impossible to find a valid receiver for one of the givers after multiple attempts.' };
+    }
+
+    function shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            let j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
     }
 
     function submitForm() {
-        const participantsDataInput = document.querySelector('#participants_data');
-        participantsDataInput.value = JSON.stringify(participants);
-        document.querySelector('#participant_email').removeAttribute('required');
-        document.querySelector('#form_players').submit();
+        const result = performDraw(participants);
+
+        if (result.success) {
+            const participantsDataInput = document.querySelector('#participants_data');
+            participantsDataInput.value = JSON.stringify(result.pairs);
+            document.querySelector('#form_players').submit();
+        } else {
+            alert(result.message);
+        }
     }
 </script>
 {% endblock %}

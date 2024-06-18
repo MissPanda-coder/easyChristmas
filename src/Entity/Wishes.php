@@ -18,21 +18,17 @@ class Wishes
     #[ORM\Column]
     private ?int $wishesyear = null;
 
-    /**
-     * @var Collection<int, User>
-     */
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'wishes')]
-    private Collection $User;
+    #[ORM\Column(length: 50)]
+    private ?string $wishname = null;
 
-    /**
-     * @var Collection<int, Assignation>
-     */
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    private ?User $user = null;
+
     #[ORM\ManyToMany(targetEntity: Assignation::class, mappedBy: 'wishes')]
     private Collection $assignations;
 
     public function __construct()
     {
-        $this->User = new ArrayCollection();
         $this->assignations = new ArrayCollection();
     }
 
@@ -46,56 +42,53 @@ class Wishes
         return $this->wishesyear;
     }
 
-    public function setWishesyear(int $wishesyear): static
+    public function setWishesyear(int $wishesyear): self
     {
         $this->wishesyear = $wishesyear;
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, User>
-     */
-    public function getUser(): Collection
+    public function getWishname(): ?string
     {
-        return $this->User;
+        return $this->wishname;
     }
 
-    public function addUser(User $user): static
+    public function setWishname(?string $wishname): self
     {
-        if (!$this->User->contains($user)) {
-            $this->User->add($user);
-        }
+        $this->wishname = $wishname;
 
         return $this;
     }
 
-    public function removeUser(User $user): static
+    public function getUser(): ?User
     {
-        $this->User->removeElement($user);
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, Assignation>
-     */
     public function getAssignations(): Collection
     {
         return $this->assignations;
     }
 
-    public function addAssignation(Assignation $assignation): static
+    public function addAssignation(Assignation $assignation): self
     {
         if (!$this->assignations->contains($assignation)) {
-            $this->assignations->add($assignation);
+            $this->assignations[] = $assignation;
             $assignation->addWish($this);
         }
 
         return $this;
     }
 
-    public function removeAssignation(Assignation $assignation): static
+    public function removeAssignation(Assignation $assignation): self
     {
         if ($this->assignations->removeElement($assignation)) {
             $assignation->removeWish($this);

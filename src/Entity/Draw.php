@@ -31,12 +31,16 @@ class Draw
     #[ORM\OneToMany(targetEntity: Exclusion::class, mappedBy: "draw")]
     private Collection $exclusions;
 
+    #[ORM\OneToMany(targetEntity: Assignation::class, mappedBy: "draw", cascade: ["persist", "remove"])]
+    private Collection $assignations;
+
     public function __construct()
     {
         $this->drawdate = new \DateTime();
         $this->drawyear = (new \DateTime())->format('Y');        
         $this->participants = new ArrayCollection();
         $this->exclusions = new ArrayCollection();
+        $this->assignations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -112,6 +116,37 @@ class Draw
     public function removeExclusions(Exclusion $exclusions): static
     {
         $this->exclusions->removeElement($exclusions);
+
+        return $this;
+    }
+
+    /**
+     * Get the value of assignations
+     *
+     * @return Collection
+     */public function getAssignations(): Collection
+    {
+        return $this->assignations;
+    }
+
+    public function addAssignation(Assignation $assignation): self
+    {
+        if (!$this->assignations->contains($assignation)) {
+            $this->assignations[] = $assignation;
+            $assignation->setDraw($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAssignation(Assignation $assignation): self
+    {
+        if ($this->assignations->removeElement($assignation)) {
+            // set the owning side to null (unless already changed)
+            if ($assignation->getDraw() === $this) {
+                $assignation->setDraw(null);
+            }
+        }
 
         return $this;
     }

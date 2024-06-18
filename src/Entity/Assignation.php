@@ -21,22 +21,22 @@ class Assignation
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $user_giver = null;
+    private ?User $userGiver = null;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $user_receiver = null;
+    private ?User $userReceiver = null;
 
     /**
      * @var Collection<int, Wishes>
      */
     #[ORM\ManyToMany(targetEntity: Wishes::class, inversedBy: 'assignations')]
     #[ORM\JoinTable(name: "assignation_has_wishes")]
-    private Collection $Wishes;
+    private Collection $wishes;
 
     public function __construct()
     {
-        $this->Wishes = new ArrayCollection();
+        $this->wishes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -58,24 +58,24 @@ class Assignation
 
     public function getUserGiver(): ?User
     {
-        return $this->user_giver;
+        return $this->userGiver;
     }
 
-    public function setUserGiver(?User $user_giver): self
+    public function setUserGiver(?User $userGiver): self
     {
-        $this->user_giver = $user_giver;
+        $this->userGiver = $userGiver;
 
         return $this;
     }
 
     public function getUserReceiver(): ?User
     {
-        return $this->user_receiver;
+        return $this->userReceiver;
     }
 
-    public function setUserReceiver(?User $user_receiver): self
+    public function setUserReceiver(?User $userReceiver): self
     {
-        $this->user_receiver = $user_receiver;
+        $this->userReceiver = $userReceiver;
 
         return $this;
     }
@@ -85,22 +85,31 @@ class Assignation
      */
     public function getWishes(): Collection
     {
-        return $this->Wishes;
+        return $this->wishes;
     }
 
-    public function addWish(Wishes $wish): static
+    public function addWish(Wishes $wish): self
     {
-        if (!$this->Wishes->contains($wish)) {
-            $this->Wishes->add($wish);
+        if (!$this->wishes->contains($wish)) {
+            $this->wishes->add($wish);
         }
 
         return $this;
     }
 
-    public function removeWish(Wishes $wish): static
+    public function removeWish(Wishes $wish): self
     {
-        $this->Wishes->removeElement($wish);
+        $this->wishes->removeElement($wish);
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return sprintf(
+            'Giver: %s, Receiver: %s',
+            $this->getUserGiver() ? $this->getUserGiver()->getEmail() : 'N/A',
+            $this->getUserReceiver() ? $this->getUserReceiver()->getEmail() : 'N/A'
+        );
     }
 }

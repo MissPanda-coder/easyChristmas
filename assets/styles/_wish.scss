@@ -1,7 +1,41 @@
-#wishlist{
+#wishes{
     width: 100%;
     height:100vh;
-    background-image: url(../images/else/wishes.webp);
+    background-image: url(../images/else/wishes.png);
     background-size: cover;
     background-repeat: no-repeat;
 }
+
+.letter_layout {
+    width:350px;
+    font-family: $f-third;
+    padding: 20px;
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.letter_layout h5 {
+    text-align: center;
+    font-size: 1.5em;
+    margin-bottom: 1em;
+}
+
+.letter_layout p {
+    margin-bottom: 1em;
+}
+
+.form_wishes-layout ul li {
+    margin-bottom: 1em;
+}
+
+.form_wishes-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+

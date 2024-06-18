@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Draw;
+use App\Entity\Assignation;
+use App\Entity\Exclusion;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -23,51 +25,67 @@ class DrawController extends AbstractController
         if ($request->isMethod('POST')) {
             $data = json_decode($request->request->get('participants_data'), true);
 
-            if (!$data || !isset($data) || !is_array($data)) {
+            if (!$data || !is_array($data)) {
                 return new JsonResponse(['success' => false, 'message' => 'Invalid data received.'], JsonResponse::HTTP_BAD_REQUEST);
             }
 
-            $participants = $data;
-            $result = $this->performDraw($participants);
+            $pairs = $data;
+            $draw = new Draw();
+            $draw->setDrawDate(new \DateTime());
+            $draw->setDrawyear((new \DateTime())->format('Y'));
 
-            if ($result['success']) {
-                $draw = new Draw();
-                $draw->setDrawDate(new \DateTime());
-                $draw->setDrawyear((new \DateTime())->format('Y'));
+            foreach ($pairs as $pair) {
+                $giver = $userRepository->findOneBy(['email' => $pair['giver']]);
+                $receiver = $userRepository->findOneBy(['email' => $pair['receiver']]);
 
-                foreach ($result['pairs'] as $pair) {
-                    $participant = $userRepository->findOneBy(['email' => $pair['giver']]);
-                    $recipient = $userRepository->findOneBy(['email' => $pair['receiver']]);
-
-                    if (!$participant || !$recipient) {
-                        return new JsonResponse(['success' => false, 'message' => 'Participant or recipient not found.'], JsonResponse::HTTP_BAD_REQUEST);
-                    }
-
-                    // Send email to the participant
-                    $email = (new TemplatedEmail())
-                        ->from('no-reply@easychristmas.fr')
-                        ->to($participant->getEmail())
-                        ->subject('Résultat du tirage au sort')
-                        ->htmlTemplate('draw/emailResults.html.twig')
-                        ->context([
-                            'giver' => $participant->getEmail(),
-                            'receiver' => $recipient->getEmail(),
-                        ]);
-
-                    $mailer->send($email);
-
-                    // Add participants to the draw
-                    $draw->addParticipant($participant);
-                    $draw->addParticipant($recipient);
+                if (!$giver || !$receiver) {
+                    return new JsonResponse(['success' => false, 'message' => 'Giver or receiver not found.'], JsonResponse::HTTP_BAD_REQUEST);
                 }
 
-                $em->persist($draw);
-                $em->flush();
+                // Create and persist the assignation
+                $assignation = new Assignation();
+                $assignation->setDraw($draw);
+                $assignation->setUserGiver($giver);
+                $assignation->setUserReceiver($receiver);
+                $em->persist($assignation);
 
-                return $this->redirectToRoute('draw_results', ['id' => $draw->getId()]);
-            } else {
-                return new JsonResponse(['success' => false, 'message' => 'Un problème est survenu lors du tirage au sort.']);
+                // Handle exclusions
+                if (!empty($pair['exclusion'])) {
+                    $excludedUser = $userRepository->findOneBy(['email' => $pair['exclusion']]);
+                    if ($excludedUser) {
+                        $exclusion = new Exclusion();
+                        $exclusion->setDraw($draw);
+                        $exclusion->setUserparticipant($giver);
+                        $exclusion->setUserexcluded($excludedUser);
+                        $em->persist($exclusion);
+                    }
+                }
+
+                // Send email to the participant
+                $email = (new TemplatedEmail())
+                    ->from('no-reply@easychristmas.fr')
+                    ->to($giver->getEmail())
+                    ->subject('Résultat du tirage au sort')
+                    ->htmlTemplate('draw/emailResults.html.twig')
+                    ->context([
+                        'giver' => $giver->getEmail(),
+                        'receiver' => $receiver->getEmail(),
+                    ]);
+
+                $mailer->send($email);
+
+                // Add participants to the draw
+                $draw->addParticipant($giver);
+                $draw->addParticipant($receiver);
+
+                // Ajouter un délai entre les envois d'email
+                usleep(500000); // Pause de 0.5 seconde (500 000 microsecondes)
             }
+
+            $em->persist($draw);
+            $em->flush();
+
+            return $this->redirectToRoute('draw_results', ['id' => $draw->getId()]);
         }
 
         return $this->render('draw/index.html.twig', [
@@ -77,85 +95,18 @@ class DrawController extends AbstractController
         ]);
     }
 
-    private function performDraw($participants)
-    {
-        $pairs = [];
-        $givers = array_column($participants, 'email');
-        $receivers = array_column($participants, 'email');
-        $exclusions = array_column($participants, 'exclusion', 'email');
-
-        // Shuffle the givers to ensure randomness
-        shuffle($givers);
-
-        foreach ($givers as $giver) {
-            $receiver = $this->findValidReceiver($giver, $receivers, $exclusions);
-            if ($receiver === null) {
-                return ['success' => false];
-            }
-
-            $pairs[] = ['giver' => $giver, 'receiver' => $receiver];
-            // Remove the chosen receiver from the list
-            $receivers = array_diff($receivers, [$receiver]);
-        }
-
-        return ['success' => true, 'pairs' => $pairs];
-    }
-
-    private function findValidReceiver($giver, $receivers, $exclusions)
-    {
-        // Shuffle the receivers to ensure randomness
-        shuffle($receivers);
-
-        foreach ($receivers as $receiver) {
-            if ($receiver !== $giver && (!isset($exclusions[$giver]) || $exclusions[$giver] !== $receiver)) {
-                return $receiver;
-            }
-        }
-
-        return null;
-    }
-
     #[Route('/draw/results/{id}', name: 'draw_results')]
     public function drawResults(Draw $draw): Response
     {
-        $participants = $draw->getParticipants();
-
-        $pairs = [];
-        foreach ($participants as $giver) {
-            $receiver = $this->findReceiverForGiver($giver, $participants, $draw->getExclusions());
-            if ($receiver) {
-                $pairs[] = ['giver' => $giver, 'receiver' => $receiver];
-            }
-        }
+        $assignations = $draw->getAssignations();
+        $exclusions = $draw->getExclusions();
 
         return $this->render('draw/results.html.twig', [
             'draw' => $draw,
-            'pairs' => $pairs,
+            'assignations' => $assignations,
+            'exclusions' => $exclusions,
             'page_title' => 'Résultats du tirage au sort',
             'sectionName' => 'drawResults',
         ]);
-    }
-
-    private function findReceiverForGiver($giver, $participants, $exclusions)
-    {
-        foreach ($participants as $participant) {
-            if ($participant !== $giver && !$this->isExcluded($giver, $participant, $exclusions)) {
-                return $participant;
-            }
-        }
-
-        return null;
-    }
-
-    private function isExcluded($giver, $receiver, $exclusions)
-    {
-        foreach ($exclusions as $exclusion) {
-            if (($exclusion->getUserparticipant() === $giver && $exclusion->getUserexcluded() === $receiver) ||
-                ($exclusion->getUserparticipant() === $receiver && $exclusion->getUserexcluded() === $giver)) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }

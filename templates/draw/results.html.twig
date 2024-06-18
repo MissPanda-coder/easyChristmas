@@ -3,23 +3,22 @@
 {% block body %}
 <h2>Résultats du tirage au sort</h2>
 
-
-    <div class="results_container">
-        <div class="column giver_column">
-            <h3>Donneur</h3>
-            <ul>
-                {% for pair in pairs %}
-                    <li class="names_layout">{{ pair.giver.email }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-        <div class="column receiver_column">
-            <h3>Receveur</h3>
-            <ul>
-                {% for pair in pairs %}
-                    <li class="names_layout">{{ pair.receiver.email }}</li>
-                {% endfor %}
-            </ul>
-        </div>
+<div class="results_container">
+    <div class="column giver_column">
+        <h3>Donneur</h3>
+        <ul>
+            {% for assignation in assignations %}
+                <li class="names_layout">{{ assignation.userGiver.email }}</li>
+            {% endfor %}
+        </ul>
     </div>
-    {% endblock %}
+    <div class="column receiver_column">
+        <h3>Receveur</h3>
+        <ul>
+            {% for assignation in assignations %}
+                <li class="names_layout">{{ assignation.userReceiver.email }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}
