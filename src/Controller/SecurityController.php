@@ -14,7 +14,6 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\Regex;
-use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\RateLimiter\RateLimiterFactory;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -22,7 +21,6 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-
 
 class SecurityController extends AbstractController
 {
@@ -101,7 +99,6 @@ class SecurityController extends AbstractController
         $em->persist($user);
         $em->flush();
 
-
         $this->addFlash('success', 'Votre adresse email a été vérifiée.');
 
         return $this->redirectToRoute('login');
@@ -143,15 +140,16 @@ class SecurityController extends AbstractController
       ->getForm();
 
       $passwordForm->handleRequest($request);
+
         if ($passwordForm->isSubmitted() && $passwordForm->isValid()) {
-      $password = $passwordForm->get('password')->getData();
-      $user = $resetPassword->getUser();
-      $hash = $userPasswordHasher->hashPassword($user, $password);
-      $user->setPassword($hash);
-      $em->remove($resetPassword);
-      $em->flush();
-      $this->addFlash('success', 'Votre mot de passe a été modifié.');
-      return $this->redirectToRoute('login');
+          $password = $passwordForm->get('password')->getData();
+          $user = $resetPassword->getUser();
+          $hash = $userPasswordHasher->hashPassword($user, $password);
+          $user->setPassword($hash);
+          $em->remove($resetPassword);
+          $em->flush();
+          $this->addFlash('success', 'Votre mot de passe a été modifié.');
+          return $this->redirectToRoute('login');
         }
 
       return $this->render('security/email-reset-password.html.twig', [
@@ -163,7 +161,6 @@ class SecurityController extends AbstractController
     #[Route('/reset-password-request', name: 'reset-password-request')]
     public function resetPasswordRequest(RateLimiterFactory $passwordRecoveryLimiter, MailerInterface $mailer, Request $request, UserRepository $userRepository, ResetPasswordRepository $resetPasswordRepository, EntityManagerInterface $em)
     {
-
       $limiter = $passwordRecoveryLimiter->create($request->getClientIp());
         if (false === $limiter->consume(1)->isAccepted()) {
             $this->addFlash('error', 'Vous devez attendre une heure pour refaire une récupération');
@@ -227,8 +224,10 @@ class SecurityController extends AbstractController
         if ($this->getUser()) {
             return $this->redirectToRoute('countdown');
         }
+
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
+
         return $this->render('security/login.html.twig', [
             'last_username' => $lastUsername,
             'error' => $error,
@@ -240,6 +239,6 @@ class SecurityController extends AbstractController
     #[Route("/logout", name: "logout")]
     public function logout()
     {
-        // Symfony gère la déconnexion automatiquement
+        // Symfony gère la déconnexion
     }
-  }
+}

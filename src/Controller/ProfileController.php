@@ -16,8 +16,6 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class ProfileController extends AbstractController
 {
-
-
     #[Route('/user/{id}', name: 'user_info')]
         public function setSuperAdmin(EntityManagerInterface $entityManager, int $id): Response
     {
@@ -88,7 +86,7 @@ class ProfileController extends AbstractController
                     // Mettre à jour le chemin de la nouvelle photo de l'utilisateur
                     $user->setPhoto($filename);
                 } catch (FileException $e) {
-                    // Handle exception if something happens during file upload
+                     // Gérer l'exception si quelque chose se passe mal pendant le téléchargement
                 }
             }
             $em->flush();

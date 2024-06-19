@@ -20,10 +20,7 @@
     width:80%;
 }
 
-.form_players-layout{
-    display:flex;
-    flex-flow:row wrap;
-}
+.form_players-layout,
 .email_participant-layout{
     display:flex;
     flex-flow:row wrap;
@@ -57,7 +54,7 @@
 #participant_email:focus, #participant_exclusion:focus,#participant_email:valid,
 #participant_exclusion:valid, #particpant_email:not(:placeholder-shown),#participant_exclusion:not(:placeholder-shown){
     outline: none;
-    border-bottom: 1px solid $c-white;
+    border-bottom: 0.5px solid $c-white;
     color: $c-white;
 }
 
@@ -70,13 +67,9 @@
 }
 
 .btn_add,.newParticipant,.btn_play{
-    height:40px;
-    padding: 0.5rem;
-    color: $c-white;
+    @include btn;
     background-color: $c-green;
-    border:none;
     margin:1rem 1.5rem;
-    border-radius: 18px;
     transition: transform 0.2s ease-in-out;
 }
 
@@ -93,18 +86,8 @@ td{
 }
 
 .btn_remove{
-    height:30px;
-    width: 30px;
-    padding: 0.5rem;
-    color: $c-white;
-    background-color: $c-green;
-    border:none;
+    @include btnaddandremove;
     margin:0 1.5rem;
-    border-radius: 50%;
-    transition: transform 0.2s ease-in-out;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .btn_add:hover,.btn_remove:hover,.newParticipant:hover,.btn_play:hover{

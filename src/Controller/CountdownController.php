@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class CountdownController extends AbstractController
 {
     #[Route('/countdown', name: 'countdown')]
-    public function index(): Response
+    public function countdown(): Response
     {
         return $this->render('countdown/index.html.twig', [
             'page_title' => 'Compte à rebours pour Noël - X dodos avant le grand jour !',

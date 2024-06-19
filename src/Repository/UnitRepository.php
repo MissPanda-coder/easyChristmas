@@ -27,14 +27,4 @@ class UnitRepository extends ServiceEntityRepository
                ->getResult()
            ;
        }
-
-    //    public function findOneBySomeField($value): ?Unit
-    //    {
-    //        return $this->createQueryBuilder('u')
-    //            ->andWhere('u.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
 }

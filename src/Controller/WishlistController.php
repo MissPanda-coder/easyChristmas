@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Wishes;
 use App\Form\WishType;
-use App\Form\WishesType;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\AssignationRepository;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;

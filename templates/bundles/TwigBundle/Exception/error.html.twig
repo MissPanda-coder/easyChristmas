@@ -4,11 +4,10 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Vivez la magie de Noël sur notre site ! Tirage au sort pour des cadeaux inoubliables, idées festives, recettes délicieuses, et décompte jusqu'au jour J. Préparez-vous à une fête pleine de surprises!">
-    <meta name="robots" content="index, follow">
-        
+        <meta name="description" content="Vivez la magie de Noël sur notre site ! Tirage au sort pour des cadeaux inoubliables, idées festives, recettes délicieuses, et décompte jusqu'au jour J. Préparez-vous à une fête pleine de surprises!">
+        <meta name="robots" content="index, follow">
         <link rel="shortcut icon" href="{{ asset('images/favicon/favicon.png') }}" type="image/x-icon">
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     
         {% block stylesheets %}
          {{ encore_entry_link_tags('app') }}
@@ -21,12 +20,11 @@
         {% endblock %}
     </head>
     <body>
-    <section id="oops">
-        {% block body %}
-     
-    <p class="oops_text">Oops...une erreur est survenue</p>
-    <a href="{{ path('home') }}" class="oops_button">Retour à l'accueil</a>
-        {% endblock %}
- </section>
+        <section id="oops">
+            {% block body %}
+                <p class="oops_text">Oops...une erreur est survenue</p>
+                <a href="{{ path('home') }}" class="oops_button">Retour à l'accueil</a>
+            {% endblock %}
+        </section>
     </body>
 </html>

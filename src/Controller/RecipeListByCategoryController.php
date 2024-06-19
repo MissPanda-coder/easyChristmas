@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Recipe;
-use App\Repository\RecipeCategoryRepository;
 use App\Repository\RecipeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -13,11 +12,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class RecipeListByCategoryController extends AbstractController
 {
-
     protected EntityManagerInterface $entityManager;
 
     private RecipeRepository $recipeRepository;
-
     public function __construct(EntityManagerInterface $em)
     {
         $this->entityManager = $em;
@@ -25,9 +22,8 @@ class RecipeListByCategoryController extends AbstractController
     }
     #[Route('/recipe/list/by/category/{categoryname}', name: 'recipe_list_by_category')]
     #[IsGranted('ROLE_USER')]
-    public function index(string $categoryname): Response
+    public function recipesByCategories(string $categoryname): Response
     {
-
         $recipes = $this->recipeRepository->findByCategoryname($categoryname);
 
         return $this->render('recipe_list_by_category/index.html.twig', [

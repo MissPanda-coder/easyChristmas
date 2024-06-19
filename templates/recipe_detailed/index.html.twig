@@ -2,10 +2,13 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+
 <h1>{{ recipe.title }}</h1>
 
 <div class="container_detailed">
+
     <div class="row gy-5">
+
         <div class="col-sm-3 d-flex justify-content-center" id="recipe_ingredients-size">
             <article class="recipe_ingredients">
                 <div class="quantity">
@@ -24,6 +27,7 @@
                 </ul>
             </article>        
         </div>
+
         <div class="col-sm-9">
             <div class="row">
                 <div class="col-8 col-sm-6 d-flex justify-content-end">
@@ -34,6 +38,7 @@
                         <p>{{ recipe.recipedifficulty }}</p>
                     </article>  
                 </div>
+
                 <div class="col-4 col-sm-6 d-flex justify-content-end">
                     <img src="{{ asset('uploads/photos/' ~ recipe.photo) }}" class="recipe_photo" alt="Photo de la recette">
                  </div>
@@ -41,19 +46,24 @@
         </div>
     
         <div class="col-12">
-        <article class="recipe_steps">
-            <strong>Étapes de préparation :</strong>
-                <ol>
-                {% for recipesteps in recipe.recipestep %}
-                    <li class="recipe_step-description">
-                    <p class="stepnumber_strong">{{ recipesteps }}</p>
-                    <p class="step-description_justify">{{ recipesteps.description}}</p>
-                    </li>
-                {% endfor %}
-                </ol>
-        </article>
+            <article class="recipe_steps">
+
+                <strong>Étapes de préparation :</strong>
+
+                    <ol>
+                    {% for recipesteps in recipe.recipestep %}
+                        <li class="recipe_step-description">
+                        <p class="stepnumber_strong">{{ recipesteps }}</p>
+                        <p class="step-description_justify">{{ recipesteps.description}}</p>
+                        </li>
+                    {% endfor %}
+                    </ol>
+
+            </article>
         </div>
+
     </div>
+
 </div>
 {% endblock %}
 

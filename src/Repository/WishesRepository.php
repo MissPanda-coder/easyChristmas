@@ -31,13 +31,4 @@ class WishesRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Wishes
-    //    {
-    //        return $this->createQueryBuilder('w')
-    //            ->andWhere('w.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
 }

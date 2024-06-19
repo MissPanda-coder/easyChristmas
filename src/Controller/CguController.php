@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class CguController extends AbstractController
 {
     #[Route('/cgu', name: 'cgu')]
-    public function index(): Response
+    public function cgu(): Response
     {
         return $this->render('cgu/index.html.twig', [
             'page_title' => 'CGU',

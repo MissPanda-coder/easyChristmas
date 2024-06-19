@@ -2,42 +2,51 @@
 
 {% block body %}
 
-
     <h2>Profil</h2>
 
     {{ form_start(userForm, {'attr': {'class': 'profileForm_layout mx-auto'}}) }}
     
     <div class="row gap-3 ">
-        <fieldset class="col-lg-5 col-md-5 col-sm-12 mx-auto" id="profile_photo-bento">
+
+        <div class="col-lg-5 col-md-5 col-sm-12 mx-auto" id="profile_photo-bento">
             <img src="{{ asset('uploads/photos/' ~ app.user.photo) }}" alt="Photo de profil" class="profile_picture mx-auto">
             {{ form_widget(userForm.photoFile, {'attr': {'id': 'profile_photo'}}) }}
                 <button type="submit" class="form_btn">Envoyer</button>
-        </fieldset>
+        </div>
+
             <div class="col-lg-7 col-md-7 col-sm-12 mx-auto" id="profileForm_col-bento">
                 <fieldset class="form_field">
                     {{ form_label(userForm.username, 'Nom d\'utilisateur', {'label_attr': {'class': 'form_label'}}) }}
                     {{ form_widget(userForm.username, {'attr': {'class': 'form_input'}}) }}
                 </fieldset>
+
                 <fieldset class="form_field">
                     {{ form_label(userForm.firstname, 'Prénom', {'label_attr': {'class': 'form_label'}}) }}
                     {{ form_widget(userForm.firstname, {'attr': {'class': 'form_input'}}) }}
                 </fieldset>
+
                 <fieldset class="form_field">
                     {{ form_label(userForm.lastname, 'Nom de famille', {'label_attr': {'class': 'form_label'}}) }} 
                     {{ form_widget(userForm.lastname, {'attr': {'class': 'form_input'}}) }}
                 </fieldset>
+
                     <button type="submit" class="form_btn">Envoyer</button>
+
                         <p class="form_field">
                             <a href="{{ path('reset-password-request') }}">Modifier mon mot de passe<a>
                         </p>
+
                         <p class="form_field">
                             <a href="#">Supprimer mon compte<a>
                         </p>
+
                         <p class="form_field">
                             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                         </p>
             </div>
+
     </div>
+
     {{ form_end(userForm) }}
 
 {% endblock %}

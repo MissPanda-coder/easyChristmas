@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class PdcController extends AbstractController
 {
     #[Route('/pdc', name: 'pdc')]
-    public function index(): Response
+    public function pdc(): Response
     {
         return $this->render('pdc/index.html.twig', [
             'page_title' => 'Politique de confidentialité',

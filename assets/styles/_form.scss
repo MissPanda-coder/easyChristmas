@@ -1,114 +1,102 @@
-
 @import "_variables";
 @import "_mixin";
 
 
 .form_layout{
     @include form;
-    }
-
+}
 
 .form_title{
-      color: $c-white;
-      font-family:$f-first, sans-serif;
-      font-weight: 700;
-      font-size: 1.5rem;
-      letter-spacing: 0.8px;
-      text-align: center;
-      margin-bottom: 2rem;
-    }
+    color: $c-white;
+    font-family:$f-first, sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    letter-spacing: 0.8px;
+    text-align: center;
+    margin-bottom: 2rem;
+}
  
- .form_field{
-  margin-bottom: 1.1rem;;
+.form_field{
+    margin-bottom: 1.1rem;;
  }   
 
 .form_label{
-  display: block; 
-  margin-bottom: 5px;
-  color: $c-white;
-  font-size: 1.1rem;
+    display: block; 
+    margin-bottom: 5px;
+    color: $c-white;
+    font-size: 1.1rem;
 }
 
 .form_input {
-      font-family: $f-second; 
-      color:$c-white;
-      width:380px;
-      border-radius: 50px;
-      backdrop-filter: blur(5px);
-      -webkit-backdrop-filter: blur(5px);
-      -moz-backdrop-filter: blur(5px);
-      box-shadow: 4px 4px 60px rgba(0, 0, 0, .2);
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, .2);
-      transition: all .3s;   
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      background: transparent;
-      padding: 0.8rem;
-    }
+    width:380px;
+    font-family: $f-second; 
+    color:$c-white;
+    background: transparent;
+    border-radius: 50px;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    -moz-backdrop-filter: blur(5px);
+    box-shadow: 4px 4px 60px rgba(0, 0, 0, .2);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, .2);
+    transition: all .3s;   
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 0.8rem;
+}
 
 .form_input:hover{
-      background: rgba(255, 255, 255, .1);
-      box-shadow: 4px 4px 60px 8px rgba(0, 0, 0, .2);
-      transition: all 0.4s ease-out;
-    }
+    background: rgba(255, 255, 255, .1);
+    box-shadow: 4px 4px 60px 8px rgba(0, 0, 0, .2);
+    transition: all 0.4s ease-out;
+}
     
-    ::placeholder{
-      font-family: $f-second; 
-      color: $c-white;
-    }
+::placeholder{
+    font-family: $f-second; 
+    color: $c-white;
+}
     
-    .form_btn{
-      cursor: pointer ;
-      border-radius: 18px;
-      color: $c-white;
-      background-color: $c-red;
-      font-family: $f-first, sans-serif;
-      font-size: 1.2rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      padding: 0.5rem 1rem;
-      display: block;
-      border: none;
-      margin:2rem auto;
-      
-    }
+.form_btn{
+    @include btn;
+    background-color: $c-red;
+    display: block;
+    margin:2rem auto;
+}
     
-    .form_btn:hover{
-      text-shadow: 2px 2px 4px rgba(0, 0, 0);
-      transition: all 0.4s ease-out;
-    }
+.form_btn:hover{
+    text-shadow: 2px 2px 4px rgba(0, 0, 0);
+    transition: all 0.4s ease-out;
+}
    
-    .form_password-forgot, .register_button{
-      color:$c-white;
-      margin-bottom: 0.5rem;
-    }
+.form_password-forgot, .register_button{
+    color:$c-white;
+    margin-bottom: 0.5rem;
+}
 
-    .form_password-forgot:hover, .register_button:hover{
-      color:$c-red;
-      transition: all 0.4s ease-out;
-    }
+.form_password-forgot:hover, .register_button:hover{
+    color:$c-red;
+    transition: all 0.4s ease-out;
+}
 
-    .form-field{
-      padding: 0;
-    }
+.form-field{
+    padding: 0;
+}
 
-    .form_field-center{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        margin-bottom: 0.5rem;
-    }
+.form_field-center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 0.5rem;
+}
 
-   .rememberMe{
+.rememberMe{
     color: $c-white;
     padding-left: 1em;
     font-family: $f-second, sans-serif;
     font-size: 0.85rem;
-   }
+}
 
-    .form_errors{
-      color:$c-red !important;
-      font-family: $f-second, sans-serif;
-      display: block;
-    }
+.form_errors{
+    color:$c-red !important;
+    font-family: $f-second, sans-serif;
+    display: block;
+}

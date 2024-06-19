@@ -1,9 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+
 <h2>Résultats du tirage au sort</h2>
 
 <div class="results_container">
+
     <div class="column giver_column">
         <h3>Donneur</h3>
         <ul>
@@ -12,6 +14,7 @@
             {% endfor %}
         </ul>
     </div>
+
     <div class="column receiver_column">
         <h3>Receveur</h3>
         <ul>
@@ -20,5 +23,7 @@
             {% endfor %}
         </ul>
     </div>
+    
 </div>
+
 {% endblock %}

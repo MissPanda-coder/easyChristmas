@@ -42,14 +42,14 @@ class DrawController extends AbstractController
                     return new JsonResponse(['success' => false, 'message' => 'Giver or receiver not found.'], JsonResponse::HTTP_BAD_REQUEST);
                 }
 
-                // Create and persist the assignation
+                // Creation et persist des résultats
                 $assignation = new Assignation();
                 $assignation->setDraw($draw);
                 $assignation->setUserGiver($giver);
                 $assignation->setUserReceiver($receiver);
                 $em->persist($assignation);
 
-                // Handle exclusions
+                // Exclusions
                 if (!empty($pair['exclusion'])) {
                     $excludedUser = $userRepository->findOneBy(['email' => $pair['exclusion']]);
                     if ($excludedUser) {
@@ -78,8 +78,8 @@ class DrawController extends AbstractController
                 $draw->addParticipant($giver);
                 $draw->addParticipant($receiver);
 
-                // Ajouter un délai entre les envois d'email
-                usleep(500000); // Pause de 0.5 seconde (500 000 microsecondes)
+                // Délai entre les envois d'email pour ne pas planter mailtrap
+                usleep(500000);
             }
 
             $em->persist($draw);

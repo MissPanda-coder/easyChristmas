@@ -45,21 +45,21 @@
 
 .select-container {
     select {
+        select:focus,
+        select:hover {
+            background-color: #f0f0f0; 
+        }
 
-    select:focus,
-    select:hover {
-        background-color: #f0f0f0; 
+        option {
+            background-color: #ffffff; 
+            color: $c-grey; 
+        }
+        select option:checked {
+            background-color: #dddddd; 
+            color: $c-grey; 
+        }
     }
-
-    option {
-        background-color: #ffffff; 
-        color: $c-grey; 
-    }
-    select option:checked {
-        background-color: #dddddd; 
-        color: $c-grey; 
-    }
-}}
+}
 
 .remove-link{
     display: block;

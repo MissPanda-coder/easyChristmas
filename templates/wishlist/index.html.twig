@@ -1,43 +1,55 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+
 <div class="letter_layout">
+
     {{ form_start(wishForm, {'attr': {'class': 'form_wishes-layout'}}) }}
-    <p>Mon cher papa Noël,</p>
 
-    <p>Cette année, j'ai été particulièrement sage ! Je mérite donc un joli cadeau et au cas où tu ne saurais pas quoi m'offrir, voici quelques idées :</p>
-        <fieldset class="wish_fieldset">
-            <div class="wish_fieldset-errors">
-                <div class="wish_fieldset-div">
-                    <label for="wish_participant" class="wish_participant-layout">Voeu :</label>
-                    <input type="text" id="wish_participant" required>
+        <section>
+            <p>Mon cher papa Noël,
+            </p>
+
+            <p>Cette année, j'ai été particulièrement sage ! Je mérite donc un joli cadeau et au cas où tu ne saurais pas quoi m'offrir, voici quelques idées :
+            </p>
+        </section>
+
+        <section>
+            <div class="wish_fieldset">
+                <div class="wish_fieldset-errors">
+                    <fieldset class="wish_fieldset-div">
+                        <label for="wish_participant" class="wish_participant-layout">Voeu :</label>
+                        <input type="text" id="wish_participant" required>
+                    </fieldset>
+                    <span id="wish_error">Seuls les lettres et chiffres sont autorisés</span>
                 </div>
-                <span id="wish_error">Seuls les lettres et chiffres sont autorisés</span>
+                    <button class="wish_btn-add" type="button" onclick="addWish()">+</button> 
             </div>
-            <button class="wish_btn-add" type="button" onclick="addWish()">+</button> 
-        </fieldset>
 
-    <table id="wish_table">
-        <thead id="wish_titles">
-            <tr>
-                <th>Voeu n°</th>
-                <th>Souhait</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody id="wish_list">
-            <!-- tableau des souhaits -->
-        </tbody>
-    </table>
+            <table id="wish_table">
+                <tbody id="wish_list">
+                    <!-- tableau des souhaits -->
+                </tbody>
+            </table>
+        </section>
 
-    <p>Je te remercie et j'ai hâte de te voir,</p>
-    <p>{{ app.user.username }}</p>
-    <input type="hidden" id="participants_data" name="participants_data">
-    <button type="submit" class="form_btn">Envoyer</button>
+        <section>
+            <p>Je te remercie et j'ai hâte de te voir,
+            </p>
+            <p>{{ app.user.username }}
+            </p>
+        </section>
+
+            <input type="hidden" id="participants_data" name="participants_data">
+
+            <button type="submit" class="form_btn" onclick="submitWishForm()">Envoyer</button>
+
     {{ form_end(wishForm) }}
+
 </div>
 
 <script>
+
     let wishes = [];
 
     function addWish() {
@@ -70,6 +82,7 @@
             wishRow.appendChild(wishNumberCell);
 
             const wishCell = document.createElement('td');
+            wishCell.className = 'wish_names'
             wishCell.textContent = wishValue;
             wishRow.appendChild(wishCell);
 
@@ -90,7 +103,7 @@
     }
 
     function validateWish(wishValue) {
-        const wishPattern = /^[a-z0-9]+$/;
+        const wishPattern = /^[a-z0-9]+(?:[-\s][a-z0-9]+)*$/;
         return wishPattern.test(wishValue);
     }
 
@@ -113,5 +126,7 @@
         participantsDataInput.value = JSON.stringify(wishes);
         document.querySelector('.form_wishes-layout').submit();
     }
+
 </script>
+
 {% endblock %}

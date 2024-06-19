@@ -1,9 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+
 <h2>Le grand tirage au sort</h2>
 
 <div class="draw_explanations">
+
     <ul>
         <li>
             <h6>Étape 1 : Liste des participants</h6>
@@ -22,35 +24,49 @@
             <p>N'oubliez pas de vous rendre dans la rubrique 'Liste au Père Noël pour envoyer vos souhaits à la personne qui a été tirée au sort pour vous offrir un cadeau à Noël !</p>
         </li>
     </ul>
+
 </div>
+
 <form id="form_players" method="post" action="{{ path('draw_index') }}">
-    <fieldset class="form_players-layout">
+
+    <div class="form_players-layout">
+
         <div class="email-participant_errors">
-            <div class="email_participant-layout">
+            <fieldset class="email_participant-layout">
                 <label for="participant_email" class="players">Email du participant :</label>
                 <input type="email" id="participant_email" class="participant_email" required>
-            </div>
+            </fieldset>
             <span class="email_error-participant" id="email_error-participant">Veuillez entrer un email valide.</span>
         </div>
+
         <div class="email-participant_errors">
-            <div class="email_participant-layout">
+            <fieldset class="email_participant-layout">
                 <label for="participant_exclusion" class="players">Email de l'exclusion :</label>
                 <input type="email" id="participant_exclusion" class="participant_exclusion">
-            </div>
+            </fieldset>
             <span class="email_error-participant" id="email_error-exclusion">Veuillez entrer un email valide.</span>
         </div>
+
         <button class="btn_add" type="button" onclick="addParticipant()">Confirmer</button>
-    </fieldset>
+
+    </div>
+
     <table id="participants_table">
+
         <tbody id="participants_list">
             <!-- tableau des participants -->
         </tbody>
+
     </table>
+
     <input type="hidden" id="participants_data" name="participants_data">
+
     <button class="btn_play" type="button" onclick="submitForm()">Lancer le tirage</button>
+
 </form>
 
 <script>
+
     let participants = [];
 
     function addParticipant() {
@@ -176,5 +192,7 @@
             alert(result.message);
         }
     }
+
 </script>
+
 {% endblock %}

@@ -11,7 +11,7 @@ class RecipeIntroController extends AbstractController
 {
     #[Route('/recipe/intro', name: 'recipe_intro')]
     #[IsGranted('ROLE_USER')]
-    public function index(): Response
+    public function recipeIntro(): Response
     {
         return $this->render('recipe_intro/index.html.twig', [
             'page_title' => 'Recettes de Noël pour tous les goûts',

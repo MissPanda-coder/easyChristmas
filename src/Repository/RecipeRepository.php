@@ -4,10 +4,8 @@ namespace App\Repository;
 
 use App\Entity\Recipe;
 use App\Entity\Recipecategory;
-use App\Entity\Recipedifficulty;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-
 /**
  * @extends ServiceEntityRepository<Recipe>
  */
@@ -29,9 +27,8 @@ class RecipeRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-
     function findById(int $id): array
-{
+    {
         return $this->createQueryBuilder('recipe')
             ->addSelect('difficulty, stepnumber, description, quantity, unit, ingredient')
             ->join('recipe.recipedifficulty', 'difficulty')
@@ -44,6 +41,5 @@ class RecipeRepository extends ServiceEntityRepository
             ->setParameter('id', $id)
             ->getQuery()
             ->getOneOrNullResult();
-}
-
+    }
 }

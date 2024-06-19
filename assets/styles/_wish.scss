@@ -1,3 +1,6 @@
+@import "_variables";
+@import "_mixin";
+
 #wishes{
     width: 100%;
     height:100vh;
@@ -45,35 +48,37 @@
 
 #wish_participant{
     border:none;
-    border-bottom: 1px solid $c-grey;
+    border-bottom: 0.5px solid $c-grey;
     background-color: transparent;
     color: $c-grey;
 }
 
-#wish_error, #wish_titles{
+#wish_error,#wish_titles{
     display: none;
 }
 
-.wish_btn-add{
-    display: inline-block;
-    width:30px;
-    height:30px;
-    border:none;
-    border-radius: 50%;
-    background-color: $c-green;
-    color:$c-white;
+.wish_btn-add,.btn_wish{
+    @include btnaddandremove;
     margin-left:1.5rem;
-    cursor: pointer;
+}
+
+.wish_btn-add:hover, .btn_wish:hover{
+    transform: scale(1.1);
 }
 
 #wish_table{
     margin:1rem;
+    width:350px;
 }
 
-.wish_row, .wish_col{
+.wish_row, .wish_col,.wish_names{
     color:$c-grey;
     font-family:'PlaywriteSK', serif;
     font-size: 1rem;
+}
+
+th{
+    height:40px;
 }
 
 

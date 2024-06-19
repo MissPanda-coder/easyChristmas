@@ -35,9 +35,7 @@ class RecipeHasIngredientType extends AbstractType
         ->add('quantity', IntegerType::class, [
             'label' => 'Quantité',
             'attr' => ['class' => 'quantity-input']
-        ]);
-
-            
+        ]);       
     }
 
     public function configureOptions(OptionsResolver $resolver): void
