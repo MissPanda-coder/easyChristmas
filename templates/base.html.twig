@@ -6,7 +6,7 @@
         <meta name="description" content="Vivez la magie de Noël sur notre site ! Tirage au sort pour des cadeaux inoubliables, idées festives, recettes délicieuses, et décompte jusqu'au jour J. Préparez-vous à une fête pleine de surprises!">
         <meta name="robots" content="index, follow">
         <title>{% block title %}{% if page_title is defined %} {{ page_title }} | {% endif %}Bienvenue sur Easy Christmas !{% endblock %}</title>
-        <link rel="shortcut icon" href="{{ asset('images/favicon/favicon.png') }}" type="image/x-icon">
+        <link rel="shortcut icon" href="{{ asset('build/images/favicon/favicon.png') }}" type="image/x-icon">
         <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     
         {% block stylesheets %}
@@ -18,19 +18,21 @@
         {% endblock %}
     </head>
     <body>
-        {{include('./partials/navbar.html.twig')}}
         
+            {{include('./partials/navbar.html.twig')}}
+
             {% for label, messages in app.flashes %}
                 {% for message in messages %}
                     <div class="flash flash-{{ label }}">{{ message }}</div>
                 {% endfor %}
             {% endfor %}
             
-            {% block body %}
-    
-            {% endblock %}
+            <div class="{{content}}">
+                {% block body %}
+                {% endblock %}
+            </div>
 
-        {{include('./partials/footer.html.twig')}}
-    
+            {{include('./partials/footer.html.twig')}}
+        
     </body>
 </html>

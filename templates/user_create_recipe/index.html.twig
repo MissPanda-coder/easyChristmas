@@ -6,6 +6,11 @@
 
 <div class="container_creation">
 
+    <div class="draw_explanations">
+        <p>Pour créer une recette sur notre site, veuillez remplir tous les champs obligatoires.</p>
+        <p>Il est également essentiel de spécifier le nombre de personnes pour lesquelles la recette est conçue. Cela permettra de calculer correctement les quantités d'ingrédients lorsque vous consultez la recette et ajustez le nombre de portions.</p>
+    </div>
+
     {{ form_start(recipeForm, {'attr': {'class': 'form_layout-recipe'}}) }}
         <fieldset class="form_field">
             {{ form_label(recipeForm.title, null, {'label_attr':{'class': 'form_label'}}) }}
@@ -14,7 +19,7 @@
 
         <fieldset class="form_field">
             {{ form_label(recipeForm.description, null, {'label_attr': {'class': 'form_label'}}) }}
-            {{ form_widget(recipeForm.description, {'attr': {'class': 'form_input'}}) }}
+            {{ form_widget(recipeForm.description, {'attr': {'class': 'form_input-desc','maxlength': 200}}) }}
             {{ form_errors(recipeForm.description) }}    
         </fieldset>
 
@@ -40,22 +45,27 @@
         </fieldset>
 
         <fieldset class="form_field">
+            {{ form_label(recipeForm.servings, null, {'label_attr': {'class': 'form_label'}}) }}
+            {{ form_widget(recipeForm.servings, {'attr': {'class': 'form_input'}}) }}
+        </fieldset>
+
+        <fieldset class="form_field">
             {{ form_label(recipeForm.ingredients, null, {'label_attr': {'class': 'form_label'}}) }}
-            <p class="ingredient-collection select-container" data-prototype="{{ form_widget(recipeForm.ingredients.vars.prototype)|e('html_attr') }}">
+            <p class="ingredient_collection select_container" data-prototype="{{ form_widget(recipeForm.ingredients.vars.prototype)|e('html_attr') }}">
                 {{ form_widget(recipeForm.ingredients) }}
-                <button type="button" class="add-ingredient_link">Ajouter un ingrédient</button>
+                <button type="button" class="add_ingredient-link">Ajouter un ingrédient</button>
             </p>
         </fieldset>
 
         <fieldset class="form_field">
             {{ form_label(recipeForm.recipestep, null, {'label_attr': {'class': 'form_label'}}) }}
-            <p class="step-collection select-container" data-prototype="{{ form_widget(recipeForm.recipestep.vars.prototype)|e('html_attr')}}">
+            <p class="step_collection select_container" data-prototype="{{ form_widget(recipeForm.recipestep.vars.prototype)|e('html_attr')}}">
                 {{ form_widget(recipeForm.recipestep) }}
-                <button type="button" class="add-step_link">Ajouter une étape</button>
+                <button type="button" class="add_step-link">Ajouter une étape</button>
             </p>
         </fieldset>
 
-        <button type="submit" class="form_btn">Envoyer</button>
+        <button type="submit" class="form_btn-recipe">Envoyer</button>
 
         <fieldset class="form_field">
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
@@ -73,8 +83,8 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const ingredientCollectionHolder = document.querySelector('.ingredient-collection');
-            const addIngredientButton = document.querySelector('.add-ingredient_link');
+            const ingredientCollectionHolder = document.querySelector('.ingredient_collection');
+            const addIngredientButton = document.querySelector('.add_ingredient-link');
             ingredientCollectionHolder.dataset.index = ingredientCollectionHolder.querySelectorAll('input').length;
 
             addIngredientButton.addEventListener('click', function() {
@@ -84,13 +94,13 @@
                 ingredientCollectionHolder.dataset.index++;
                 const newFormElement = document.createElement('div');
                 newFormElement.innerHTML = newForm;
-                newFormElement.classList.add('new-ingredient_item');
-                ingredientCollectionHolder.insertBefore(newFormElement, addIngredientButton);
+                newFormElement.classList.add('new_ingredient-item');
+                ingredientCollectionHolder.appendChild(newFormElement); 
                 addDeleteButton(newFormElement);
             });
 
-            const stepCollectionHolder = document.querySelector('.step-collection');
-            const addStepButton = document.querySelector('.add-step_link');
+            const stepCollectionHolder = document.querySelector('.step_collection');
+            const addStepButton = document.querySelector('.add_step-link');
             stepCollectionHolder.dataset.index = stepCollectionHolder.querySelectorAll('input').length;
 
             addStepButton.addEventListener('click', function() {
@@ -100,20 +110,20 @@
                 stepCollectionHolder.dataset.index++;
                 const newFormElement = document.createElement('div');
                 newFormElement.innerHTML = newForm;
-                newFormElement.classList.add('new-step_item');
-                stepCollectionHolder.insertBefore(newFormElement, addStepButton);
+                newFormElement.classList.add('new_step-item');
+                stepCollectionHolder.appendChild(newFormElement); 
                 addDeleteButton(newFormElement);
             });
 
             function addDeleteButton(element) {
                 const removeButton = document.createElement('button');
                 removeButton.type = 'button';
-                removeButton.classList.add('remove-link');
+                removeButton.classList.add('remove_link');
 
                 const removeIcon = document.createElement('img');
                 removeIcon.src = '/build/images/else/poubelle.png'; 
                 removeIcon.alt = 'Supprimer';
-                removeIcon.classList.add('remove-icon');
+                removeIcon.classList.add('remove_icon');
 
                 removeButton.appendChild(removeIcon);
                 element.appendChild(removeButton);
@@ -124,7 +134,7 @@
             }
 
             // Ajoutez les boutons de suppression existants
-            document.querySelectorAll('.new-ingredient_item, .new-step_item').forEach(function(element) {
+            document.querySelectorAll('.new_ingredient-item, .new_step-item').forEach(function(element) {
                 addDeleteButton(element);
             });
         });

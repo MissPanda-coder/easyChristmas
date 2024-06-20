@@ -10,9 +10,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
@@ -57,19 +58,21 @@ class UserRecipeType extends AbstractType
                 'choice_label' => 'difficultyname',
                 'label' => 'Difficulté',
             ])
+            ->add('servings', IntegerType::class, [
+                'label' => 'Nombre de personnes',
+                'attr' => ['class' => 'form_input']
+            ])
             ->add('ingredients', CollectionType::class, [
                 'entry_type' => RecipeHasIngredientType::class,
                 'entry_options' => [
                     'label' => false,
                     'ingredients' => $options['ingredients'],
+                    'units' => $options['units'],
                 ],
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,
                 'prototype' => true,
-                'attr' => [
-                    'data-controller' => 'form-collection',
-                ],
                 'label' => 'Ingrédients',
             ])
             ->add('recipestep', CollectionType::class, [
@@ -79,9 +82,6 @@ class UserRecipeType extends AbstractType
                 'allow_delete' => true,
                 'by_reference' => false,
                 'prototype' => true,
-                'attr' => [
-                    'data-controller' => 'form-collection',
-                ],
                 'label' => 'Étapes de préparation',
             ]);
     }
@@ -90,6 +90,8 @@ class UserRecipeType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Recipe::class,
+            'ingredients' => [], 
+            'units' => [], 
         ]);
     }
 }

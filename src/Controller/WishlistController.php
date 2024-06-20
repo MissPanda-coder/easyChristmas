@@ -70,6 +70,7 @@ class WishlistController extends AbstractController
         return $this->render('wishlist/index.html.twig', [
             'page_title' => 'Liste de voeux',
             'sectionName' => 'wishes',
+            'content' => 'wishesContent',
             'controller_name' => 'WishlistController',
         ]);
     }

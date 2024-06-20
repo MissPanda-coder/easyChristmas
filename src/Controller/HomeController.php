@@ -14,6 +14,7 @@ class HomeController extends AbstractController
         return $this->render('home/index.html.twig', [
             'page_title' => 'Plateforme interactive de Noël',
             'sectionName' => 'home',
+            'content' => 'content',
             'controller_name' => 'HomeController',
         ]);
     }

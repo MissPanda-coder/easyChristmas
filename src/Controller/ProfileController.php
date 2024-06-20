@@ -99,6 +99,7 @@ class ProfileController extends AbstractController
             'userForm' => $userForm->createView(),
             'page_title' => 'Votre profil',
             'sectionName' => 'profile',
+            'content' => 'content',
         ]);
     }
 }

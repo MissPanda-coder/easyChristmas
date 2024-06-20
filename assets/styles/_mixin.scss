@@ -78,3 +78,15 @@
     background-repeat: no-repeat;
     background-size: cover;
 }
+
+@mixin footer{
+    width: 100%;
+    height:fit-content;
+    background-color: transparent;
+    font-family: $f-second, sans-serif;
+    color: $c-white;
+    margin-top:1.5rem;
+    padding-top: 1.5rem;
+    padding-bottom: 0.8rem;
+   
+}

@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 class UserCreateRecipeController extends AbstractController
 {
     #[Route('/user/recipe/create', name: 'user_recipe_create')]
-    public function userCreateRecipe(Request $request, EntityManagerInterface $em,IngredientRepository $ingredientRepository, UnitRepository $unitRepository): Response
+    public function userCreateRecipe(Request $request, EntityManagerInterface $em, IngredientRepository $ingredientRepository, UnitRepository $unitRepository): Response
     {
         // Ingrédients et unités triés par ordre alphabétique
         $ingredients = $ingredientRepository->ordered();
@@ -26,7 +26,10 @@ class UserCreateRecipeController extends AbstractController
 
         // Formulaire de création de recette
         $recipe = new Recipe();
-        $recipeForm = $this->createForm(UserRecipeType::class, $recipe);
+        $recipeForm = $this->createForm(UserRecipeType::class, $recipe, [
+            'ingredients' => $ingredients,
+            'units' => $units,
+        ]);
         $recipeForm->handleRequest($request);
 
         if ($recipeForm->isSubmitted() && $recipeForm->isValid()) {
@@ -48,7 +51,6 @@ class UserCreateRecipeController extends AbstractController
                     // gérer l'exception si quelque chose se passe mal pendant le téléchargement
                 }
 
-                
                 $recipe->setPhoto($filename);
             }
 
@@ -68,9 +70,8 @@ class UserCreateRecipeController extends AbstractController
             'recipeForm' => $recipeForm->createView(),
             'page_title' => 'Proposer une recette',
             'sectionName' => 'userRecipe',
+            'content' => 'content',
             'controller_name' => 'UserCreateRecipeController',
         ]);
     }
 }
-
-

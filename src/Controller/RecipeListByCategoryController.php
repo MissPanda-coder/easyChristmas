@@ -30,6 +30,7 @@ class RecipeListByCategoryController extends AbstractController
             'recipes' => $recipes,
             'page_title' => 'Recettes de Noël pour tous les goûts',
             'sectionName' => 'recipesListByCategory',
+            'content' => 'content',
             'controller_name' => 'RecipeListByCategoryController',
         ]);
     }

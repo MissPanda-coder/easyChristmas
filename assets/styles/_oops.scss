@@ -2,8 +2,10 @@
 @import '_mixin';
 
 #oops{
-    min-height:100vh;
-    width: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    width:100%;
     background-image: url(../images/else/dog.jpg);
     background-size: cover;
     background-repeat: no-repeat;

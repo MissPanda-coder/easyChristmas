@@ -75,6 +75,7 @@ class SecurityController extends AbstractController
             'registrationForm' => $registrationForm->createView(),
             'page_title' => 'Espace Inscription',
             'sectionName' => 'signup',
+            'content' => 'content',
         ]);
     }
 
@@ -214,7 +215,8 @@ class SecurityController extends AbstractController
         return $this->render('security/reset-password-request.html.twig', [
           'emailForm' => $emailForm->createView(),
           'page_title' => 'Demande de réinitialisation de mot de passe',
-          'sectionName' => 'resetPassword'
+          'sectionName' => 'resetPassword',
+          'content' => 'content',
         ]);
     }
 
@@ -233,6 +235,7 @@ class SecurityController extends AbstractController
             'error' => $error,
             'page_title' => 'Espace Connexion',
             'sectionName' => 'login',
+            'content' => 'content',
         ]);
     }
 

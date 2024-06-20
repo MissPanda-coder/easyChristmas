@@ -91,6 +91,7 @@ class DrawController extends AbstractController
         return $this->render('draw/index.html.twig', [
             'page_title' => 'Tirage au sort',
             'sectionName' => 'draw',
+            'content' => 'content',
             'controller_name' => 'DrawController',
         ]);
     }

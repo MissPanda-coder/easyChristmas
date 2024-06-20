@@ -14,6 +14,7 @@ class CguController extends AbstractController
         return $this->render('cgu/index.html.twig', [
             'page_title' => 'CGU',
             'sectionName' => 'cgu',
+            'content' => 'content',
             'controller_name' => 'CguController',
         ]);
     }

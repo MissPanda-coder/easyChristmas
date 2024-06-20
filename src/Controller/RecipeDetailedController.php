@@ -11,7 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class RecipeDetailedController extends AbstractController
 {
-    #[Route('/recipe/{slug}-{id}', name: 'recipe_detailed')]
+    #[Route('/recipe/{slug}-{id}', name: 'recipe_detailed', requirements: ['slug' => '[a-zA-Z0-9\-]+', 'id' => '\d+'])]
     #[IsGranted('ROLE_USER')]
     public function recipeDetailed(Request $request, string $slug, int $id, RecipeRepository $recipe): Response
     {
@@ -32,6 +32,7 @@ class RecipeDetailedController extends AbstractController
             'recipe' => $recipe,
             'page_title' => 'Recettes de Noël pour tous les goûts',
             'sectionName' => 'recipeDetailed',
+            'content' => 'content',
             'controller_name' => 'RecipeDetailedController',
         ]);
     }

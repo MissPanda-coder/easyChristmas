@@ -11,8 +11,6 @@ footer {
     margin-top:1.5rem;
     padding-top: 1.5rem;
     padding-bottom: 0.8rem;
-    position:absolute;
-    bottom:0;
     z-index:100;
   }
   
@@ -39,7 +37,7 @@ footer ul a:hover{
     color: $c-red;
   }
   
-  .copyright {
+.copyright {
     margin-top: 0.8rem; 
     text-align: center;
     font-size: clamp(0.75rem, 0.6vw, 0.81rem); 

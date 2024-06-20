@@ -14,6 +14,7 @@ class CountdownController extends AbstractController
         return $this->render('countdown/index.html.twig', [
             'page_title' => 'Compte à rebours pour Noël - X dodos avant le grand jour !',
             'sectionName' => 'count',
+            'content' => 'content',
             'controller_name' => 'CountdownController',
         ]);
     }

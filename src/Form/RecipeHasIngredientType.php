@@ -9,7 +9,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
 class RecipeHasIngredientType extends AbstractType
 {
@@ -32,8 +32,9 @@ class RecipeHasIngredientType extends AbstractType
             'placeholder' => 'Sélectionnez une unité',
             'attr' => ['class' => 'unit-select']
         ])
-        ->add('quantity', IntegerType::class, [
+        ->add('quantity', NumberType::class, [
             'label' => 'Quantité',
+            'scale' => 2, 
             'attr' => ['class' => 'quantity-input']
         ]);       
     }

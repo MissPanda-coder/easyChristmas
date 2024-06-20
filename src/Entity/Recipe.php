@@ -38,7 +38,10 @@ class Recipe
     private ?DateTimeImmutable $createdAt = null;
 
     #[ORM\Column]
-    private ?bool $isActive = null;
+    private ?bool $isActive = false;
+
+    #[ORM\Column]
+    private ?int $servings;
 
     #[ORM\ManyToOne(inversedBy: 'recipes')]
     #[ORM\JoinColumn(nullable: false)]
@@ -283,6 +286,18 @@ public function removeIngredient(RecipeHasIngredient $ingredient): self
     public function setSlug(string $slug): static
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getServings(): ?int
+    {
+        return $this->servings;
+    }
+
+    public function setServings(int $servings): self
+    {
+        $this->servings = $servings;
 
         return $this;
     }

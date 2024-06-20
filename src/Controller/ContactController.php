@@ -47,6 +47,7 @@ class ContactController extends AbstractController
             'contactForm' => $contactForm,
             'page_title' => 'Nous contacter',
             'sectionName' => 'contact',
+            'content' => 'content',
             'controller_name' => 'ContactController',
         ]);
     }
