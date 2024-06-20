@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\WishesRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\WishesRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: WishesRepository::class)]
 class Wishes
@@ -16,7 +17,7 @@ class Wishes
     private ?int $id = null;
 
     #[ORM\Column]
-    private ?int $wishesyear = null;
+    private ?DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(length: 50)]
     private ?string $wishname = null;
@@ -35,18 +36,6 @@ class Wishes
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getWishesyear(): ?int
-    {
-        return $this->wishesyear;
-    }
-
-    public function setWishesyear(int $wishesyear): self
-    {
-        $this->wishesyear = $wishesyear;
-
-        return $this;
     }
 
     public function getWishname(): ?string
@@ -93,6 +82,30 @@ class Wishes
         if ($this->assignations->removeElement($assignation)) {
             $assignation->removeWish($this);
         }
+
+        return $this;
+    }
+
+    /**
+     * Get the value of createdAt
+     *
+     * @return ?DateTimeImmutable
+     */
+    public function getCreatedAt(): ?DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set the value of createdAt
+     *
+     * @param ?DateTimeImmutable $createdAt
+     *
+     * @return self
+     */
+    public function setCreatedAt(?DateTimeImmutable $createdAt): self
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }

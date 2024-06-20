@@ -4,7 +4,7 @@
 
 <div class="letter_layout">
 
-    {{ form_start(wishForm, {'attr': {'class': 'form_wishes-layout'}}) }}
+    <form class="form_wishes-layout" method="post" action="{{ path('wishlist_index') }}">
 
         <section>
             <p>Mon cher papa Noël,
@@ -21,9 +21,9 @@
                         <label for="wish_participant" class="wish_participant-layout">Voeu :</label>
                         <input type="text" id="wish_participant" required>
                     </fieldset>
-                    <span id="wish_error">Seuls les lettres et chiffres sont autorisés</span>
+                    <span id="wish_error" style="display: none;">Seuls les lettres et chiffres sont autorisés</span>
                 </div>
-                    <button class="wish_btn-add" type="button" onclick="addWish()">+</button> 
+                <button class="wish_btn-add" type="button" onclick="addWish()">+</button> 
             </div>
 
             <table id="wish_table">
@@ -40,11 +40,11 @@
             </p>
         </section>
 
-            <input type="hidden" id="participants_data" name="participants_data">
+        <input type="hidden" id="participants_data_wishes" name="participants_data_wishes">
 
-            <button type="submit" class="form_btn" onclick="submitWishForm()">Envoyer</button>
+        <button type="submit" class="form_btn" onclick="submitWishForm()">Envoyer</button>
 
-    {{ form_end(wishForm) }}
+    </form>
 
 </div>
 
@@ -103,7 +103,7 @@
     }
 
     function validateWish(wishValue) {
-        const wishPattern = /^[a-z0-9]+(?:[-\s][a-z0-9]+)*$/;
+        const wishPattern = /^[a-zA-Z0-9\s]+$/;
         return wishPattern.test(wishValue);
     }
 
@@ -122,8 +122,13 @@
     }
 
     function submitWishForm() {
-        const participantsDataInput = document.querySelector('#participants_data');
+        const participantsDataInput = document.querySelector('#participants_data_wishes');
         participantsDataInput.value = JSON.stringify(wishes);
+        
+        // Désactiver l'input wish_participant pour que cela me redemande de compléter ce champ
+        document.querySelector('#wish_participant').disabled = true;
+        
+        
         document.querySelector('.form_wishes-layout').submit();
     }
 

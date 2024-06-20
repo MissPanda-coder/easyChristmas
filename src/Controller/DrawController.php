@@ -26,7 +26,7 @@ class DrawController extends AbstractController
             $data = json_decode($request->request->get('participants_data'), true);
 
             if (!$data || !is_array($data)) {
-                return new JsonResponse(['success' => false, 'message' => 'Invalid data received.'], JsonResponse::HTTP_BAD_REQUEST);
+                return new JsonResponse(['success' => false, 'message' => 'Donnee non valide'], JsonResponse::HTTP_BAD_REQUEST);
             }
 
             $pairs = $data;
@@ -39,7 +39,7 @@ class DrawController extends AbstractController
                 $receiver = $userRepository->findOneBy(['email' => $pair['receiver']]);
 
                 if (!$giver || !$receiver) {
-                    return new JsonResponse(['success' => false, 'message' => 'Giver or receiver not found.'], JsonResponse::HTTP_BAD_REQUEST);
+                    return new JsonResponse(['success' => false, 'message' => 'Donneur ou receveur non trouve'], JsonResponse::HTTP_BAD_REQUEST);
                 }
 
                 // Creation et persist des résultats
@@ -61,7 +61,7 @@ class DrawController extends AbstractController
                     }
                 }
 
-                // Send email to the participant
+                // Mail aux participantx
                 $email = (new TemplatedEmail())
                     ->from('no-reply@easychristmas.fr')
                     ->to($giver->getEmail())
@@ -74,7 +74,7 @@ class DrawController extends AbstractController
 
                 $mailer->send($email);
 
-                // Add participants to the draw
+                // Ajout des participants à draw
                 $draw->addParticipant($giver);
                 $draw->addParticipant($receiver);
 
