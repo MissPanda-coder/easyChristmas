@@ -1,0 +1,25 @@
+nelmio_api_doc:
+    documentation:
+        servers:
+          - url: http://api.easyChristmas.com/unsafe
+            description: API sous HTTP
+          - url: https://api.easyChristmas.com/secured
+            description: API sous HTTPS
+        info:
+            title: Easy Christmas
+            description: Documentation pour Easy Christmas
+            version: 1.0.0
+            x-build: #CommitHash
+        components:
+            securitySchemes:
+                Bearer:
+                    type: http
+                    scheme: bearer
+                    bearerFormat: JWT
+        security:
+            - Bearer: []
+    areas: # pour filtrer les zones documentées
+        path_patterns:
+            - ^/api(?!/doc$) # Accepte les routes sous /api sauf /api/doc
+        host_patterns: # documente uniquement les routes avec un hôte de la forme api.*
+            - ^api\.

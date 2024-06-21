@@ -9,3 +9,7 @@ verify_email:
     controller: App\Controller\SecurityController::verifyUserEmail
     methods: [GET]
 
+app.swagger_ui:
+    path: /api/doc
+    methods: GET
+    defaults: { _controller: nelmio_api_doc.controller.swagger_ui }

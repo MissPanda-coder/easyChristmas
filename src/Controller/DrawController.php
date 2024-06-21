@@ -15,18 +15,60 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use OpenApi\Annotations as OA;
+use Nelmio\ApiDocBundle\Annotation\Security;
 
 class DrawController extends AbstractController
 {
     #[Route('/draw', name: 'draw_index', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_USER')]
+    #[OA\Post(
+        path: '/draw',
+        summary: 'Lancer un tirage au sort',
+        requestBody: new OA\RequestBody(
+            required: true,
+            content: new OA\JsonContent(
+                type: 'object',
+                properties: [
+                    new OA\Property(property: 'participants_data', type: 'string', description: 'Les données des participants au tirage')
+                ]
+            )
+        ),
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'Tirage au sort réussi et emails envoyés',
+                content: new OA\JsonContent(
+                    type: 'object',
+                    properties: [
+                        new OA\Property(property: 'success', type: 'boolean'),
+                        new OA\Property(property: 'message', type: 'string')
+                    ]
+                )
+            ),
+            new OA\Response(
+                response: 400,
+                description: 'Donnée non valide',
+                content: new OA\JsonContent(
+                    type: 'object',
+                    properties: [
+                        new OA\Property(property: 'success', type: 'boolean'),
+                        new OA\Property(property: 'message', type: 'string')
+                    ]
+                )
+            )
+        ],
+        security: [ new OA\SecurityScheme(bearerAuth: []) ]
+    )]
+    #[OA\Tag(name: 'draw')]
     public function index(Request $request, EntityManagerInterface $em, MailerInterface $mailer, UserRepository $userRepository): Response
     {
         if ($request->isMethod('POST')) {
             $data = json_decode($request->request->get('participants_data'), true);
 
             if (!$data || !is_array($data)) {
-                return new JsonResponse(['success' => false, 'message' => 'Donnee non valide'], JsonResponse::HTTP_BAD_REQUEST);
+                return new JsonResponse(['success' => false, 'message' => 'Donnée non valide'], JsonResponse::HTTP_BAD_REQUEST);
             }
 
             $pairs = $data;
@@ -39,10 +81,10 @@ class DrawController extends AbstractController
                 $receiver = $userRepository->findOneBy(['email' => $pair['receiver']]);
 
                 if (!$giver || !$receiver) {
-                    return new JsonResponse(['success' => false, 'message' => 'Donneur ou receveur non trouve'], JsonResponse::HTTP_BAD_REQUEST);
+                    return new JsonResponse(['success' => false, 'message' => 'Donneur ou receveur non trouvé'], JsonResponse::HTTP_BAD_REQUEST);
                 }
 
-                // Creation et persist des résultats
+                // Création et persist des résultats
                 $assignation = new Assignation();
                 $assignation->setDraw($draw);
                 $assignation->setUserGiver($giver);
@@ -61,7 +103,7 @@ class DrawController extends AbstractController
                     }
                 }
 
-                // Mail aux participantx
+                // Mail aux participants
                 $email = (new TemplatedEmail())
                     ->from('no-reply@easychristmas.fr')
                     ->to($giver->getEmail())
@@ -96,7 +138,35 @@ class DrawController extends AbstractController
         ]);
     }
 
-    #[Route('/draw/results/{id}', name: 'draw_results')]
+    #[Route('/draw/results/{id}', name: 'draw_results', methods: ['GET'])]
+    #[OA\Get(
+        path: '/draw/results/{id}',
+        summary: 'Afficher les résultats d\'un tirage au sort',
+        parameters: [
+            new OA\Parameter(
+                name: 'id',
+                in: 'path',
+                description: 'ID du tirage',
+                required: true,
+                schema: new OA\Schema(type: 'integer')
+            )
+        ],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'Les résultats du tirage au sort',
+                content: new OA\JsonContent(
+                    properties: [
+                        new OA\Property(property: 'draw', ref: new Model(type: Draw::class)),
+                        new OA\Property(property: 'assignations', type: 'array', items: new OA\Items(ref: new Model(type: Assignation::class))),
+                        new OA\Property(property: 'exclusions', type: 'array', items: new OA\Items(ref: new Model(type: Exclusion::class)))
+                    ]
+                )
+            )
+        ],
+        security: [ new OA\SecurityScheme(bearerAuth: []) ]
+    )]
+    #[OA\Tag(name: 'draw')]
     public function drawResults(Draw $draw): Response
     {
         $assignations = $draw->getAssignations();
