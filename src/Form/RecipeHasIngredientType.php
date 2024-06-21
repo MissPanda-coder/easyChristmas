@@ -22,7 +22,7 @@ class RecipeHasIngredientType extends AbstractType
             'choice_label' => 'ingredientName',
             'label' => 'Ingrédient',  
             'placeholder' => 'Sélectionnez un ingrédient',
-            'attr' => ['class' => 'ingredient-select']
+            'attr' => ['class' => 'ingredient_select']
         ])
         ->add('unit', EntityType::class, [
             'class' => Unit::class,
@@ -30,12 +30,12 @@ class RecipeHasIngredientType extends AbstractType
             'choice_label' => 'unitName',
             'label' => 'Unité de mesure', 
             'placeholder' => 'Sélectionnez une unité',
-            'attr' => ['class' => 'unit-select']
+            'attr' => ['class' => 'unit_select']
         ])
         ->add('quantity', NumberType::class, [
             'label' => 'Quantité',
-            'scale' => 2, 
-            'attr' => ['class' => 'quantity-input']
+            'scale' => 1, 
+            'attr' => ['class' => 'quantity_input']
         ]);       
     }
 

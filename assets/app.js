@@ -118,17 +118,5 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
 //  CALCUL INGREDIENTS PAR PERSONNE
-let minus = document.querySelector(".minus1");
-let plus = document.querySelector(".add1");
-let persons = document.querySelector("#quantity_input-choice");
 
-minus.addEventListener("click", () => {
-  if (persons.value <= 10) {
-    persons.value--;
-  }
-});
-plus.addEventListener("click", () => {
-  if (persons.value <= 1) {
-    persons.value++;
-  }
-});
+

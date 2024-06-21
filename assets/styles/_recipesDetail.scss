@@ -28,7 +28,7 @@ border-radius: 16px;
     margin:auto;
  }
 
-.quantity_input,.minus1,.add1{
+.quantity_span,.minus1,.add1{
    width:50px;
    padding:.3em;
    font-size:1rem;
@@ -37,9 +37,10 @@ border-radius: 16px;
    font-weight:700;
    background:$c-white;
    border:1px solid $c-grey;
+   cursor: pointer;
 }
 
-.quantity input{
+.quantity_span{
    border-left:none;
    border-right:none;
 }
@@ -85,7 +86,7 @@ margin:0 0 2rem 0;
     font-weight: 600;
 }
 
-.step-description_justify{
+.step_description-justify{
     text-align: justify;
     word-wrap: break-word;
     overflow-wrap: break-word;
