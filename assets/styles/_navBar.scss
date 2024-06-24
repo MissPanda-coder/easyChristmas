@@ -12,6 +12,10 @@ header{
     width: 100%;
 }
 
+.hamburger{
+    border:$c-white 0.5px solid;
+}
+
 .hamburger, .hamburger a{
     padding: 0;
     width: 37px;
@@ -23,7 +27,6 @@ header{
     -webkit-backdrop-filter: blur(10px);
     justify-content: center;
     align-items: center;
-    border: none;
 }
     
 .hamburger, .nav_links-hidden{
@@ -219,6 +222,7 @@ header ul li a:hover{
 
     .hamburger {
         display: block;
+        margin-left: 1rem;
     }
 
     .open {

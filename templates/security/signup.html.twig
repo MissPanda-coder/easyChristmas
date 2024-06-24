@@ -2,9 +2,9 @@
 
 {% block body %}
 
-  <div class="block">
 
-    {{ form_start(registrationForm, {'attr': {'class': 'form_layout'}}) }}
+
+    {{ form_start(registrationForm, {'attr': {'class': 'form_signup-layout'}}) }}
         <h3>Inscription</h3>
 
         <fieldset class="form_field">
@@ -31,9 +31,9 @@
             <small class="form_errors">{{ form_errors(registrationForm.password.second) }}</small>
         </fieldset>
 
-        <fieldset class="form_field">
+        <fieldset class="form_field-checkbox">
             <input type="checkbox" id="checkboxCgu" name="checkboxCgu" class="checkboxCgu" required/>
-            <label for="checkboxCgu" class="rememberMe" >J'ai lu et j'accepte les conditions générales d'utilisation</label>
+            <label for="checkboxCgu" class="rememberMe" >J'ai lu et accepte les conditions générales d'utilisation</label>
         </fieldset>
 
             <button type="submit" class="form_btn">Envoyer</button>
@@ -43,8 +43,7 @@
         </p>
         {{ form_end(registrationForm) }}
 
-    </div>
-
+   
     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
 {% endblock %}
