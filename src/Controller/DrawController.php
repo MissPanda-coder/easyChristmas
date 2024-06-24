@@ -21,47 +21,9 @@ use Nelmio\ApiDocBundle\Annotation\Security;
 
 class DrawController extends AbstractController
 {
-    #[Route('/draw', name: 'draw_index', methods: ['GET', 'POST'])]
+    #[Route('/api/draw', name: 'draw_index', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_USER')]
-    #[OA\Post(
-        path: '/draw',
-        summary: 'Lancer un tirage au sort',
-        requestBody: new OA\RequestBody(
-            required: true,
-            content: new OA\JsonContent(
-                type: 'object',
-                properties: [
-                    new OA\Property(property: 'participants_data', type: 'string', description: 'Les données des participants au tirage')
-                ]
-            )
-        ),
-        responses: [
-            new OA\Response(
-                response: 200,
-                description: 'Tirage au sort réussi et emails envoyés',
-                content: new OA\JsonContent(
-                    type: 'object',
-                    properties: [
-                        new OA\Property(property: 'success', type: 'boolean'),
-                        new OA\Property(property: 'message', type: 'string')
-                    ]
-                )
-            ),
-            new OA\Response(
-                response: 400,
-                description: 'Donnée non valide',
-                content: new OA\JsonContent(
-                    type: 'object',
-                    properties: [
-                        new OA\Property(property: 'success', type: 'boolean'),
-                        new OA\Property(property: 'message', type: 'string')
-                    ]
-                )
-            )
-        ],
-        security: [ new OA\SecurityScheme(bearerAuth: []) ]
-    )]
-    #[OA\Tag(name: 'draw')]
+    
     public function index(Request $request, EntityManagerInterface $em, MailerInterface $mailer, UserRepository $userRepository): Response
     {
         if ($request->isMethod('POST')) {
@@ -138,35 +100,8 @@ class DrawController extends AbstractController
         ]);
     }
 
-    #[Route('/draw/results/{id}', name: 'draw_results', methods: ['GET'])]
-    #[OA\Get(
-        path: '/draw/results/{id}',
-        summary: 'Afficher les résultats d\'un tirage au sort',
-        parameters: [
-            new OA\Parameter(
-                name: 'id',
-                in: 'path',
-                description: 'ID du tirage',
-                required: true,
-                schema: new OA\Schema(type: 'integer')
-            )
-        ],
-        responses: [
-            new OA\Response(
-                response: 200,
-                description: 'Les résultats du tirage au sort',
-                content: new OA\JsonContent(
-                    properties: [
-                        new OA\Property(property: 'draw', ref: new Model(type: Draw::class)),
-                        new OA\Property(property: 'assignations', type: 'array', items: new OA\Items(ref: new Model(type: Assignation::class))),
-                        new OA\Property(property: 'exclusions', type: 'array', items: new OA\Items(ref: new Model(type: Exclusion::class)))
-                    ]
-                )
-            )
-        ],
-        security: [ new OA\SecurityScheme(bearerAuth: []) ]
-    )]
-    #[OA\Tag(name: 'draw')]
+    #[Route('/api/draw/results/{id}', name: 'draw_results', methods: ['GET'])]
+ 
     public function drawResults(Draw $draw): Response
     {
         $assignations = $draw->getAssignations();

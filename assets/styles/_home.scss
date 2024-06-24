@@ -13,7 +13,6 @@
     perspective: 1000px;
 }
 
-
 .home_snowflakes {
     position: absolute;
     background: #fff;
@@ -42,7 +41,6 @@
     height:auto;
     padding:1.5rem;
     z-index:7;
-    pointer-events: auto;
     border-radius: 16px;
     position: absolute;
     top: 50%;
@@ -88,8 +86,44 @@
 }
 
 
-
 // PHONES
 @media only screen and (max-width: 768px) {
-
+    .parallax_text{
+            width:370px;
+            padding:1rem;
+          }
+        
+        .parallax_text p{
+            font-size: 1rem;
+            line-height: 1.2rem;
+            text-align: justify;
+        }
+        
+          .parallax_leftTree {
+           display:none;
+          }
+        
+          .parallax_rightTree {
+          display: none;
+          }
 }
+
+
+// TABLETS
+@media screen and (min-width: 769px) and (max-width: 992px){
+    .parallax_mountain {
+        width: 1600px;
+        height: 900px;
+        top: 75%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    
+      .parallax_leftTree {
+       display:none;
+      }
+    
+      .parallax_rightTree {
+      display: none;
+      }
+    }

@@ -2,10 +2,10 @@
 
 {% block body %}
 
-<form id="form_login" class="form_layout" method="POST" action="{{ path('login') }}">
+<form id="form_login" class="form_login-layout" method="POST" action="{{ path('login') }}">
 
     <div name="login">
-        <h3 class="form_title">Connexion</h3>
+        <h3>Connexion</h3>
         
         {% if error %}
             <small class="form_errors">

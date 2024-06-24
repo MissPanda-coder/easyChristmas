@@ -7,9 +7,13 @@ use DateTimeImmutable;
 use Cocur\Slugify\Slugify;
 use App\Form\UserRecipeType;
 use App\Repository\UnitRepository;
+use App\Repository\UserRepository;
+use Symfony\Component\Mime\Address;
 use App\Repository\IngredientRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,8 +21,8 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 class UserCreateRecipeController extends AbstractController
 {
-    #[Route('/user/recipe/create', name: 'user_recipe_create')]
-    public function userCreateRecipe(Request $request, EntityManagerInterface $em, IngredientRepository $ingredientRepository, UnitRepository $unitRepository): Response
+    #[Route('/api/user/recipe/create', name: 'user_recipe_create', methods: ['POST'])]
+    public function userCreateRecipe(Request $request, EntityManagerInterface $em, IngredientRepository $ingredientRepository, UnitRepository $unitRepository, MailerInterface $mailer): Response
     {
         // Ingrédients et unités triés par ordre alphabétique
         $ingredients = $ingredientRepository->ordered();
@@ -62,6 +66,20 @@ class UserCreateRecipeController extends AbstractController
             $em->persist($recipe);
             $em->flush();
             $this->addFlash('success', 'Recette créée avec succès !');
+
+            // Envoi d'un e-mail de notification à l'administrateur
+            $user = $this->getUser();
+            $email = (new TemplatedEmail())
+            ->from(new Address('no-reply@easychristmas.fr', 'Easy Christmas'))
+            ->to('admin@easychristmas.fr')
+            ->subject('Nouvelle recette à activer')
+            ->htmlTemplate('user_create_recipe/emailActivation.html.twig')
+            ->context([
+                'user' => $user,
+                'recipe' => $recipe,
+                     ]);
+ 
+                 $mailer->send($email);
 
             return $this->redirectToRoute('profile');
         }

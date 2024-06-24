@@ -67,34 +67,30 @@ header img{
     justify-content: space-evenly;
     align-items: center;
     flex-grow: 1;
-    font-size: clamp(15px, 1.17vw, 18px);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
 }
 
-.nav_links:hover{
-    color:$c-red;
-    transition: all 0.4s ease-out;
-}
-
-header ul a{
+header ul li a{
     text-decoration: none;
     color:$c-white;
     padding: 0 1.5rem;
     text-transform: uppercase;
     font-weight: 600;
-    font-size: 1.2rem;
+    font-size: clamp(15px, 1.17vw, 18px);
     font-family: $f-first;
     letter-spacing: 0.2em;
   }
 
-.login_button{
+header ul li a:hover{
+    color:$c-red;
+    transition: all 0.4s ease-out;
+}
+
+#login_button{
     @include btn;
     background-color: $c-red;
 }
 
-.login_button:hover{
+#login_button:hover{
     text-shadow: 2px 2px 4px rgba(0, 0, 0);
     transition: all 0.4s ease-out;
 }
@@ -175,16 +171,17 @@ header ul a{
     height: 35px;
 }
 
-
-// PHONES
-@media only screen and (max-width: 768px) {
-    .nav_links{
+// TABLETS
+@media screen and (min-width: 769px) and (max-width: 992px) {
+    .nav_links {
         display: none;
     }
 
-    .hamburger{
+    .hamburger {
         display: block;
+        margin-left: 1rem;
     }
+
     .open {
         display: flex;
         flex-flow: column nowrap;
@@ -192,21 +189,63 @@ header ul a{
         position: absolute;
         top: 0;
         left: 0;
-        width: 80%;
+        width: 40%;
         height: 100vh;
-        background-color: $c-red;
-        color: $c-white;
-        transition: all 0.4s ease-out;
-        align-items: center;
-        }
-      }
+        background-color: #e2e2e2;
+        transition: transform 0.4s;
+        padding-left: 1rem;
+    }
+}
 
-.open li{
+.open li {
     margin-top: 2rem;
 }
 
-.nav_links-hidden:hover{
-    color:$c-white;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0);
-    transition: all 0.4s ease-out;
+.open li a {
+    color: $c-red;
+    transition: transform 0.3s;
+}
+
+.open li a:hover {
+    transform: scale(1.1);
+}
+
+
+// PHONES
+@media only screen and (max-width: 768px) {
+    .nav_links {
+        display: none;
     }
+
+    .hamburger {
+        display: block;
+    }
+
+    .open {
+        display: flex;
+        flex-flow: column nowrap;
+        z-index: 10;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 70%;
+        height: 100vh;
+        background-color: #e2e2e2;
+        transition: all 0.4s ease-out;
+        padding-left: 0.6rem;
+    }
+}
+
+.open li {
+    margin-top: 2rem;
+}
+
+.open li a {
+    font-size: 0.9rem;
+    color: $c-red;
+    transition: transform 0.3s;
+}
+
+.open li a:hover {
+    transform: scale(1.1);
+}

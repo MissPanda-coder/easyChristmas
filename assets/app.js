@@ -11,10 +11,10 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// ===== HAMBURGER BUTTON ===== //
+// HAMBURGER 
 document.addEventListener('DOMContentLoaded', function() {
     const hamburger = document.querySelector(".hamburger");
-  const navLinksHidden = document.querySelector(".nav_links-hidden");
+    const navLinksHidden = document.querySelector(".nav_links-hidden");
   
   hamburger.addEventListener('click', function() {
     navLinksHidden.classList.toggle('open');
@@ -22,20 +22,6 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   
   
-  
-  // //EYE PASSWORD
-  // document.querySelectorAll(".toggle-password").forEach(function (element) {
-  //   element.addEventListener("click", function () {
-  //     this.classList.toggle("fa-eye-slash");
-  //     this.classList.toggle("fa-eye");
-  //     const input = document.querySelector(".password-eye");
-  //     if (input.getAttribute("type") === "password") {
-  //       input.setAttribute("type", "text");
-  //     } else {
-  //       input.setAttribute("type", "password");
-  //     }
-  //   });
-  // });
   
   // PARALLAX
   let parallax_el = document.querySelectorAll(".parallax");
@@ -83,6 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 }
   
+  // DECOMPTE
   let christmas = new Date("2024-12-24T23:59:00"); 
   
   // Fonction pour formater les nombres avec un zéro devant si inférieur à 10
@@ -116,7 +103,5 @@ document.addEventListener('DOMContentLoaded', function() {
   
   countdown();
   
-  
-//  CALCUL INGREDIENTS PAR PERSONNE
 
 

@@ -9,15 +9,11 @@
     -webkit-backdrop-filter: blur(5px);
     border: 1px solid rgba(255, 255, 255, 0.3);
     padding: 1rem;
-    width:415px;
-    height:auto;
-    position: absolute;
-    left:50%;
-    top:50%;
-    transform: translate(-50%,-50%);
     z-index:7;
     transition: transform 0.5s ease, opacity 0.5s ease;
 }
+
+
 
 @mixin glassmorphism{
     background: rgba(161, 46, 46, 0.459);
@@ -90,3 +86,6 @@
     padding-bottom: 0.8rem;
    
 }
+
+
+    
