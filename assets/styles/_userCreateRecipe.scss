@@ -13,7 +13,7 @@
 }
 
 .form_input-desc{
-    width:380px;
+    width:100%;
     font-family: $f-second; 
     color:$c-white;
     background: transparent;
@@ -48,7 +48,7 @@
 .ingredient_select,.unit_select, .quantity_input,.new_step-item input{
     font-family: $f-second; 
     color:$c-white;
-    width:380px;
+    width:100%;
     border-radius: 50px;
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);

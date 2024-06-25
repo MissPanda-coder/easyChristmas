@@ -21,8 +21,6 @@
 
   .recipes_item:hover{
     transition: all 0.4s ease-in-out;
-    -webkit-transition: all 0.4s ease-in-out;
-    transform: translateX (-46px);
     width: 350px;
     box-shadow: 12px 40px 40px rgba(0, 0, 0, 0.25);
     -webkit-box-shadow: 12px 40px 40px rgba(0, 0, 0, 0.25);
@@ -51,7 +49,7 @@
 
 .recipes_a{
     font-family:'Roboto', sans-serif;
-    font-size: 2.2rem;
+    font-size: clamp(1.5rem, 2.2rem, 2.2rem);
     font-weight: 900;
     color: $c-white;
     position: relative;
@@ -61,5 +59,20 @@
 
 .recipes_a:hover{
     color:$c-green;
+}
+
+// TABLETS
+@media screen and (min-width: 769px) and (max-width: 992px){ 
+    .container{
+    width: 75%;
+    height: 800px;
+}
+    }
+
+// PHONES
+@media only screen and (max-width: 768px) {
+    .container{
+        width: 85%;
+    }
 }
 

@@ -10,6 +10,13 @@
     position: relative;
 }
 
+
+.form_contact-layout{
+    @include form;
+    width:90%;
+    max-width:415px;
+}
+
 .contact_snowGround{
     position:absolute;
     bottom:1.8%;
@@ -24,3 +31,17 @@
     left:10%;
     bottom:5%;
 }
+
+// TABLETS
+@media screen and (min-width: 769px) and (max-width: 992px){ 
+    .contact_santa{
+        position: absolute;
+        left:2%;
+        bottom:5%;
+    }
+        }
+    
+    // PHONES
+    @media only screen and (max-width: 768px) {
+     
+    }

@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 class UserCreateRecipeController extends AbstractController
 {
-    #[Route('/api/user/recipe/create', name: 'user_recipe_create', methods: ['POST'])]
+    #[Route('/user/recipe/create', name: 'user_recipe_create')]
     public function userCreateRecipe(Request $request, EntityManagerInterface $em, IngredientRepository $ingredientRepository, UnitRepository $unitRepository, MailerInterface $mailer): Response
     {
         // Ingrédients et unités triés par ordre alphabétique

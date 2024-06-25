@@ -9,7 +9,10 @@
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
-   
+}
+
+.card_recipe-cat{
+    max-width: 540px;
 }
 
 .recipes_discover{

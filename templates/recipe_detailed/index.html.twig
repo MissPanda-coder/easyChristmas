@@ -5,10 +5,8 @@
 <h1>{{ recipe.title }}</h1>
 
 <div class="container_detailed">
-
     <div class="row gy-5">
-
-        <div class="col-sm-3 d-flex justify-content-center" id="recipe_ingredients-size">
+        <div class="col-lg-4 col-md-4 col-sm-12 d-flex justify-content-center" id="recipe_ingredients-size">
             <article class="recipe_ingredients">
                 <div class="quantity">
                     <button class="minus1">-</button>
@@ -27,9 +25,9 @@
             </article>        
         </div>
 
-        <div class="col-sm-9">
+        <div class="col-lg-8 col-md-8 col-sm-12">
             <div class="row">
-                <div class="col-8 col-sm-6 d-flex justify-content-end">
+                <div class="col-lg-6 col-md-6 col-sm-6 d-flex justify-content-center">
                     <article class="recipe_info">
                         <strong>Temps de préparation :</strong>
                         <p>{{ recipe.duration ? recipe.duration|date('H:i')}}</p>
@@ -38,17 +36,15 @@
                     </article>  
                 </div>
 
-                <div class="col-4 col-sm-6 d-flex justify-content-end">
+                <div class="col-lg-6 col-md-6 col-sm-6 d-flex justify-content-center">
                     <img src="{{ asset('uploads/photos/' ~ recipe.photo) }}" class="recipe_photo" alt="Photo de la recette">
                  </div>
             </div>
         </div>
     
-        <div class="col-12">
+        <div class="col-lg-12 col-md-12 col-sm-12">
             <article class="recipe_steps">
-
                 <strong>Étapes de préparation :</strong>
-
                 <ol>
                 {% for recipesteps in recipe.recipestep %}
                     <li class="recipe_step-description">
@@ -57,12 +53,9 @@
                     </li>
                 {% endfor %}
                 </ol>
-
             </article>
         </div>
-
     </div>
-
 </div>
 
 <script>

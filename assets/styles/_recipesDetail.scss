@@ -8,17 +8,17 @@
 }
 
 .container_detailed{
-    width:65%;
+    width:75%;
     margin:auto;
-   padding-bottom:5rem;
+    padding-bottom:5rem;
 }
 
 .recipe_ingredients{
-width:370px;
-padding: 20px;
-background-color: $c-white; 
-color: $c-grey; 
-border-radius: 16px;
+    width:370px;
+    padding: 20px;
+    background-color: $c-white; 
+    color: $c-grey; 
+    border-radius: 16px;
 }
 
 .quantity{
@@ -51,8 +51,8 @@ border-radius: 16px;
 }
 
 .ingredient_layout{
-flex-flow: column wrap;
-margin:0 0 2rem 0;
+    flex-flow: column wrap;
+    margin:0 0 2rem 0;
 }
 
 .ingredient_li{
@@ -82,7 +82,7 @@ margin:0 0 2rem 0;
 
 .stepnumber_strong{
     margin-bottom: 10px;
-    font-size: 1.2rem;
+    font-size: clamp(1rem, 1.2rem, 1.2rem);
     font-weight: 600;
 }
 
@@ -90,4 +90,36 @@ margin:0 0 2rem 0;
     text-align: justify;
     word-wrap: break-word;
     overflow-wrap: break-word;
+}
+
+// TABLETS
+@media screen and (min-width: 769px) and (max-width: 992px){ 
+.container_detailed{
+    width:95%;
+    margin:auto;
+    padding-bottom:5rem;
+}
+
+.recipe_photo{
+    width:100%;
+    height:auto;
+}
+    }
+
+// PHONES
+@media only screen and (max-width: 768px) {
+    .container_detailed{
+        width:85%;
+        margin:auto;
+        padding-bottom:5rem;
+    }
+
+    .recipe_info {
+        margin-bottom: 3rem; 
+    }
+
+    .recipe_photo{
+        width:100%;
+        height:auto;
+    }
 }

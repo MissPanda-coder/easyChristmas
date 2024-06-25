@@ -10,15 +10,8 @@
    
 }
 
-.profileForm_layout{
+.form_profile-layout{
     width:80%;
-}
-
-#profileForm_col-bento{
-  @include profileBento;
-  padding: 2rem;
-  width:auto;
-  height:auto;
 }
 
 #profile_photo-bento{
@@ -29,14 +22,41 @@
     height:350px;
 }
 
+#profile_col-bento{
+  @include profileBento;
+  padding: 2rem;
+  min-width: 350px;
+  max-width:350px;
+  height:auto;
+}
+
+
 .profile_picture{
     width: 180px;
     height: 180px;
-   
 }
 
 #profile_photo{
     margin-top:3rem;
     cursor: pointer;
+}
+
+// TABLETS
+@media screen and (min-width: 769px) and (max-width: 992px){ 
+.form_profile-layout{
+    width:90%;
+}
+}
+
+// PHONES
+@media only screen and (max-width: 768px) {
+.form_profile-layout{
+    width:90%;
+}  
+
+#profile_photo-bento{
+    width:100%;
+    height:auto;
+}
 }
 

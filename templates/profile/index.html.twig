@@ -4,7 +4,7 @@
 
     <h2>Profil</h2>
 
-    {{ form_start(userForm, {'attr': {'class': 'profileForm_layout mx-auto'}}) }}
+    {{ form_start(userForm, {'attr': {'class': 'form_profile-layout mx-auto'}}) }}
     
     <div class="row gap-3 ">
 
@@ -14,7 +14,7 @@
                 <button type="submit" class="form_btn">Envoyer</button>
         </div>
 
-            <div class="col-lg-7 col-md-7 col-sm-12 mx-auto" id="profileForm_col-bento">
+            <div class="col-lg-7 col-md-7 col-sm-12 mx-auto" id="profile_col-bento">
                 <fieldset class="form_field">
                     {{ form_label(userForm.username, 'Nom d\'utilisateur', {'label_attr': {'class': 'form_label'}}) }}
                     {{ form_widget(userForm.username, {'attr': {'class': 'form_input'}}) }}

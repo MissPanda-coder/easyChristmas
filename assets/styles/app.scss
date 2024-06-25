@@ -51,7 +51,7 @@ li, ul, ol{
     list-style: none;
 }
 
-ul{
+ul, ol{
     padding-left:0;
 }
 
@@ -67,6 +67,7 @@ h1{
     font-family: $f-first, sans-serif;
 }
 
+//TITRES DES PAGES
 h2{
     font-family: $f-first, sans-serif;
     font-size: clamp(1.5rem,calc(2.2rem + 1vw),3rem) !important;
@@ -78,7 +79,7 @@ h2{
     margin-bottom: 2.5rem !important;
 }
 
-//form titles
+//TITRES DES FORMULAIRES
 h3{
     font-family: $f-first, sans-serif;
     font-size: clamp(1.3rem, 2.5vw, 1.5rem) !important;
@@ -89,14 +90,14 @@ h3{
     margin-bottom: 1.2rem;
 }
 
+//TITRES PR LES RECIPES CAT
 h4 {
     text-transform: uppercase;
     text-align: center;
-    margin-top: 2.5rem !important;
     font-family: $f-first, sans-serif;
   }
   
-
+//TITRES PR LES CGU ET PDC
 h5 {
     font-family: $f-second, sans-serif;
     text-transform: uppercase;
