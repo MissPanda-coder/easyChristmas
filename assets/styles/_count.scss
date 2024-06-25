@@ -4,6 +4,8 @@
 #count{
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;  
     min-height: 100vh;
     width:100%;
     background-color: $c-red;
@@ -13,8 +15,9 @@
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-    justify-content: center;
+    justify-content: center;    
     align-items: center;
+    height:610px;
 }
 
 .clock-contain{
@@ -64,20 +67,17 @@
 
 // TABLETS
 @media screen and (min-width: 769px) and (max-width: 992px) {
-    .clock-contain{
-        -webkit-box-reflect:none;
-
+    .clock{
+        height:800px;
     }
 }
 
 // PHONES
 @media only screen and (max-width: 768px) {
+    .clock{
+        height:auto;
+    }
     .clock-contain{
-        -webkit-box-reflect:none;
-        position: relative;  
-        margin:0 10px;
-        font-family: 'Roboto', sans-serif;
-        width: 200px;
-        height: 205px; 
+        -webkit-box-reflect:unset;
     }
 }

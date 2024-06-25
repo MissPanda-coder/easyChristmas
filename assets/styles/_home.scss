@@ -85,7 +85,25 @@
     transform: translate(-50%, -50%);
 }
 
-
+// TABLETS
+@media screen and (min-width: 769px) and (max-width: 992px){
+    .parallax_mountain {
+        width: 1600px;
+        height: 900px;
+        top: 75%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    
+      .parallax_leftTree {
+       display:none;
+      }
+    
+      .parallax_rightTree {
+      display: none;
+      }
+    }
+    
 // PHONES
 @media only screen and (max-width: 768px) {
     .parallax_text{
@@ -109,21 +127,3 @@
 }
 
 
-// TABLETS
-@media screen and (min-width: 769px) and (max-width: 992px){
-    .parallax_mountain {
-        width: 1600px;
-        height: 900px;
-        top: 75%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-      }
-    
-      .parallax_leftTree {
-       display:none;
-      }
-    
-      .parallax_rightTree {
-      display: none;
-      }
-    }

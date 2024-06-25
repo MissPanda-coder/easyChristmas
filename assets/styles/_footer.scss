@@ -18,7 +18,7 @@ footer ul {
     padding: 0;
     list-style: none;
     text-align: center;
-    font-size: clamp(0.875rem, 2vw, 1.1rem); 
+    font-size: clamp(0.875rem, 1.8vw, 1rem); 
     margin-bottom: 0;
     color: $c-white;
   }
@@ -34,7 +34,7 @@ footer ul li {
   }
   
 footer ul a:hover{
-    color: $c-red;
+    color: $c-green;
   }
   
 .copyright {

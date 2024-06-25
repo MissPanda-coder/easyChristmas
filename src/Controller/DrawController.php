@@ -113,6 +113,7 @@ class DrawController extends AbstractController
             'exclusions' => $exclusions,
             'page_title' => 'Résultats du tirage au sort',
             'sectionName' => 'drawResults',
+            'content' => 'content',
         ]);
     }
 }

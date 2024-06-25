@@ -11,17 +11,24 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// HAMBURGER 
+// HAMBURGER   
 document.addEventListener('DOMContentLoaded', function() {
-    const hamburger = document.querySelector(".hamburger");
-    const navLinksHidden = document.querySelector(".nav_links-hidden");
-  
+  const hamburger = document.querySelector('.hamburger');
+  const navLinks = document.querySelector('.nav_links');
+  const closeBtn = document.createElement('div');
+
+  closeBtn.classList.add('close-hamburger');
+  closeBtn.innerHTML = 'X';
+  navLinks.appendChild(closeBtn);
+
   hamburger.addEventListener('click', function() {
-    navLinksHidden.classList.toggle('open');
-    });
+      navLinks.classList.toggle('open');
   });
-  
-  
+
+  closeBtn.addEventListener('click', function() {
+      navLinks.classList.remove('open');
+  });
+});
   
   // PARALLAX
   let parallax_el = document.querySelectorAll(".parallax");

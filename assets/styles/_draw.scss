@@ -112,3 +112,16 @@ td{
     text-transform: uppercase;
     letter-spacing: 0.1em;
 }
+
+
+// PHONES
+@media only screen and (max-width: 768px) {
+    #form_players{
+        margin-left:0;
+    }
+    #participant_email, #participant_exclusion{
+        height:40px;
+        width:250px;
+       
+    }
+}
