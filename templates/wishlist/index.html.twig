@@ -43,7 +43,7 @@
         <input type="hidden" id="participants_data_wishes" name="participants_data_wishes">
 
         <button type="submit" class="form_btn" onclick="submitWishForm()">Envoyer</button>
-
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
     </form>
 
 </div>

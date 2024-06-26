@@ -62,7 +62,7 @@
     <input type="hidden" id="participants_data" name="participants_data">
 
     <button class="btn_play" type="button" onclick="submitForm()">Lancer le tirage</button>
-
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 </form>
 
 <script>

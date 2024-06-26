@@ -1,10 +1,10 @@
 # see https://symfony.com/doc/current/reference/configuration/framework.html
 framework:
+    error_controller: 'App\Controller\ErrorController::show'
     secret: '%env(APP_SECRET)%'
     #csrf_protection: true
 
     # Note that the session will be started ONLY if you read or write from it.
-   
     session:
         handler_id: session.handler.native_file
         cookie_lifetime: 604800

@@ -1,40 +1,39 @@
 {% extends "base.html.twig" %}
 
-
 {% block body %}
+    <h2 class="form_title">Nous contacter</h2>
 
-      <h2 class="form_title">Nous contacter</h2>
-
-  {{ form_start(contactForm, {'attr': {'class': 'form_contact-layout'}}) }}
+    {{ form_start(contactForm, {'attr': {'class': 'form_contact-layout'}}) }}
   
-        <fieldset class="form_field">
-            {{ form_label(contactForm.name, null, {'label_attr':{'class': 'form_label'}}) }}
-            {{ form_widget(contactForm.name, {'attr': {'class': 'form_input'}}) }}
-            {{ form_errors(contactForm.name) }}
-        </fieldset> 
+    <fieldset class="form_field">
+        {{ form_label(contactForm.name, null, {'label_attr':{'class': 'form_label'}}) }}
+        {{ form_widget(contactForm.name, {'attr': {'class': 'form_input', 'required': 'required'}}) }}
+        <small class="form_errors">{{ form_errors(contactForm.name) }}</small>
+    </fieldset> 
 
-        <fieldset class="form_field">
-            {{ form_label(contactForm.email, null, {'label_attr': {'class': 'form_label'}}) }}
-            {{ form_widget(contactForm.email, {'attr': {'class': 'form_input'}}) }}
-            {{ form_errors(contactForm.email) }}    
-        </fieldset>
+    <fieldset class="form_field">
+        {{ form_label(contactForm.email, null, {'label_attr': {'class': 'form_label'}}) }}
+        {{ form_widget(contactForm.email, {'attr': {'class': 'form_input', 'required': 'required', 'type': 'email'}}) }}
+        <small class="form_errors">{{ form_errors(contactForm.email) }}</small>   
+    </fieldset>
 
-        <fieldset class="form_field">
-            {{ form_label(contactForm.subject, null, {'label_attr': {'class': 'form_label'}}) }}
-            {{ form_widget(contactForm.subject, {'attr': {'class': 'form_input'}}) }}
-            {{ form_errors(contactForm.subject) }}
-        </fieldset>
+    <fieldset class="form_field">
+        {{ form_label(contactForm.subject, null, {'label_attr': {'class': 'form_label'}}) }}
+        {{ form_widget(contactForm.subject, {'attr': {'class': 'form_input', 'required': 'required'}}) }}
+        <small class="form_errors">{{ form_errors(contactForm.subject) }}</small>
+    </fieldset>
 
-        <fieldset class="form_field">
-            {{ form_label(contactForm.message, null, {'label_attr': {'class': 'form_label'}}) }}
-            {{ form_widget(contactForm.message, {'attr': {'class': 'form_input'}}) }}
-        </fieldset>
-      
-            <button type="submit" class="form_btn">Envoyer</button>
- 
+    <fieldset class="form_field">
+        {{ form_label(contactForm.message, null, {'label_attr': {'class': 'form_label'}}) }}
+        {{ form_widget(contactForm.message, {'attr': {'class': 'form_input', 'required': 'required'}}) }}
+        <small class="form_errors">{{ form_errors(contactForm.message) }}</small>
+    </fieldset>
+  
+    <button type="submit" class="form_btn">Envoyer</button>
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+    
     {{ form_end(contactForm) }}
 
-    <img src="{{ asset('build/images/else/santa.png') }}" alt="Père Noêl dans son traineau"  class="contact_santa">
+    <img src="{{ asset('build/images/else/santa.png') }}" alt="Père Noël dans son traineau" class="contact_santa">
     <img src="{{ asset('build/images/else/snowGround.png') }}" alt="neige au sol" class="contact_snowGround">
-
 {% endblock %}

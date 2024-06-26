@@ -43,6 +43,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private bool $isVerified = false;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Regex(
+        pattern: "/\.(jpg|jpeg|png)$/i",
+        message: "Le nom du fichier doit se terminer par .jpg, .jpeg ou .png."
+    )]
     private ?string $photo = null;
 
     #[ORM\Column(length: 150, unique: true)]
@@ -395,7 +399,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function eraseCredentials(): void
     {
         // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+        $this->newPassword = null;
     }
 
     /**
@@ -437,4 +441,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+
 }
