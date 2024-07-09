@@ -16,7 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class WishlistController extends AbstractController
 {
-    #[Route('/wishlist', name: 'wishlist_index', methods: ['GET', 'POST'])]
+    #[Route('/voeux', name: 'wishlist_index', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_USER')]
     public function sendWishes(Request $request, EntityManagerInterface $em, MailerInterface $mailer, AssignationRepository $assignationRepository): Response
     {

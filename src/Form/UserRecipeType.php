@@ -34,7 +34,7 @@ class UserRecipeType extends AbstractType
                 'mapped' => false,
                 'constraints' => [
                     new Image([
-                        'mimeTypes' => ['image/jpeg', 'image/png'],
+                        'mimeTypes' => ['image/jpeg', 'image/png', 'image/jpeg', 'image/webp'],
                         'mimeTypesMessage' => 'Veuillez soumettre une image de type JPG ou PNG.',
                         'maxSize' => '1M',
                         'maxSizeMessage' => 'Votre image fait {{ size }} {{ suffix }}. La limite est de {{ limit }} {{ suffix }}'

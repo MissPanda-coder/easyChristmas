@@ -16,7 +16,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class ProfileController extends AbstractController
 {
-    #[Route('/user/{id}', name: 'user_info')]
+    #[Route('/utilisateur/{id}', name: 'user_info')]
         public function setSuperAdmin(EntityManagerInterface $entityManager, int $id): Response
     {
         // Récupérer l'utilisateur par son ID
@@ -39,7 +39,7 @@ class ProfileController extends AbstractController
         return new Response('Rôle ROLE_SUPER_ADMIN ajouté à l\'utilisateur avec ID '.$id);
     }
     
-    #[Route('/user/{id}', name: 'user')]
+    #[Route('/utilisateur/{id}', name: 'user')]
     #[IsGranted('ROLE_USER')]
     public function userProfile(User $user): Response
     {
@@ -52,7 +52,7 @@ class ProfileController extends AbstractController
         ]);
     }
 
-    #[Route('/profile', name: 'profile')]
+    #[Route('/profil', name: 'profile')]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function profile(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher, SluggerInterface $slugger): Response
     {   

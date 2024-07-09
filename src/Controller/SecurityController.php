@@ -24,7 +24,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class SecurityController extends AbstractController
 {
-    #[Route('/signup', name: 'signup')]
+    #[Route('/inscription', name: 'signup')]
     public function signup(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher, MailerInterface $mailer): Response
     {
         $user = new User();
@@ -43,9 +43,6 @@ class SecurityController extends AbstractController
             $hashedToken = sha1($rawToken);
 
             // Créer une nouvelle instance de vérification
-            $rawToken = substr(str_replace(['+', '/', '='], '', base64_encode(random_bytes(30))), 0, 20);
-            $hashedToken = sha1($rawToken);
-
             $user->setVerificationToken($hashedToken);
             $user->setVerificationTokenExpiresAt(new \DateTimeImmutable('+2 hours'));
 
@@ -79,7 +76,7 @@ class SecurityController extends AbstractController
         ]);
     }
 
-    #[Route('/verify-email/{token}', name: 'verify_email')]
+    #[Route('/verification-email/{token}', name: 'verify_email')]
     public function verifyUserEmail(string $token, UserRepository $userRepository, EntityManagerInterface $em): Response
     {
         // Hacher le token reçu pour vérifier la correspondance avec celui envoyé
@@ -159,7 +156,7 @@ class SecurityController extends AbstractController
       ]);
     }
     
-    #[Route('/reset-password-request', name: 'reset-password-request')]
+    #[Route('/reset-password-demande', name: 'reset-password-request')]
     public function resetPasswordRequest(RateLimiterFactory $passwordRecoveryLimiter, MailerInterface $mailer, Request $request, UserRepository $userRepository, ResetPasswordRepository $resetPasswordRepository, EntityManagerInterface $em)
     {
       $limiter = $passwordRecoveryLimiter->create($request->getClientIp());
@@ -220,7 +217,7 @@ class SecurityController extends AbstractController
         ]);
     }
 
-    #[Route("/login", name: "login")]
+    #[Route("/connexion", name: "login")]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         if ($this->getUser()) {
@@ -239,7 +236,7 @@ class SecurityController extends AbstractController
         ]);
     }
 
-    #[Route("/logout", name: "logout")]
+    #[Route("/deconnexion", name: "logout")]
     public function logout()
     {
         // Symfony gère la déconnexion

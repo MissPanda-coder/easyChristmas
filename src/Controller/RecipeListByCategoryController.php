@@ -20,7 +20,7 @@ class RecipeListByCategoryController extends AbstractController
         $this->entityManager = $em;
         $this->recipeRepository = $em->getRepository(Recipe::class);
     }
-    #[Route('/recipe/list/by/category/{categoryname}', name: 'recipe_list_by_category')]
+    #[Route('/recettes/liste/par/categorie/{categoryname}', name: 'recipe_list_by_category')]
     #[IsGranted('ROLE_USER')]
     public function recipesByCategories(string $categoryname): Response
     {

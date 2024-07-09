@@ -15,17 +15,16 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Nelmio\ApiDocBundle\Annotation\Model;
-use OpenApi\Annotations as OA;
-use Nelmio\ApiDocBundle\Annotation\Security;
+
 
 class DrawController extends AbstractController
 {
-    #[Route('/api/draw', name: 'draw_index', methods: ['GET', 'POST'])]
+    #[Route('/tirage-au-sort', name: 'draw_index', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_USER')]
     
     public function index(Request $request, EntityManagerInterface $em, MailerInterface $mailer, UserRepository $userRepository): Response
     {
+        
         if ($request->isMethod('POST')) {
             $data = json_decode($request->request->get('participants_data'), true);
 
@@ -100,7 +99,7 @@ class DrawController extends AbstractController
         ]);
     }
 
-    #[Route('/api/draw/results/{id}', name: 'draw_results', methods: ['GET'])]
+    #[Route('/tirage-au-sort/resultats/{id}', name: 'draw_results', methods: ['GET'])]
  
     public function drawResults(Draw $draw): Response
     {

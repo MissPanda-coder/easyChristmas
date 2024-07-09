@@ -44,8 +44,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Assert\Regex(
-        pattern: "/\.(jpg|jpeg|png)$/i",
-        message: "Le nom du fichier doit se terminer par .jpg, .jpeg ou .png."
+        pattern: "/\.(jpg|jpeg|png|webp)$/i",
+        message: "Le nom du fichier doit se terminer par .jpg, .jpeg, .webp ou .png."
     )]
     private ?string $photo = null;
 

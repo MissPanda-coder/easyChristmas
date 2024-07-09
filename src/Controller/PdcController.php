@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class PdcController extends AbstractController
 {
-    #[Route('/pdc', name: 'pdc')]
+    #[Route('/politique-de-confidentialite', name: 'pdc')]
     public function pdc(): Response
     {
         return $this->render('pdc/index.html.twig', [

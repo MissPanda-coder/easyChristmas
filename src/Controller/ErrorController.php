@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 #[AsController]
 class ErrorController extends AbstractController
 {
-    #[Route('/error', name: 'app_error')]
+    #[Route('/erreur', name: 'app_error')]
     public function show(Request $request): Response
     {
         $exception = $request->attributes->get('exception');

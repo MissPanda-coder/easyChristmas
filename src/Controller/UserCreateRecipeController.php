@@ -7,7 +7,6 @@ use DateTimeImmutable;
 use Cocur\Slugify\Slugify;
 use App\Form\UserRecipeType;
 use App\Repository\UnitRepository;
-use App\Repository\UserRepository;
 use Symfony\Component\Mime\Address;
 use App\Repository\IngredientRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -21,7 +20,7 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 class UserCreateRecipeController extends AbstractController
 {
-    #[Route('/user/recipe/create', name: 'user_recipe_create')]
+    #[Route('/utilisateur/recette/creation', name: 'user_recipe_create')]
     public function userCreateRecipe(Request $request, EntityManagerInterface $em, IngredientRepository $ingredientRepository, UnitRepository $unitRepository, MailerInterface $mailer): Response
     {
         // Ingrédients et unités triés par ordre alphabétique

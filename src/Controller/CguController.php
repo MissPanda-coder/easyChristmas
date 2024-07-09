@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class CguController extends AbstractController
 {
-    #[Route('/cgu', name: 'cgu')]
+    #[Route('/conditions-generales-utilisation', name: 'cgu')]
     public function cgu(): Response
     {
         return $this->render('cgu/index.html.twig', [

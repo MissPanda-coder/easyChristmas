@@ -76,14 +76,15 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 }
   
+document.addEventListener('DOMContentLoaded', function() {
   // DECOMPTE
   let christmas = new Date("2024-12-24T23:59:00"); 
-  
+
   // Fonction pour formater les nombres avec un zéro devant si inférieur à 10
   function caractere(nb) {
       return nb < 10 ? '0' + nb : nb;
   }
-  
+
   function countdown() {
       let today = new Date(); 
       let total_seconds = Math.floor((christmas - today) / 1000); // Calculer le total des secondes restantes
@@ -93,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
           let nb_hours = Math.floor((total_seconds - nb_days * 24 * 60 * 60) / (60 * 60));
           let nb_minutes = Math.floor((total_seconds - nb_days * 24 * 60 * 60 - nb_hours * 60 * 60) / 60);
           let nb_seconds = Math.floor(total_seconds % 60);
-  
+
           document.querySelector("#clock-days").innerHTML = caractere(nb_days);
           document.querySelector("#clock-hours").innerHTML = caractere(nb_hours);
           document.querySelector("#clock-minutes").innerHTML = caractere(nb_minutes);
@@ -107,8 +108,8 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       setTimeout(countdown, 1000); // Répéter le compte à rebours toutes les secondes
   }
-  
+
   countdown();
-  
+});
 
 

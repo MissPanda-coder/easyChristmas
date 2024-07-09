@@ -9,7 +9,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class RecipeIntroController extends AbstractController
 {
-    #[Route('/recipe/intro', name: 'recipe_intro')]
+    #[Route('/recettes/categories', name: 'recipe_intro')]
     #[IsGranted('ROLE_USER')]
     public function recipeIntro(): Response
     {

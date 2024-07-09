@@ -9,6 +9,7 @@ use App\Entity\Recipestep;
 use App\Entity\Recipecategory;
 use App\Entity\Recipedifficulty;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\RecipeHasIngredient;
 use App\Repository\RecipeRepository;
 use Doctrine\Common\Collections\Collection;
@@ -29,6 +30,10 @@ class Recipe
     private ?string $description = null;
 
     #[ORM\Column(length: 255, nullable: false)]
+    #[Assert\Regex(
+        pattern: "/\.(jpg|jpeg|png|webp)$/i",
+        message: "Le nom du fichier doit se terminer par .jpg, .jpeg, .webp ou .png."
+    )]
     private ?string $photo = null;
 
     #[ORM\Column(type:"time")]

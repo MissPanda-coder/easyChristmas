@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class CountdownController extends AbstractController
 {
-    #[Route('/countdown', name: 'countdown')]
+    #[Route('/compte_a_rebours', name: 'countdown')]
     public function countdown(): Response
     {
         return $this->render('countdown/index.html.twig', [
