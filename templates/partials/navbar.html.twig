@@ -12,27 +12,27 @@
                     <li><a href="{{ path('wishlist_index') }}" aria-label="Liste au père Noël">Liste au père Noël</a></li>
                     <li class="dropdown-recipes">
                         <a href="{{ path('recipe_intro') }}" class="dropbtn" aria-label="Idées recettes">Idées recettes</a>
-                            <div class="dropdown-content">
-                                <a href="{{ path('recipe_intro') }}" aria-label="Consulter nos recettes">Consulter nos recettes</a>
-                                <a href="{{ path('user_recipe_create') }}" aria-label="Créer une recette">Créer une recette</a>
-                            </div>
+                            <ul class="dropdown-content">
+                                <li><a href="{{ path('recipe_intro') }}" aria-label="Consulter nos recettes">Consulter nos recettes</a></li>
+                                <li><a href="{{ path('user_recipe_create') }}" aria-label="Créer une recette">Créer une recette</a></li>
+                            </ul>
                     </li>
                     {%- if is_granted('IS_AUTHENTICATED_FULLY') -%}
-                    <div class="dropdown-profile">
+                    <li class="dropdown-profile">
                         {% if app.user and app.user.photo %}
                             <a href="#" class="dropbtn" aria-label="Ouvrir le profil"><img src="{{ asset('uploads/photos/' ~ app.user.photo) }}" id="avatar" alt="Photo de profil"></a>
                         {% else %}
                             <a href="#" class="dropbtn" aria-label="Ouvrir le profil"><img src="{{ asset('images/avatars/defaultAvatar.png') }}" id="avatar" alt="Avatar par défaut"></a>
                         {% endif %}
                         
-                        <div class="dropdown-content">
-                            <a href="{{ path('profile') }}" aria-label="Profil">Profil</a>
+                        <ul class="dropdown-content">
+                            <li><a href="{{ path('profile') }}" aria-label="Profil">Profil</a></li>
                             {%- if is_granted('ROLE_ADMIN') or is_granted('ROLE_SUPER_ADMIN') -%}
-                            <a href="{{ path('admin') }}" aria-label="Tableau de bord">Dashboard</a>
+                            <li><a href="{{ path('admin') }}" aria-label="Tableau de bord">Dashboard</a></li>
                             {%- endif -%}
-                            <a href="{{ path('logout') }}" aria-label="Déconnexion">Déconnexion</a>
-                        </div>
-                    </div>
+                            <li><a href="{{ path('logout') }}" aria-label="Déconnexion">Déconnexion</a></li>
+                        </ul>
+                    </li>
                     {%- else -%}
                     <li><a id="login_button" href="{{ path('login') }}" aria-label="Se connecter">Se connecter</a></li>
                     {%- endif -%}
